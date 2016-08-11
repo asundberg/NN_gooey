@@ -1,0 +1,24 @@
+{
+  "name": "nn_gooey",
+  "version": "1.0.0",
+  "description": "GUI for Neural Networks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asundberg/NN_gooey.git"
+  },
+  "author": "[\"Yoo Jung Dan\", \"Winnie Chen\", \"Ayako Mikami\", \"Annika Sundberg\"]",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asundberg/NN_gooey/issues"
+  },
+  "homepage": "https://github.com/asundberg/NN_gooey#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "path": "^0.12.7"
+  }
+}
