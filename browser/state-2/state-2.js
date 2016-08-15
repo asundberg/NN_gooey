@@ -14,8 +14,9 @@ app.config(function ($stateProvider) {
   });
 });
 
-app.controller('State2Ctrl', function ($scope, TrainerFactory, trainer) {
+app.controller('State2Ctrl', function ($scope, TrainerFactory) {
 
   // $scope. = ;
+  d3.selectAll("p").style("color", "blue");
 
 });
