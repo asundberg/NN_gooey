@@ -18,9 +18,24 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
 
   d3.selectAll("p").style("color", "blue");
 
-  function HiddenLayer () {
-    this.neurons = Array(30);
+  function Neuron (id) {
+    this.id = id;
   }
+
+  function HiddenLayer () {
+    this.neurons = [];
+    for(var i = 1; i < 6; i++) {
+      this.neurons.push(new Neuron(i));
+    }
+  }
+
+  HiddenLayer.prototype.addToNeurons = function () {
+    this.neurons.push(new Neuron(this.neurons.length + 1));
+  };
+
+  HiddenLayer.prototype.removeFromNeurons = function () {
+    this.neurons.pop();
+  };
 
   $scope.numInputs = inputs;
 
@@ -41,8 +56,12 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
     }
   };
 
-  // $scope.addNeurons = function () {
+  $scope.addNeurons = function (index) {
+    $scope.hiddenLayers[index].addToNeurons();
+  };
 
-  // };
+  $scope.removeNeurons = function (index) {
+    $scope.hiddenLayers[index].removeFromNeurons();
+  };
 
 });

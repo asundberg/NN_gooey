@@ -329,21 +329,7 @@ limitations under the License.
                             The outputs are mixed with varying <b>weights</b>, shown by the thickness of the lines.
                         </div>
                     </div>
-                    <!--functionality for PLUS MINUS # NEURONS-->
-                    <div class="plus-minus-neurons" style="left: 188.706px;">
-                        <div class="ui-numNodes1">
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
-                        </div>
-                        <div>4 neurons</div>
-                    </div>
-                    <div class="plus-minus-neurons" style="left: 419.294px;">
-                        <div class="ui-numNodes2">
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
-                        </div>
-                        <div>2 neurons</div>
-                    </div>
+
                     <!-- copy pasted up until here -->
                     <svg id="svg" width="510" height="450">
                         <defs>
@@ -388,19 +374,38 @@ limitations under the License.
             <!-- Hidden Layers Column -->
             <div class="column hidden-layers">
                 <h4>
-        <div class="ui-numHiddenLayers">
-          <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="addLayers()">
-            <i class="material-icons">add</i>
-          </button>
-          <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeLayers()">
-            <i class="material-icons">remove</i>
-          </button>
-        </div>
-        <span id="num-layers">2</span>
-        <span id="layers-label">Hidden Layers</span>
-      </h4>
-                <div class="bracket">{{hiddenLayers}}</div>
+                  <div class="ui-numHiddenLayers">
+                    <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="addLayers()">
+                      <i class="material-icons">add</i>
+                    </button>
+                    <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeLayers()">
+                      <i class="material-icons">remove</i>
+                    </button>
+                  </div>
+                  <span id="num-layers">{{hiddenLayers.length}}</span>
+                  <span id="layers-label">Hidden Layers</span>
+                </h4>
+                <div class="row">
+                  <!--functionality for PLUS MINUS # NEURONS-->
+                  <div ng-repeat="layer in hiddenLayers">
+                    <!-- <div class="plus-minus-neurons" style="left: 188.706px;"> -->
+                        <!-- <div class="ui-numNodes1"> -->
+                    <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="addNeurons($index)"><i class="material-icons">add</i></button>
+                    <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeNeurons($index)"><i class="material-icons">remove</i></button>
+                <!-- </div> -->
+                    <div>{{layer.message}}</div>
+                    <!-- </div> -->
+      <!--                       <div class="plus-minus-neurons" style="left: 419.294px;">
+                        <div class="ui-numNodes2">
+                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
+                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
+                        </div>
+                        <div>2 neurons</div>
+                    </div> -->
+                  </div>
+                </div>
             </div>
+
             <!-- Output Column -->
             <div class="column output">
                 <h4>Output</h4>
