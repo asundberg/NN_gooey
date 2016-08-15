@@ -1,6 +1,6 @@
 'use strict';
 
-nn_gooey.factory('TrainerFactory', function ($http) {
+app.factory('TrainerFactory', function ($http) {
 
     var TrainerFactory = {};
 
