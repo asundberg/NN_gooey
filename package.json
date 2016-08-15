@@ -2,8 +2,9 @@
   "name": "nn_gooey",
   "version": "1.0.0",
   "description": "GUI for Neural Networks",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
+    "start": "nodemon --watch server -e js,html server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
