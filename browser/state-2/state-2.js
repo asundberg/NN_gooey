@@ -18,22 +18,31 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
 
   d3.selectAll("p").style("color", "blue");
 
+  function HiddenLayer () {
+    this.neurons = Array(30);
+  }
+
   $scope.numInputs = inputs;
 
-  $scope.hiddenLayers = 1;
+  $scope.hiddenLayers = [];
 
   $scope.trainNetwork = function () {
     $scope.greeting = 'The network is being trained!!!';
+    // show some kind of 'loading' graphic
   };
 
   $scope.addLayers = function () {
-    $scope.hiddenLayers++;
+    $scope.hiddenLayers.push(new HiddenLayer());
   };
 
   $scope.removeLayers = function () {
-    if ($scope.hiddenLayers >= 0) {
-      $scope.hiddenLayers--;
+    if ($scope.hiddenLayers.length) {
+      $scope.hiddenLayers.pop();
     }
   };
+
+  // $scope.addNeurons = function () {
+
+  // };
 
 });
