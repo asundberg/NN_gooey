@@ -83,7 +83,7 @@ body {
 
 #main-part .mdl-button {
   background-color: rgba(158,158,158,.1);
-  width: 28px;
+  width: 35px;
   height: 28px;
   min-width: 28px;
 }
@@ -93,11 +93,11 @@ body {
 }
 
 #main-part .mdl-button:focus:not(:active) {
-    background-color: rgba(158,158,158,.4);
+  background-color: rgba(158,158,158,.4);
 }
 
 #main-part .mdl-button:active {
-    background-color: rgba(158,158,158,.5);
+  background-color: rgba(158,158,158,.5);
 }
 
 #main-part .mdl-button .material-icons {
@@ -116,10 +116,9 @@ body {
   align-items: center;
   -webkit-justify-content: center;
   justify-content: center;
-  width: 24px;
+  width: 35px;
   height: 24px;
   font-size: 18px;
-  border-radius: 50%;
   margin: 0 1px;
   background-color: rgba(0,0,0,0.05);
   outline: none;
@@ -154,36 +153,6 @@ body {
   color: #eee;
   font: 11px 'Lucida Grande', sans-serif;
   display: table;
-}
-
-/* Header */
-
-.github-link {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  display: block;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-.github-link .bg {
-  fill: #fff;
-  fill-opacity: 0.2;
-}
-
-.github-link:hover .bg {
-  fill-opacity: 0.3;
-}
-
-.github-link .icon {
-  fill: #fff;
-  fill-opacity: 0.6;
-}
-
-.github-link:hover .icon {
-  fill-opacity: 0.7;
 }
 
 header {
@@ -264,23 +233,20 @@ header h1 .optional {
   width: 140px;
 }
 
-#play-pause-button .material-icons {
+#train-button {
+  cursor: pointer;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100px;
+  height: 50px;
+  font-size: 18px;
+  margin: 20px;
+  background-color: #183D4E;
+  outline: none;
+  padding: 0;
   color: white;
-  font-size: 36px;
-  transform: translate(-18px,-12px);
-}
-
-
-#play-pause-button .material-icons:nth-of-type(2) {
-  display: none;
-}
-
-#play-pause-button.playing .material-icons:nth-of-type(1) {
-  display: none;
-}
-
-#play-pause-button.playing .material-icons:nth-of-type(2) {
-  display: inherit;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 #top-controls .control {
@@ -406,6 +372,10 @@ header h1 .optional {
   padding-bottom: 8px;
   margin: 0;
   line-height: 1.4em;
+}
+
+.hidden-layer-control {
+  text-align: center;
 }
 
 #main-part p,

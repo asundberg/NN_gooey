@@ -36,7 +36,7 @@ limitations under the License.
   <meta name="twitter:image:height" content="295">
 
   <meta name="author" content="Daniel Smilkov and Shan Carter">
-  <title>A Neural Network Playground</title>
+  <title>NN Gooey</title>
   <link rel="stylesheet" href="/state-2/bundle.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
   <script src="lib.js"></script>
@@ -44,98 +44,19 @@ limitations under the License.
 <body>
   <!-- Header -->
   <header>
-    <h1 class="l--page">Train a <b>Neural Network</b> <span class="optional">Right Here </span>in Your Browser.<br>Don’t Worry, You Can’t Break It. We Promise.</h1>
+    <h1 class="l--page">Train a <b>Neural Network</b> and test your own data against it.</h1>
   </header>
 
   <!-- Top Controls -->
   <div id="top-controls">
     <div class="container l--page">
       <div class="timeline-controls">
-        <button class="mdl-button mdl-js-button mdl-button--icon ui-resetButton" id="reset-button" title="Reset the network">
-          <i class="material-icons">replay</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored ui-playButton" id="play-pause-button" title="Run/Pause">
-          <i class="material-icons">play_arrow</i>
-          <i class="material-icons">pause</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon ui-stepButton" id="next-step-button" title="Step">
-          <i class="material-icons">skip_next</i>
-        </button>
-      </div>
-      <div class="control">
-        <span class="label">Iterations</span>
-        <span class="value" id="iter-number"></span>
-      </div>
-      <div class="control ui-learningRate">
-        <label for="learningRate">Learning rate</label>
-        <div class="select">
-          <select id="learningRate">
-            <option value="0.00001">0.00001</option>
-            <option value="0.0001">0.0001</option>
-            <option value="0.001">0.001</option>
-            <option value="0.003">0.003</option>
-            <option value="0.01">0.01</option>
-            <option value="0.03">0.03</option>
-            <option value="0.1">0.1</option>
-            <option value="0.3">0.3</option>
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="10">10</option>
-          </select>
-        </div>
-      </div>
-      <div class="control ui-activation">
-        <label for="activations">Activation</label>
-        <div class="select">
-          <select id="activations">
-            <option value="relu">ReLU</option>
-            <option value="tanh">Tanh</option>
-            <option value="sigmoid">Sigmoid</option>
-            <option value="linear">Linear</option>
-          </select>
-        </div>
-      </div>
-      <div class="control ui-regularization">
-        <label for="regularizations">Regularization</label>
-        <div class="select">
-          <select id="regularizations">
-            <option value="none">None</option>
-            <option value="L1">L1</option>
-            <option value="L2">L2</option>
-          </select>
-        </div>
-      </div>
-      <div class="control ui-regularizationRate">
-        <label for="regularRate">Regularization rate</label>
-        <div class="select">
-          <select id="regularRate">
-            <option value="0">0</option>
-            <option value="0.001">0.001</option>
-            <option value="0.003">0.003</option>
-            <option value="0.01">0.01</option>
-            <option value="0.03">0.03</option>
-            <option value="0.1">0.1</option>
-            <option value="0.3">0.3</option>
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="10">10</option>
-          </select>
-        </div>
-      </div>
-      <div class="control ui-problem">
-        <label for="problem">Problem type</label>
-        <div class="select">
-          <select id="problem">
-            <option value="classification">Classification</option>
-            <option value="regression">Regression</option>
-          </select>
-        </div>
+        <button class="btn btn-info btn-sm" id="train-button" title="Train" ng-click="trainNetwork()">TRAIN!</button>
       </div>
     </div>
   </div>
   <div id="testingd3">
-    <p>I like pie</p>
-
+    <h3>{{greeting}}</h3>
   </div>
 
   <!-- Main Part -->
@@ -245,17 +166,17 @@ limitations under the License.
     <div class="column hidden-layers">
       <h4>
         <div class="ui-numHiddenLayers">
-          <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon">
+          <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="addLayers()">
             <i class="material-icons">add</i>
           </button>
-          <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon">
+          <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeLayers()">
             <i class="material-icons">remove</i>
           </button>
         </div>
-        <span id="num-layers"></span>
-        <span id="layers-label"></span>
+        <span id="num-layers">2</span>
+        <span id="layers-label">Hidden Layers</span>
       </h4>
-      <div class="bracket"></div>
+      <div class="bracket">{{hiddenLayers}}</div>
     </div>
 
     <!-- Output Column -->
