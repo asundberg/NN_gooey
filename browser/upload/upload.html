@@ -1,63 +1,65 @@
-<h1>Please Upload</h1>
+<div class="container">
+  <h1>Please Upload</h1>
 
-<form ng-submit=uploadData() name="uploadForm">
-  <div>
-    <h3>Problem Type</h3>
-    <select name="problemType" ng-model='upload.problemType' >
-      <option value="binary">Binary</option>
-      <option value="multi_class">Multi-Class</option>
-    </select>
+  <form ng-submit=uploadData() name="uploadForm">
+    <div>
+      <h3>Problem Type</h3>
+      <select name="problemType" ng-model='upload.problemType' >
+        <option value="binary">Binary</option>
+        <option value="multi_class">Multi-Class</option>
+      </select>
+    </div>
+
+    <div>
+      <h3>Header</h3>
+      <select name="header" ng-model='upload.headers' >
+        <option value='yes'>Yes</option>
+        <option value='no'>No</option>
+      </select>
+    </div>
+    <div>
+      <h3> Delimiter </h3>
+      <select name="delimiter" ng-model='upload.delimiter' >
+        <option value=','>Comma</option>
+        <option value=' '>Space</option>
+        <option value=';'>Semicolon</option>
+        <option value='\t'>Tab</option>
+      </select>
+    </div>
+
+    <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
+    <input type="submit" value="Submit"/>
+  </form>
+
+  <div ng-show="showData">
+    <div class="col-lg-8">
+    <h4>Input</h4>
+    <table class="table" style="overflow: auto">
+      <thead>
+        <th ng-repeat="header in headers.slice(0,-1)">{{header}}</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in input.slice(0, 5)">
+          <td ng-repeat="data in row">{{data}}</td>
+        </tr>
+        <tr ng-repeat="row in input.slice(0, 3)">
+          <td ng-repeat="data in row">.</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="col-lg-4">
+    <h4>Output</h4>
+    <table class="table" style="overflow: auto">
+      <thead>
+        <th>{{headers[headers.length-1]}}</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in output.slice(0, 5) track by $index">
+          <td>{{data}}<td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
   </div>
-
-  <div>
-    <h3>Header</h3>
-    <select name="header" ng-model='upload.headers' >
-      <option value='yes'>Yes</option>
-      <option value='no'>No</option>
-    </select>
-  </div>
-  <div>
-    <h3> Delimiter </h3>
-    <select name="delimiter" ng-model='upload.delimiter' >
-      <option value=','>Comma</option>
-      <option value=' '>Space</option>
-      <option value=';'>Semicolon</option>
-      <option value='\t'>Tab</option>
-    </select>
-  </div>
-
-  <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
-  <input type="submit" value="Submit"/>
-</form>
-
-<div ng-show="showData">
-  <table class="table" style="overflow: auto">
-    <thead>
-      <th ng-repeat="header in headers">{{header}}</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="row in sampleRows.slice(0, 5)">
-        <td ng-repeat="data in row">{{data}}</td>
-      </tr>
-      <tr ng-repeat="row in sampleRows.slice(0, 3)">
-        <td ng-repeat="data in row">.</td>
-      </tr>
-    </tbody>
-<!--     <div class="row-fluid">
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-        <div class="col-lg-3">COL1</div>
-    </div> -->
-    </table>
 </div>

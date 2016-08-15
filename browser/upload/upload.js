@@ -31,7 +31,7 @@ app.controller('UploadCtrl', function($scope) {
       return row.split(delimiter)
     })
     if($scope.upload.headers==='yes') {
-      $scope.headers = newArr[0];
+      $scope.headers = newArr[0].slice();
       newArr.splice(0, 1);
     }
     else {
@@ -39,10 +39,10 @@ app.controller('UploadCtrl', function($scope) {
         $scope.headers.push("Column " + i)
       }
     }
-    // console.log("headers", $scope.headers);
-    // console.log("array", newArr);
-    $scope.sampleRows = newArr;
-    // $scope.featureRows = transpose(newArr);
+    var transposed = transpose(newArr);
+    console.log(transposed.slice(0, (transposed.length - 1)));
+    $scope.input = transpose(transposed.slice(0, (transposed.length - 1)));
+    $scope.output = transposed[transposed.length-1];
   }
 
   function transpose(array) {
