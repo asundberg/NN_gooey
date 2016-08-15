@@ -16,7 +16,6 @@ app.config(function ($stateProvider) {
 
 app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
 
-  d3.selectAll("p").style("color", "blue");
 
   function Neuron (id) {
     this.id = id;
