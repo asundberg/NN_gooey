@@ -1,1 +1,1 @@
-var app = angular.module('nn_gooey', ['ui.router', 'ui.bootstrap', 'ngFileUpload']);
+var app = angular.module('nn_gooey', ['ui.router', 'ui.bootstrap']);
