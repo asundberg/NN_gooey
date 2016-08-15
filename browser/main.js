@@ -1,1 +1,1 @@
-var nn_gooey = angular.module('nn_gooey', []);
+var app = angular.module('nn_gooey', ['ui.router', 'ui.bootstrap']);

@@ -4,6 +4,7 @@
   "description": "GUI for Neural Networks",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +18,10 @@
   },
   "homepage": "https://github.com/asundberg/NN_gooey#readme",
   "dependencies": {
+    "angular": "^1.5.8",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "nodemon": "^1.10.0",
     "path": "^0.12.7"
   }
 }
