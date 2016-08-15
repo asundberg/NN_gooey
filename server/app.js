@@ -11,6 +11,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var indexHtmlPath = path.join(__dirname, '../index.html');
+var npmPath = path.join(__dirname, '../node_modules');
+var browserPath = path.join(__dirname, '../browser');
+console.log(npmPath);
+
+app.use(Express.static(npmPath));
+app.use(Express.static(browserPath));
 
 app.get('/', function (req, res) {
     res.sendFile(indexHtmlPath);
