@@ -1,7 +1,9 @@
+.input-section {
+  overflow: auto;
+  white-space: nowrap;
+}
+
 .input-columns {
   display: inline-block;
 }
 
-.input-section {
-  overflow: auto;
-}

@@ -28,6 +28,8 @@ app.controller('UploadCtrl', function($scope) {
   $scope.byColumn = [];
 
   function convertToArr(str, delimiter){
+    console.log("str", str);
+    if(delimiter == "Space") delimiter = " ";
     var newArr = str.split("\n").map(row=>{
       return row.split(delimiter)
     })
