@@ -22,6 +22,8 @@ app.get('/', function (req, res) {
     res.sendFile(indexHtmlPath);
 });
 
+// app.post('/upload', function(req,res) )
+
 app.post('/train', function(req,res,next){
 	var trainingData = req.body;
 	var input = trainingData.input;
@@ -42,5 +44,6 @@ app.post('/train', function(req,res,next){
 
 	py.stdin.end();
 })
+
 
 //{"input":"[[1,2],[3,4]]", "output":"[[5,6],[7,8]]"}
