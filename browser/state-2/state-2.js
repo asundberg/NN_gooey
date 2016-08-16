@@ -5,16 +5,11 @@ app.config(function ($stateProvider) {
   $stateProvider.state('state2', {
     url: '/train',
     templateUrl: '/state-2/template.html',
-    controller: 'State2Ctrl',
-    resolve: {
-      inputs: function (TrainerFactory) {
-        return TrainerFactory.getInputs();
-      }
-    }
+    controller: 'State2Ctrl'
   });
 });
 
-app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
+app.controller('State2Ctrl', function ($scope, TrainerFactory) {
 
   d3.selectAll("p").style("color", "blue");
 
@@ -37,12 +32,12 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
     this.neurons.pop();
   };
 
-  $scope.numInputs = inputs;
-
   $scope.hiddenLayers = [];
 
   $scope.trainNetwork = function () {
-    $scope.greeting = 'The network is being trained!!!';
+    TrainerFactory.hiddenLayersArr = $scope.hiddenLayers;
+    console.log('this is our TrainerFactory object: ', TrainerFactory);
+    TrainerFactory.train(TrainerFactory);
     // show some kind of 'loading' graphic
   };
 
