@@ -34,9 +34,13 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory) {
 
   $scope.hiddenLayers = [];
 
+
   $scope.trainNetwork = function () {
-    TrainerFactory.hiddenLayersArr = $scope.hiddenLayers;
-    console.log('this is our TrainerFactory object: ', TrainerFactory);
+    var finalArr = [];
+    $scope.hiddenLayers.forEach(function (layer) {
+      finalArr.push(layer.neurons.length);
+    });
+    TrainerFactory.hiddenLayersArr = finalArr;
     TrainerFactory.train(TrainerFactory);
     // show some kind of 'loading' graphic
   };
