@@ -30,7 +30,7 @@
     <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
     <input type="submit" value="Submit"/>
   </form>
-
+<!--
   <div ng-show="showData">
     <div class="col-lg-8">
     <h4>Input</h4>
@@ -61,5 +61,32 @@
       </tbody>
       </table>
     </div>
+  </div> -->
+
+  <div ng-show="showData">
+    <div class="input-section col-lg-8">
+    <h4>Input</h4>
+      <div ng-repeat="column in byColumn" class="input-columns col-lg-3">
+        <h5 class="column-data">{{headers[0]}}</h5>
+        <div class="column-data" ng-repeat="data in column.slice(0, 5) track by $index">{{data}}</div>
+        <div class="column-data elipses">.</div>
+        <div class="column-data elipses">.</div>
+        <div class="column-data elipses">.</div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+    <h4>Output</h4>
+    <table class="table" style="overflow: auto">
+      <thead>
+        <th>{{headers[headers.length-1]}}</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in output.slice(0, 5) track by $index">
+          <td>{{data}}<td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
   </div>
+
 </div>

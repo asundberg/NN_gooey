@@ -1,0 +1,7 @@
+.input-columns {
+  display: inline-block;
+}
+
+.input-section {
+  overflow: auto;
+}

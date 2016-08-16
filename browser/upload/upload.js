@@ -12,7 +12,7 @@ app.controller('UploadCtrl', function($scope) {
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      // console.log(textFile);
+      console.log(textFile);
       $scope.upload.file = textFile;
     })
     fReader.readAsText(file); //emits loadended event
@@ -25,6 +25,7 @@ app.controller('UploadCtrl', function($scope) {
   }
 
   $scope.headers = [];
+  $scope.byColumn = [];
 
   function convertToArr(str, delimiter){
     var newArr = str.split("\n").map(row=>{
@@ -40,6 +41,7 @@ app.controller('UploadCtrl', function($scope) {
       }
     }
     var transposed = transpose(newArr);
+    $scope.byColumn = transposed;
     console.log(transposed.slice(0, (transposed.length - 1)));
     $scope.input = transpose(transposed.slice(0, (transposed.length - 1)));
     $scope.output = transposed[transposed.length-1];
@@ -56,5 +58,8 @@ app.controller('UploadCtrl', function($scope) {
     }
     return newArr;
   }
+
+  // Trying with divs
+
 
 })
