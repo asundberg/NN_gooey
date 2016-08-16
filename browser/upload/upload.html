@@ -2,7 +2,7 @@
   <h1>Please Upload</h1>
 
   <form ng-submit=uploadData() name="uploadForm">
-    <div>
+    <div class="col-lg-3">
       <h3>Problem Type</h3>
       <select name="problemType" ng-model='upload.problemType' >
         <option value="binary">Binary</option>
@@ -10,14 +10,14 @@
       </select>
     </div>
 
-    <div>
+    <div class="col-lg-3">
       <h3>Header</h3>
       <select name="header" ng-model='upload.headers' >
         <option value='yes'>Yes</option>
         <option value='no'>No</option>
       </select>
     </div>
-    <div>
+    <div class="col-lg-3">
       <h3> Delimiter </h3>
       <select name="delimiter" ng-model='upload.delimiter' >
         <option value=','>Comma</option>
@@ -26,66 +26,36 @@
         <option value='\t'>Tab</option>
       </select>
     </div>
-
+    <div class="col-lg-3">
     <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
     <input type="submit" value="Submit"/>
+    </div>
   </form>
-<!--
+
   <div ng-show="showData">
     <div class="col-lg-8">
     <h4>Input</h4>
-    <table class="table" style="overflow: auto">
-      <thead>
-        <th ng-repeat="header in headers.slice(0,-1)">{{header}}</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="row in input.slice(0, 5)">
-          <td ng-repeat="data in row">{{data}}</td>
-        </tr>
-        <tr ng-repeat="row in input.slice(0, 3)">
-          <td ng-repeat="data in row">.</td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
-    <div class="col-lg-4">
-    <h4>Output</h4>
-    <table class="table" style="overflow: auto">
-      <thead>
-        <th>{{headers[headers.length-1]}}</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="data in output.slice(0, 5) track by $index">
-          <td>{{data}}<td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
-  </div> -->
-
-  <div ng-show="showData">
-    <div class="input-section col-lg-8">
-    <h4>Input</h4>
-      <div ng-repeat="column in byColumn" class="input-columns col-lg-3">
-        <h5 class="column-data">{{headers[0]}}</h5>
+    <div class="input-section">
+      <div ng-repeat="column in inputData track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)">
+        <h5 class="column-data">{{headers[$index]}}</h5>
         <div class="column-data" ng-repeat="data in column.slice(0, 5) track by $index">{{data}}</div>
         <div class="column-data elipses">.</div>
         <div class="column-data elipses">.</div>
         <div class="column-data elipses">.</div>
       </div>
+      </div>
     </div>
     <div class="col-lg-4">
     <h4>Output</h4>
-    <table class="table" style="overflow: auto">
-      <thead>
-        <th>{{headers[headers.length-1]}}</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="data in output.slice(0, 5) track by $index">
-          <td>{{data}}<td>
-        </tr>
-      </tbody>
-      </table>
+    <div class="output-section">
+    <div class="container">
+        <h5 class="column-data">{{headers[headers.length - 1]}}</h5>
+        <div class="column-data" ng-repeat="data in outputData.slice(0, 5) track by $index">{{data}}</div>
+        <div class="column-data elipses">.</div>
+        <div class="column-data elipses">.</div>
+        <div class="column-data elipses">.</div>
+    </div>
+    </div>
     </div>
   </div>
 

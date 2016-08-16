@@ -25,10 +25,10 @@ app.controller('UploadCtrl', function($scope) {
   }
 
   $scope.headers = [];
-  $scope.byColumn = [];
+  // For input section
+  $scope.inputData = [];
 
   function convertToArr(str, delimiter){
-    console.log("str", str);
     if(delimiter == "Space") delimiter = " ";
     var newArr = str.split("\n").map(row=>{
       return row.split(delimiter)
@@ -43,10 +43,8 @@ app.controller('UploadCtrl', function($scope) {
       }
     }
     var transposed = transpose(newArr);
-    $scope.byColumn = transposed;
-    console.log(transposed.slice(0, (transposed.length - 1)));
-    $scope.input = transpose(transposed.slice(0, (transposed.length - 1)));
-    $scope.output = transposed[transposed.length-1];
+    $scope.inputData = transposed.slice(0, -1);
+    $scope.outputData = transposed[transposed.length-1];
   }
 
   function transpose(array) {
@@ -61,7 +59,9 @@ app.controller('UploadCtrl', function($scope) {
     return newArr;
   }
 
-  // Trying with divs
+  $scope.toggleInputCol = function(index) {
+    console.log(index);
+  }
 
 
 })
