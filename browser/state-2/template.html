@@ -53,9 +53,6 @@ limitations under the License.
                 </div>
             </div>
         </div>
-        <div id="testingd3">
-            <h3>{{greeting}}</h3>
-        </div>
         <!-- Main Part -->
         <div id="main-part" class="l--page">
             <!--  Data Column-->
@@ -115,7 +112,16 @@ limitations under the License.
                 <h4>Features</h4>
                 <p>Which properties do you want to feed in?</p>
                 <div id="network">
-
+                    <div ng-repeat="input in numInputs()" id="canvasInput-$index" class="canvas" style="position: absolute; left: 53px; top: {{$index * 55 +3}}px; cursor: pointer;">
+                        <div style="width: 30px; height: 30px; position: relative; top: 0px; left: 0px;">
+                            <canvas width="10" height="10" style="width: 30px; height: 30px; position: absolute; top: 0px; left: 0px;"></canvas>
+                        </div>
+                    </div>
+                    <!-- <div ng-repeat="layer in hiddenLayers" class="plus-minus-neurons">
+                        <button class="mdl-button mdl-js-button mdl-button-icon" ng-click="addNeurons($index)"><i class="material-icons">add</i></button>
+                        <button class="mdl-button mdl-js-button mdl-button-icon" ng-click="removeNeurons($index)"><i class="material-icons">remove</i></button>
+                        <div>{{layer.neurons.length}} neurons</div>
+                    </div> -->
                 </div>
             </div>
             <!-- Hidden Layers Column -->
@@ -132,27 +138,8 @@ limitations under the License.
                   <span id="num-layers">{{hiddenLayers.length}}</span>
                   <span id="layers-label">Hidden Layers</span>
                 </h4>
-                <div class="row">
-                  <!--functionality for PLUS MINUS # NEURONS-->
-                  <div ng-repeat="layer in hiddenLayers">
-                    <!-- <div class="plus-minus-neurons" style="left: 188.706px;"> -->
-                        <!-- <div class="ui-numNodes1"> -->
-                    <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="addNeurons($index)"><i class="material-icons">add</i></button>
-                    <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeNeurons($index)"><i class="material-icons">remove</i></button>
-                <!-- </div> -->
-                    <div>{{layer.message}}</div>
-                    <!-- </div> -->
-      <!--                       <div class="plus-minus-neurons" style="left: 419.294px;">
-                        <div class="ui-numNodes2">
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
-                            <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
-                        </div>
-                        <div>2 neurons</div>
-                    </div> -->
-                  </div>
-                </div>
+                <div class="bracket"></div>
             </div>
-
             <!-- Output Column -->
             <div class="column output">
                 <h4>Output</h4>
@@ -167,6 +154,7 @@ limitations under the License.
                     </div>
                     <div id="linechart"></div>
                 </div>
+
                 <div id="heatmap"></div>
                 <div style="float:left;margin-top:20px">
                     <div style="display:flex; align-items:center;">
