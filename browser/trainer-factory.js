@@ -6,19 +6,8 @@ app.factory('TrainerFactory', function ($http) {
       classType: null,
       inputArr: null,
       outputArr: null,
-      headerReference: null
-    };
-
-    TrainerFactory.getInputs = function () {
-      return this.numInputs;
-    };
-
-    TrainerFactory.setClassType = function (classType) {
-      this.classType = classType;
-    };
-
-    TrainerFactory.getClassType = function () {
-      return this.classType;
+      headerReference: null,
+      hiddenLayersArr: [] // array of numbers, each indicating number of neurons in that layer
     };
 
     TrainerFactory.setData = function(data){

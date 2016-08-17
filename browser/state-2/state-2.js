@@ -34,17 +34,6 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory) {
 
   $scope.hiddenLayers = [];
 
-
-  $scope.trainNetwork = function () {
-    var finalArr = [];
-    $scope.hiddenLayers.forEach(function (layer) {
-      finalArr.push(layer.neurons.length);
-    });
-    TrainerFactory.hiddenLayersArr = finalArr;
-    TrainerFactory.train(TrainerFactory);
-    // show some kind of 'loading' graphic
-  };
-
   $scope.addLayers = function () {
     $scope.hiddenLayers.push(new HiddenLayer());
   };
@@ -61,6 +50,16 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory) {
 
   $scope.removeNeurons = function (index) {
     $scope.hiddenLayers[index].removeFromNeurons();
+  };
+
+  $scope.trainNetwork = function () {
+    var finalArr = [];
+    $scope.hiddenLayers.forEach(function (layer) {
+      finalArr.push(layer.neurons.length);
+    });
+    TrainerFactory.hiddenLayersArr = finalArr;
+    TrainerFactory.train(TrainerFactory);
+    // show some kind of 'loading' graphic
   };
 
 });
