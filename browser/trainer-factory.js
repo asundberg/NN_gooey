@@ -9,10 +9,6 @@ app.factory('TrainerFactory', function ($http) {
       headerReference: null
     };
 
-    TrainerFactory.setInputs = function (num) {
-      this.numInputs = num;
-    };
-
     TrainerFactory.getInputs = function () {
       return this.numInputs;
     };
@@ -31,6 +27,15 @@ app.factory('TrainerFactory', function ($http) {
       TrainerFactory.outputArr = data.outputArr;
       TrainerFactory.headerReference = data.headerReference;
     }
+
+    TrainerFactory.train = function (dataObj) {
+      console.log('The network is being trained! (Cool graphic is showing...)', TrainerFactory);
+      return $http.post('/train', dataObj)
+      .then(function (response) {
+        var resultObj = response.data;
+        return resultObj;
+      });
+    };
 
     return TrainerFactory;
 });
