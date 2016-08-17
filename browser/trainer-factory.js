@@ -3,18 +3,18 @@
 app.factory('TrainerFactory', function ($http) {
 
     var TrainerFactory = {
-      numInputs: 10,
       classType: null,
-      inputArr: [],
-      outputArr: [],
+      inputArr: null,
+      outputArr: null,
+      headerReference: null,
       hiddenLayersArr: [] // array of numbers, each indicating number of neurons in that layer
     };
 
-    TrainerFactory.setData = function (userInput){
-      TrainerFactory.numInputs = userInput.numInputs;
-      TrainerFactory.classType = userInput.classType;
-      TrainerFactory.inputArr = userInput.input;
-      TrainerFactory.outputArr = userInput.output;
+    TrainerFactory.setData = function (data){
+      TrainerFactory.classType = data.classType;
+      TrainerFactory.inputArr = data.input;
+      TrainerFactory.outputArr = data.output;
+      TrainerFactory.headerReference = data.headerReference;
     };
 
     TrainerFactory.train = function (dataObj) {
