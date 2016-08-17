@@ -5,28 +5,38 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope) {
+app.controller('UploadCtrl', function($scope, TrainerFactory) {
+
+  // VARIABLES
+  $scope.headers = [];
+  $scope.data = [];
+  $scope.outputIndex;
+  $scope.columnTracker = [];
+  $scope.columnClass = "";
+  //nghide if
+
+  // EVENT LISTENERS
   var fReader = new FileReader();
   var fileInput = document.getElementById('files');
   fileInput.addEventListener('change', function(event){
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      // console.log(textFile);
+      console.log(textFile);
       $scope.upload.file = textFile;
     })
     fReader.readAsText(file); //emits loadended event
   })
 
+  // FUNCTIONS
   $scope.uploadData = function() {
     var uploaded = $scope.upload;
     convertToArr(uploaded.file, uploaded.delimiter);
     $scope.showData = true;
   }
 
-  $scope.headers = [];
-
   function convertToArr(str, delimiter){
+    if(delimiter == "Space") delimiter = " ";
     var newArr = str.split("\n").map(row=>{
       return row.split(delimiter)
     })
@@ -40,9 +50,17 @@ app.controller('UploadCtrl', function($scope) {
       }
     }
     var transposed = transpose(newArr);
-    console.log(transposed.slice(0, (transposed.length - 1)));
-    $scope.input = transpose(transposed.slice(0, (transposed.length - 1)));
-    $scope.output = transposed[transposed.length-1];
+    $scope.data = transposed;
+    initColumns();
+  }
+
+  function initColumns() {
+    var numColumns = $scope.headers.length
+    for(var i = 0; i < numColumns; i++) {
+      $scope.columnTracker.push(1);
+    }
+    $scope.outputIndex = numColumns - 1;
+    $scope.columnTracker[$scope.outputIndex] = 0;
   }
 
   function transpose(array) {
@@ -55,6 +73,45 @@ app.controller('UploadCtrl', function($scope) {
         }
     }
     return newArr;
+  }
+
+  $scope.toggleInputCol = function(index) {
+    if(!$scope.outputIndex) {
+      $scope.outputIndex = index;
+      $scope.columnTracker[index] = 0;
+    }
+    else {
+      $scope.columnTracker[index] *= -1;
+    }
+  }
+  $scope.toggleOutputCol = function() {
+    $scope.columnTracker[$scope.outputIndex] = 1;
+    $scope.outputIndex = null;
+  }
+
+  $scope.sendToBuilder = function() {
+    var inputArr = [];
+    var outputArr = [];
+    var headerReference = {};
+    var header;
+    $scope.columnTracker.forEach(function(ele, index) {
+      header = $scope.headers[index];
+      if(ele == 1) {
+        inputArr.push($scope.data[index]);
+        headerReference[inputArr.length - 1] = header;
+      }
+      if(ele == 0) {
+        outputArr.push($scope.data[index]);
+        headerReference.output = header;
+      }
+    })
+    var obj = {
+      classType: $scope.problemType,
+      inputArr: inputArr,
+      outputArr: outputArr,
+      headerReference: headerReference
+    }
+    TrainerFactory.setData(obj);
   }
 
 })
