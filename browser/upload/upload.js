@@ -5,7 +5,17 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope) {
+app.controller('UploadCtrl', function($scope, TrainerFactory) {
+
+  // VARIABLES
+  $scope.headers = [];
+  $scope.data = [];
+  $scope.outputIndex;
+  $scope.columnTracker = [];
+  $scope.columnClass = "";
+  //nghide if
+
+  // EVENT LISTENERS
   var fReader = new FileReader();
   var fileInput = document.getElementById('files');
   fileInput.addEventListener('change', function(event){
@@ -18,15 +28,12 @@ app.controller('UploadCtrl', function($scope) {
     fReader.readAsText(file); //emits loadended event
   })
 
+  // FUNCTIONS
   $scope.uploadData = function() {
     var uploaded = $scope.upload;
     convertToArr(uploaded.file, uploaded.delimiter);
     $scope.showData = true;
   }
-
-  $scope.headers = [];
-  // For input section
-  $scope.inputData = [];
 
   function convertToArr(str, delimiter){
     if(delimiter == "Space") delimiter = " ";
@@ -43,8 +50,17 @@ app.controller('UploadCtrl', function($scope) {
       }
     }
     var transposed = transpose(newArr);
-    $scope.inputData = transposed.slice(0, -1);
-    $scope.outputData = transposed[transposed.length-1];
+    $scope.data = transposed;
+    initColumns();
+  }
+
+  function initColumns() {
+    var numColumns = $scope.headers.length
+    for(var i = 0; i < numColumns; i++) {
+      $scope.columnTracker.push(1);
+    }
+    $scope.outputIndex = numColumns - 1;
+    $scope.columnTracker[$scope.outputIndex] = 0;
   }
 
   function transpose(array) {
@@ -60,8 +76,42 @@ app.controller('UploadCtrl', function($scope) {
   }
 
   $scope.toggleInputCol = function(index) {
-    console.log(index);
+    if(!$scope.outputIndex) {
+      $scope.outputIndex = index;
+      $scope.columnTracker[index] = 0;
+    }
+    else {
+      $scope.columnTracker[index] *= -1;
+    }
+  }
+  $scope.toggleOutputCol = function() {
+    $scope.columnTracker[$scope.outputIndex] = 1;
+    $scope.outputIndex = null;
   }
 
+  $scope.sendToBuilder = function() {
+    var inputArr = [];
+    var outputArr = [];
+    var headerReference = {};
+    var header;
+    $scope.columnTracker.forEach(function(ele, index) {
+      header = $scope.headers[index];
+      if(ele == 1) {
+        inputArr.push($scope.data[index]);
+        headerReference[inputArr.length - 1] = header;
+      }
+      if(ele == 0) {
+        outputArr.push($scope.data[index]);
+        headerReference.output = header;
+      }
+    })
+    var obj = {
+      classType: $scope.problemType,
+      inputArr: inputArr,
+      outputArr: outputArr,
+      headerReference: headerReference
+    }
+    TrainerFactory.setData(obj);
+  }
 
 })

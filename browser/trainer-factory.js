@@ -3,10 +3,10 @@
 app.factory('TrainerFactory', function ($http) {
 
     var TrainerFactory = {
-      numInputs: 10,
       classType: null,
-      inputArr: [],
-      outputArr: []
+      inputArr: null,
+      outputArr: null,
+      headerReference: null
     };
 
     TrainerFactory.setInputs = function (num) {
@@ -25,11 +25,11 @@ app.factory('TrainerFactory', function ($http) {
       return this.classType;
     };
 
-    TrainerFactory.setData = function(userInput){
-      TrainerFactory.numInputs = userInput.numInputs;
-      TrainerFactory.classType = userInput.classType;
-      TrainerFactory.inputArr = userInput.input;
-      TrainerFactory.outputArr = userInput.output;
+    TrainerFactory.setData = function(data){
+      TrainerFactory.classType = data.classType;
+      TrainerFactory.inputArr = data.inputArr;
+      TrainerFactory.outputArr = data.outputArr;
+      TrainerFactory.headerReference = data.headerReference;
     }
 
     return TrainerFactory;
