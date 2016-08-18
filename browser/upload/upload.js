@@ -69,7 +69,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     for(var i = 0; i < array[0].length; i++) {
         newArr.push([]);
         for(var j = 0; j < array.length; j++) {
-            newArr[i].push(array[j][i]);
+            newArr[i].push(Number(array[j][i]));
         }
     }
     return newArr;
@@ -105,9 +105,14 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
         headerReference.output = header;
       }
     })
-    console.log("inputArr", inputArr);
-    console.log("outputArr", outputArr);
-    console.log("headerReference", headerReference);
+    // console.log("inputArr", inputArr);
+    inputArr = transpose(inputArr);
+    inputArr.splice(inputArr.length-1, 1);
+    outputArr = outputArr[0];
+    outputArr.splice(outputArr.length-1,1);
+    //console.log("inputArrayFInal", outputArr);
+    
+    // console.log("headerReference", headerReference);
 
     var obj = {
       classType: $scope.upload.problemType,
@@ -116,7 +121,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
       headerReference: headerReference
     }
     TrainerFactory.setData(obj);
-    console.log(obj);
+    //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);
     $state.go('state2')
   }
