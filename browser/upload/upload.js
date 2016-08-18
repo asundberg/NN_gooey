@@ -22,7 +22,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      console.log(textFile);
+      //console.log(textFile);
       $scope.upload.file = textFile;
     })
     fReader.readAsText(file); //emits loadended event
@@ -106,13 +106,15 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
       }
     })
     // console.log("inputArr", inputArr);
+
     inputArr = transpose(inputArr);
     inputArr.splice(inputArr.length-1, 1);
     outputArr = outputArr[0];
     outputArr.splice(outputArr.length-1,1);
     //console.log("inputArrayFInal", outputArr);
+
+    //NEED TO FIX THE FORLOOP FOR THIS FILE, CREATING AN EXTRA ARRAY ELEMENT
     
-    // console.log("headerReference", headerReference);
 
     var obj = {
       classType: $scope.upload.problemType,

@@ -1,8 +1,9 @@
-body {
+#results {
   /*background-image: url('http://www.examinationtoday.com/wp-content/uploads/Chemical-Bond.jpg');*/
   /*background-size: cover;*/
   padding: 50px;
   font: 12px Arial;
+  color: white;
 }
 #graph {
   background-color: white;
@@ -19,4 +20,8 @@ path {
   stroke: grey;
   stroke-width: 1;
   shape-rendering: crispEdges;
+}
+.background {
+  width: 360px;
+  height: 200px;
 }
