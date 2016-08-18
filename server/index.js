@@ -9,5 +9,5 @@ server.on('request', app);
 
 // Export our server for this file to be require('')d
 server.listen(1337,function(){
-	console.log("listening");
+	console.log("listening to port 1337");
 })

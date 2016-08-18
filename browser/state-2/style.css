@@ -17,7 +17,7 @@ limitations under the License.
 
 body {
   font-family: "Helvetica", "Arial", sans-serif;
-  background-color: #f7f7f7;
+  background-color: #9b9b9b;
 }
 
 h1 {
@@ -49,6 +49,9 @@ p a {
   color: #0D658C;
 }
 
+.numNeurons {
+  color: white;
+}
 /* Layout */
 
 body {
@@ -62,7 +65,7 @@ body {
 }
 
 .l--page {
-  width: 944px;
+  width: 980px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -242,7 +245,7 @@ header h1 .optional {
   height: 50px;
   font-size: 18px;
   margin: 20px;
-  background-color: #183D4E;
+  background-color: #3C3C3D;
   outline: none;
   padding: 0;
   color: white;
@@ -411,42 +414,25 @@ svg text {
   dominant-baseline: middle;
 }
 
-canvas {
-  display: block;
-}
-
 .link {
   fill: none;
-  stroke: #aaa;
+  stroke: #fff;
   stroke-width: 1;
 }
 
-g.column rect {
-  stroke: none;
+.circleInput {
+  fill: red;
 }
 
-#heatmap {
-  position: relative;
-  float: left;
-  margin-top: 10px;
+.circleHidden {
+  fill: ＃43FF00;
 }
 
-#heatmap .tick line {
-  stroke: #ddd;
+.circleOutput {
+  fill: green;
 }
 
-#heatmap .tick text {
-  fill: #bbb;
-  dominant-baseline: auto;
-}
 
-#heatmap .tick:nth-child(7) text {
-  fill: #333;
-}
-
-#heatmap .tick:nth-child(7) line {
-  stroke: #999;
-}
 
 /* Data column */
 
@@ -460,64 +446,9 @@ g.column rect {
 }
 
 .data.column {
-  width: 10%;
+  width: 20%;
 }
 
-.data.column .dataset-list {
-  margin: 20px 0 10px;
-  overflow: hidden;
-}
-
-.data.column .dataset {
-  position: relative;
-  float: left;
-  width: 34px;
-  height: 34px;
-  margin: 0 14px 14px 0;
-}
-
-.data.column .dataset:nth-of-type(2n) {
-  margin-right: 0;
-}
-
-.data.column .data-thumbnail {
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  opacity: 0.2;
-  border: 2px solid rgba(0,0,0,0.1);
-  border-radius: 3px;
-}
-
-/*.data.column .dataset:first-of-type {
-  margin-top: 8px;
-}
-
-.data.column .dataset:last-of-type {
-  margin-bottom: 20px;
-}*/
-
-.data.column .data-thumbnail:hover {
-  border: 2px solid #999;
-}
-
-.data.column .data-thumbnail.selected {
-  border: 2px solid black;
-  opacity: 1;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  background-color: white;
-}
-
-#main-part .data.column .dataset .label {
-  position: absolute;
-  left: 48px;
-  top: calc(50% - 9px);
-  display: none;
-}
-
-#main-part .data.column p.slider {
-  margin: 0 -25px 20px;
-}
 
 #main-part .basic-button {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -557,62 +488,17 @@ g.column rect {
 /* Features column */
 
 .features.column {
-  width: 10%;
+  width: 20%;
   position: relative;
 }
 
-.features.column .plus-minus-neurons {
-  position: absolute;
-  text-align: center;
-  line-height: 28px;
-  top: -58px;
-  width: 65px;
-  height: 44px;
-  font-size: 12px;
-  z-index: 100;
-}
 
-.plus-minus-neurons .mdl-button:first-of-type {
-  margin-right: 5px;
-}
-
-.features.column .callout {
-  position: absolute;
-  width: 95px;
-  font-style: italic;
-}
-
-.features.column .callout svg {
-  position: absolute;
-  left: -15px;
-  width: 30px;
-  height: 30px;
-}
-
-.features.column .callout svg path {
-  fill: none;
-  stroke: black;
-  stroke-opacity: 0.4;
-}
-
-.features.column .callout svg defs path {
-  fill: black;
-  stroke: none;
-  fill-opacity: 0.4;
-}
-
-#main-part .features.column .callout .label {
-  position: absolute;
-  top: 24px;
-  left: 3px;
-  font-size: 11px;
-}
 
 /* Network (inside features column) */
 
 #network {
   position: absolute;
-  top: 110px;
+  top: 120px;
   left: 0;
   z-index: 100;
 }
@@ -623,92 +509,9 @@ g.column rect {
   font-weight: 300;
 }
 
-.axis line {
-  fill: none;
-  stroke: #777;
-  shape-rendering: crispEdges;
-}
 
-.axis text {
-  fill: #777;
-  font-size: 10px;
-}
 
-.axis path {
-  display: none;
-}
 
-#network svg .active .main-label {
-  fill: #333
-}
-
-#network svg #markerArrow {
-  fill: black;
-  stroke: black;
-  stroke-opacity: 0.2;
-}
-
-#network .node {
-  cursor: default;
-}
-
-#network .node rect {
-  fill: white;
-  stroke-width: 0;
-}
-
-#network .node.inactive {
-  opacity: 0.5;
-}
-
-#network .node.hovered {
-  opacity: 1.0;
-}
-
-@-webkit-keyframes flowing {
-  from { stroke-dashoffset: 0; } to { stroke-dashoffset: -10; }
-}
-
-#network .core .link {
-  stroke-dasharray: 9 1;
-  stroke-dashoffset: 1;
-  /*-webkit-animation: 0.5s linear 0s infinite flowing;*/
-}
-
-/** Invisible thick links used for showing weight values on mouse hover. */
-#network .core .link-hover {
-  stroke-width: 8;
-  stroke: black;
-  fill: "none";
-  opacity: 0;
-}
-
-#network .canvas canvas {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  border: 2px solid black;
-  border-radius: 3px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-#network .canvas.inactive canvas {
-  box-shadow: inherit;
-}
-
-#network .canvas.inactive canvas {
-  opacity: 0.4;
-  border: 0;
-  top: 0;
-  left: 0;
-}
-
-#network .canvas.hovered canvas {
-  opacity: 1.0;
-  border: 2px solid #666;
-  top: -2px;
-  left: -2px;
-}
 
 /* Hidden layers column */
 
@@ -754,7 +557,7 @@ g.column rect {
 /* Output column */
 
 .output.column {
-  width: 275px;
+  width: 200px;
 }
 
 .metrics {
@@ -764,20 +567,8 @@ g.column rect {
   height: 60px;
 }
 
-#linechart {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 55px;
-}
-.metrics .train {
-  color: #777;
-}
 
-#loss-test {
-  color: black;
-}
+
 
 .output .output-stats .value {
   color: rgba(0, 0, 0, 0.6);
@@ -785,21 +576,6 @@ g.column rect {
   font-weight: 300;
   display: inline;
 
-}
-
-g.train circle {
-  stroke: white;
-  stroke-width: 1;
-  stroke-opacity: 0.8;
-  fill-opacity: 0.9;
-}
-
- g.test circle {
-  stroke-width: 1;
-  stroke: black;
-  stroke-opacity: 0.6;
-  fill-opacity: 0.9;
-}
 
 #main-part .output .mdl-checkbox__label.label {
   line-height: 1.7em;
