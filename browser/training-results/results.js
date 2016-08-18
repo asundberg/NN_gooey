@@ -26,8 +26,8 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory) {
 
   // var parseDate = d3.time.format("%d-%b-%y").parse;
 
-  var x = d3.scale.linear().range([0, width]);
-  var y = d3.scale.linear().range([height, 0]);
+  var x = d3.scaleLinear().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
 
   var xAxis = d3.svg.axis().scale(x) // How frequent marks on x-axis
       .orient('bottom').ticks(5);
