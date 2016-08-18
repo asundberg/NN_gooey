@@ -15,8 +15,6 @@ app.config(function($stateProvider) {
 });
 
 app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
-
-
     //$scope.numInputs = inputArr[0].length;
     $scope.numInputs = 5; //DELETE THIS AFTER MERGE
     $scope.inputLayer = {};
@@ -33,8 +31,6 @@ app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
     $scope.outputLayer.neurons = [];
     $scope.outputLayer.neurons.push(new Neuron(i));
     $scope.outputLayer.neurons[0].layerType = "o";
-
-
 
     let allLayers = [];
 
@@ -200,5 +196,15 @@ app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
     //initializing
     allLayers = getAllLayers();
     drawNetwork(true);
+
+  // $scope.trainNetwork = function () {
+  //   var finalArr = [];
+  //   $scope.hiddenLayers.forEach(function (layer) {
+  //     finalArr.push(layer.neurons.length);
+  //   });
+  //   TrainerFactory.hiddenLayersArr = finalArr;
+  //   TrainerFactory.train(TrainerFactory);
+  //   // show some kind of 'loading' graphic
+  // };
 
 });
