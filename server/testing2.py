@@ -1,5 +1,5 @@
 import sys, json, numpy as np
-import train as Train
+import train3 as Train
 #Read data from stdin
 def read_in():
     lines = sys.stdin.readlines()
@@ -10,14 +10,16 @@ def main():
     #get our data as an array from read_in()
     lines = read_in()
 
+    # print lines['input']
     #create a numpy array
-    np_lines = np.array(lines)
-    result = Train.trainModel()
+    # np_lines = np.array(lines)
+    result = Train.trainModel(lines)
+    print result
     #return the result to the output stream
     # np_lines[0] is the colX, np_lines[1] is colY
-    print result
-    for row in np_lines[0]:
-        print row
+    # print result
+    # for row in np_lines[0]:
+    #     print row
 
 #start process
 if __name__ == '__main__':
