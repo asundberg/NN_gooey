@@ -7,8 +7,7 @@ app.factory('TrainerFactory', function ($http) {
       inputArr: null,
       outputArr: null,
       headerReference: null,
-      hiddenLayersArr: [], // array of numbers, each indicating number of neurons in that layer
-      resultObj: null
+      hiddenLayersArr: [] // array of numbers, each indicating number of neurons in that layer
     };
 
     TrainerFactory.setData = function(data){
@@ -22,7 +21,8 @@ app.factory('TrainerFactory', function ($http) {
       console.log('The network is being trained! (Cool graphic is showing...)', TrainerFactory);
       return $http.post('/train', dataObj)
       .then(function (response) {
-        this.resultObj = response.data;
+        var resultObj = response.data;
+        return resultObj;
       });
     };
 
