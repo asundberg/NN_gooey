@@ -5,7 +5,7 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope, TrainerFactory) {
+app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
 
   // VARIABLES
   $scope.headers = [];
@@ -105,13 +105,20 @@ app.controller('UploadCtrl', function($scope, TrainerFactory) {
         headerReference.output = header;
       }
     })
+    console.log("inputArr", inputArr);
+    console.log("outputArr", outputArr);
+    console.log("headerReference", headerReference);
+
     var obj = {
-      classType: $scope.problemType,
+      classType: $scope.upload.problemType,
       inputArr: inputArr,
       outputArr: outputArr,
       headerReference: headerReference
     }
     TrainerFactory.setData(obj);
+    console.log(obj);
+    // console.log("INPUTARR", TrainerFactory);
+    $state.go('state2')
   }
 
 })

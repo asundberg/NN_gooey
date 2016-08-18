@@ -17,9 +17,9 @@ app.factory('TrainerFactory', function ($http) {
       TrainerFactory.headerReference = data.headerReference;
     }
 
-    TrainerFactory.train = function (dataObj) {
+    TrainerFactory.train = function () {
       console.log('The network is being trained! (Cool graphic is showing...)', TrainerFactory);
-      return $http.post('/train', dataObj)
+      return $http.post('/train', TrainerFactory)
       .then(function (response) {
         var resultObj = response.data;
         return resultObj;

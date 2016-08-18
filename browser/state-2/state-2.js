@@ -15,8 +15,9 @@ app.config(function($stateProvider) {
 });
 
 app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
-    //$scope.numInputs = inputArr[0].length;
-    $scope.numInputs = 5; //DELETE THIS AFTER MERGE
+    console.log("INPUT",inputArr);
+    $scope.numInputs = inputArr[0].length;
+    // $scope.numInputs = 5; //DELETE THIS AFTER MERGE
     $scope.inputLayer = {};
     $scope.inputLayer.neurons = [];
     for (var i = 0; i < $scope.numInputs; i++) {
@@ -61,10 +62,11 @@ app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
 
     $scope.trainNetwork = function(){
       console.log("clicked train");
-      TrainerFactory.hiddenLayersArr = [];
-      $scope.hiddenLayers.forEach(layer =>{
-        TrainerFactory.hiddenLayersArr.push(layer.neurons.length);
-      })
+      // TrainerFactory.hiddenLayersArr = [];
+      // $scope.hiddenLayers.forEach(layer =>{
+      //   TrainerFactory.hiddenLayersArr.push(layer.neurons.length);
+      // })
+      TrainerFactory.hiddenLayersArr=[20];
       TrainerFactory.train(TrainerFactory);
       console.log("TrainerFactory", TrainerFactory);
     };
@@ -194,8 +196,8 @@ app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
     }
 
     //initializing
-    allLayers = getAllLayers();
-    drawNetwork(true);
+    //allLayers = getAllLayers();
+    //drawNetwork(true);
 
   // $scope.trainNetwork = function () {
   //   var finalArr = [];
