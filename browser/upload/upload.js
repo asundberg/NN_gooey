@@ -22,7 +22,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      console.log(textFile);
+      //console.log(textFile);
       $scope.upload.file = textFile;
     })
     fReader.readAsText(file); //emits loadended event
@@ -105,9 +105,9 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
         headerReference.output = header;
       }
     })
-    console.log("inputArr", inputArr);
-    console.log("outputArr", outputArr);
-    console.log("headerReference", headerReference);
+    // console.log("inputArr", inputArr);
+    // console.log("outputArr", outputArr);
+    // console.log("headerReference", headerReference);
 
     var obj = {
       classType: $scope.upload.problemType,
@@ -116,7 +116,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
       headerReference: headerReference
     }
     TrainerFactory.setData(obj);
-    console.log(obj);
+    //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);
     $state.go('state2')
   }
