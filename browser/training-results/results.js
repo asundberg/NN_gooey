@@ -11,8 +11,9 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($scope, TrainerFactory) {
 
   // example:
-  $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
+  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
+  $scope.accuracyGraph = [];
 
   TrainerFactory.train(TrainerFactory)
   .then(function (resultObj) {
