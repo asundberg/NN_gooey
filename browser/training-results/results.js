@@ -11,9 +11,9 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($scope, TrainerFactory) {
 
   // example:
-  $scope.accuracyGraph = [];
-  // [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
+  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
+  $scope.accuracyGraph = [];
 
   TrainerFactory.train(TrainerFactory)
   .then(function (resultObj) {
@@ -46,26 +46,26 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory) {
   var x = d3.scaleLinear().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
 
-  var xAxis = d3.svg.axis().scale(x) // How frequent marks on x-axis
-      .orient('bottom').ticks(5);
-
-  var yAxis = d3.svg.axis().scale(y) // How frequent marks on y-axis
-      .orient('left').ticks(5);
-
-  var valueline = d3.svg.line()
-      .x(function (d) {
-        return x(d.epoch);
-      })
-      .y(function (d) {
-        return [y(d.accuracy)];
-      });
-
   var svg = d3.select('graph')
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+  var xAxis = d3.axisBottom().scale(x) // How frequent marks on x-axis
+      .ticks(5);
+
+  var yAxis = d3.axisLeft().scale(y) // How frequent marks on y-axis
+      .ticks(5);
+
+  var valueline = d3.line()
+      .x(function (d) {
+        return x(d.epoch);
+      })
+      .y(function (d) {
+        return [y(d.accuracy)];
+      });
 
   var data = [];
 
