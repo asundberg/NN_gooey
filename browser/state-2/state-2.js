@@ -1,129 +1,204 @@
 'use strict';
 
-app.config(function ($stateProvider) {
+app.config(function($stateProvider) {
 
-  $stateProvider.state('state2', {
-    url: '/train',
-    templateUrl: '/state-2/template.html',
-    controller: 'State2Ctrl',
-    resolve: {
-      inputs: function (TrainerFactory) {
-        return TrainerFactory.getInputs();
-      }
-    }
-  });
+    $stateProvider.state('state2', {
+        url: '/train',
+        templateUrl: '/state-2/template.html',
+        controller: 'State2Ctrl',
+        resolve: {
+            inputArr: function(TrainerFactory) {
+                return TrainerFactory.inputArr;
+            }
+        }
+    });
 });
 
-app.controller('State2Ctrl', function ($scope, TrainerFactory, inputs) {
+app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr) {
 
 
-  function Neuron (id) {
-    this.id = id;
-  }
-
-  function HiddenLayer () {
-    this.neurons = [];
-    for(var i = 1; i < 6; i++) {
-      this.neurons.push(new Neuron(i));
+    //$scope.numInputs = inputArr[0].length;
+    $scope.numInputs = 5; //DELETE THIS AFTER MERGE
+    $scope.inputLayer = {};
+    $scope.inputLayer.neurons = [];
+    for (var i = 0; i < $scope.numInputs; i++) {
+        $scope.inputLayer.neurons.push(new Neuron(i));
+        $scope.inputLayer.neurons[i].layerType = "i";
     }
-  }
 
-  HiddenLayer.prototype.addToNeurons = function () {
-    this.neurons.push(new Neuron(this.neurons.length + 1));
-  };
+    let defaultNumNeurons = $scope.numInputs;
+    $scope.hiddenLayers = [new HiddenLayer()];
 
-  HiddenLayer.prototype.removeFromNeurons = function () {
-    this.neurons.pop();
-  };
+    $scope.outputLayer = {};
+    $scope.outputLayer.neurons = [];
+    $scope.outputLayer.neurons.push(new Neuron(i));
+    $scope.outputLayer.neurons[0].layerType = "o";
 
-  $scope.numInputs = function(){
-    let numInputsArray = [];
-    for (var i = 0; i < inputs; i++) {
-      numInputsArray.push(i);
+
+
+    let allLayers = [];
+
+
+    function Neuron(id) {
+        this.id = id;
+        this.x = null;
+        this.y = null;
+        this.layerType = "h";
     }
-    return numInputsArray;
-  };
 
-  console.log($scope.numInputs());
-
-  $scope.hiddenLayers = [];
-
-  $scope.trainNetwork = function () {
-    $scope.greeting = 'The network is being trained!!!';
-    // show some kind of 'loading' graphic
-  };
-
-  $scope.addLayers = function () {
-    $scope.hiddenLayers.push(new HiddenLayer());
-  };
-
-  $scope.removeLayers = function () {
-    if ($scope.hiddenLayers.length) {
-      $scope.hiddenLayers.pop();
+    function HiddenLayer() {
+        this.neurons = [];
+        console.log(defaultNumNeurons);
+        for (var i = 0; i < defaultNumNeurons; i++) { //default of 5 neurons
+            this.neurons.push(new Neuron(i));
+        }
     }
-  };
 
-  $scope.addNeurons = function (index) {
-    $scope.hiddenLayers[index].addToNeurons();
-  };
+    HiddenLayer.prototype.addToNeurons = function() {
+        this.neurons.push(new Neuron(this.neurons.length + 1));
+    };
 
-  $scope.removeNeurons = function (index) {
-    $scope.hiddenLayers[index].removeFromNeurons();
-  };
-
-  function initializeHidden(){
-    $scope.addLayers();
-    console.log($scope.hiddenLayers);
-    var network = d3.select("#network");
-    //input layer
-
-    //hidden layers
-    network
-    .selectAll("div")
-    .data($scope.hiddenLayers[0].neurons)
-    .enter()
-    .append("div")
-    .attr("id", function(d){
-      console.log("d",d);
-      return "canvas-"+d.id;
-    })
-    .attr("class", "canvas")
-    .style("position", "absolute")
-    .style("left", "300px")
-    .style("top", function(d,i){
-      return i * 55 + 3 + "px";
-    })
-    .html('<div style="width: 30px; height: 30px; position: relative; top: 0px; left: 0px;">'
-            + '<canvas width="10" height="10" style="width: 30px; height: 30px; position: absolute; top: 0px; left: 0px;"></canvas>'
-        +'</div>')
+    HiddenLayer.prototype.removeFromNeurons = function() {
+        this.neurons.pop();
+    };
 
 
+    $scope.trainNetwork = function(){
+      console.log("clicked train");
+      TrainerFactory.hiddenLayersArr = [];
+      $scope.hiddenLayers.forEach(layer =>{
+        TrainerFactory.hiddenLayersArr.push(layer.neurons.length);
+      })
+      TrainerFactory.train(TrainerFactory);
+      console.log("TrainerFactory", TrainerFactory);
+    };
 
-    //add neurons plus minus buttons
-    network
-    .data($scope.hiddenLayers)
-    .append("div")
-    .attr("class", "plus-minus-neurons")
-    .style("left", function(d,i){
-      console.log("i here", i);
-      return 285 * (i+1) + "px";
-    })
-    .html('<div class="ui-numNodes1">'
-            +'<button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>'
-            +'<button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>'
-        +'</div>')
-    .append("div")
-    .text(function(d){
-      return d.neurons.length + " neurons";
-    })
-        //+'<div class="numNeuronsLabel">5 neurons</div>')
+    $scope.addLayers = function() {
+      if($scope.hiddenLayers.length > 2) return; //No more than 3 layers
+        $scope.hiddenLayers.push(new HiddenLayer());
+        drawNetwork(false);
+    };
 
-    console.log("network", network);
+    $scope.removeLayers = function() {
+        if ($scope.hiddenLayers.length > 1) { //No less than 1 layer
+            $scope.hiddenLayers.pop();
+        }
+        drawNetwork(false);
+    };
+
+    $scope.addNeurons = function(index) {
+
+        $scope.hiddenLayers[index].addToNeurons();
+        console.log("added neurons", $scope.hiddenLayers[index]);
+        drawNetwork(false);
+    };
+
+    $scope.removeNeurons = function(index) {
+      if($scope.hiddenLayers[index].neurons.length <= 1) return;
+        $scope.hiddenLayers[index].removeFromNeurons();
+        console.log("removed neurons", $scope.hiddenLayers[index]);
+        drawNetwork(false);
+    };
 
 
 
-  }
+    function getAllLayers() {
+        allLayers = [];
+        allLayers.push($scope.inputLayer);
+        $scope.hiddenLayers.forEach(layer => {
+            allLayers.push(layer);
+        })
+        allLayers.push($scope.outputLayer);
+        return allLayers;
+    }
 
-  initializeHidden();
+    function drawNetwork(initial) {
+        if (!initial) d3.select("svg").remove();
+
+        let width = 700,
+            height = 1000,
+            radius = 10,
+            links = [],
+            neuronsArr = [],
+            X;
+
+
+        allLayers = getAllLayers();
+        let domainArr = Array.apply(null, Array(allLayers.length))
+            .map((d, i) => i);
+        X = d3.scalePoint().domain(domainArr).range([0, width]).padding(0.10);
+        allLayers.forEach(function(layer, indexLayer) {
+            layer.neurons.forEach(function(neuron, index) {
+                neuron.x = X(indexLayer);
+                neuron.y = (index * 40) + 10;
+                neuronsArr.push(neuron);
+            });
+        });
+
+        for (let l = 0; l < allLayers.length; l++) {
+            let sourceLayer;
+            let destLayer;
+            console.log("i'm layer ", allLayers[l]);
+            if (l < allLayers.length - 1) {
+                sourceLayer = allLayers[l];
+                destLayer = allLayers[l + 1];
+                sourceLayer.neurons.forEach(sn => {
+                    destLayer.neurons.forEach(dn => {
+                        links.push({ source: sn, target: dn });
+                    })
+                })
+            }
+        }
+
+        let svg = d3.select("#network").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g");
+
+        let circle = svg.selectAll(".circle")
+            .data(neuronsArr)
+            .enter()
+            .append("g")
+            .style("fill", function(d,i){
+              console.log("H",d.layerType);
+              if(d.layerType === 'i') return "43FF00";
+              if(d.layerType === 'h') return "00F1FF";
+              else return "FD1F82";
+            });
+
+        let el = circle.append("circle")
+            .attr("cx", function(d) {
+                return d.x
+            })
+            .attr("cy", function(d) {
+                return d.y
+            })
+            .attr("r", radius)
+
+
+
+        let link = svg.selectAll(".line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("class", "link")
+            .attr("x1", function(d) {
+                return d.source.x + 10
+            })
+            .attr("y1", function(d) {
+                return d.source.y
+            })
+            .attr("x2", function(d) {
+                return d.target.x - 10
+            })
+            .attr("y2", function(d) {
+                return d.target.y
+            });
+
+    }
+
+    //initializing
+    allLayers = getAllLayers();
+    drawNetwork(true);
 
 });
