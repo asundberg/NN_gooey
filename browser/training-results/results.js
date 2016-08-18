@@ -8,28 +8,23 @@ app.config(function ($stateProvider) {
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, $rootScope) {
 
   // example:
-  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
+  $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
-  $scope.accuracyGraph = [];
+  //$scope.accuracyGraph = [];
 
   TrainerFactory.train(TrainerFactory)
   .then(function (resultObj) {
-    $scope.accuracyGraph = [];
+    $scope.showResult = true;
+    console.log("reached here");
+    //set accuaracy graph here
+    //$scope.accuracyGraph;
   });
 
-  $scope.loading = function () {
-    if ($scope.accuracyGraph.length > 0) {
-      console.log("here",$scope.accuracyGraph.length);
-      $scope.showResult = true;
-    } else {
-      $scope.showResult = false;
-    }
-  };
-
-  $scope.loading();
+  $scope.showResult = false;
+  
 
   var margin = {
     top: 30,

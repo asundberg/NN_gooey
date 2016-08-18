@@ -16,7 +16,7 @@ app.config(function($stateProvider) {
 
 app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr, $state) {
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
-    $scope.numInputs = inputArr.length;
+    $scope.numInputs = inputArr[0].length;
     $scope.inputLayer = {};
     $scope.inputLayer.neurons = [];
     for (var i = 0; i < $scope.numInputs; i++) {

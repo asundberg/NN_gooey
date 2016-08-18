@@ -2,6 +2,7 @@ import numpy
 import pandas
 import math
 import json
+import data
 from encoder import Encoder as LabelEncoder
 from encoder import Decoder
 from keras.utils import np_utils
@@ -9,10 +10,9 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.models import model_from_json
 
-def getData():
-	return [1.0,2.0,3.0,4.0,5.1,6.1,7.1,8.1,9.1,10.2,0.94,0.99]
-
-def trainModel():
+def trainModel(lines):
+	X = numpy.array(lines['input']).astype(float)
+	Y = numpy.array(lines['output'])
 	testList = {
 		'binary': {
 			'outputAct':'sigmoid',
@@ -34,27 +34,26 @@ def trainModel():
 	#change filename, testType, and initDelimiter (if not comma)
 
 	#initializations
-	# testType ='multi_class'
-	testType = 'binary'
+	testType = lines['classType']
 	currentTest=testList[testType]; #from param
 	initWgt = 'uniform'
 	initAct = 'relu'
 	initOptimizer='adam'
 	initLoss=''
 	initDelimiter=",";
-	# filename = "/Users/Ddangu/nn_gooey_practice/datasets/soybean-small.data.txt"
-	filename="/Users/Ddangu/nn_gooey_practice/datasets/pima-indians-diabetes.txt"
-	dataframe = pandas.read_csv(filename, sep=initDelimiter, header=None)
-	dataset = dataframe.values
-	shape = dataframe.shape
-	numX = shape[1]
-	numY = shape[0]
-	numInputs = numX-1
-	X = dataset[:,0:numInputs].astype(float)
-	Y = dataset[:,numInputs]
+	
+	Xframe = pandas.DataFrame(X)
+	Yframe = pandas.DataFrame(Y)
+	Xshape = Xframe.shape
+	Yshape = Yframe.shape
+	numX = Xshape[1]
+	numY = Yshape[0]
+	numInputs = numX
 	encoder = LabelEncoder()
 	encoded_Y = encoder.transform(Y)
 	currentTest['outputY'] = encoded_Y
+	# print(numY)
+	# print(numX)
 
 	#need the following line for multi-class
 	if testType=='multi_class':
@@ -74,9 +73,6 @@ def trainModel():
 	model = create_baseline()
 	history = model.fit(X, currentTest['outputY'], batch_size=150, nb_epoch=100, verbose=0)
 	results = model.evaluate(X, currentTest['outputY'], verbose=0)
-	# print('Test score:', results[0])
-	# print('Test accuracy:', results[1])
-	# print(history.history['acc']) #loss and accuracy per epoch
 
 	decoder = Decoder()
 	decoder.setDecoder(encoder.getKeyVal())
@@ -121,5 +117,4 @@ def trainModel():
 		'accuracy': history.history['acc'],
 		'predicted': predictedScore
 	}
-
 	return sendBack

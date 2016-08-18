@@ -21,6 +21,9 @@ app.factory('TrainerFactory', function ($http) {
       console.log('The network is being trained! (Cool graphic is showing...)', TrainerFactory);
       return $http.post('/train', TrainerFactory)
       .then(function (response) {
+        // this.resultObj = response.data;
+        console.log("response",response.data)
+
         var resultObj = response.data;
         return resultObj;
       });
