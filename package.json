@@ -19,6 +19,7 @@
   "homepage": "https://github.com/asundberg/NN_gooey#readme",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-material": "^1.1.0",
     "angular-ui-bootstrap": "^2.0.1",
     "angular-ui-router": "^0.3.1",
     "body-parser": "^1.15.2",
@@ -27,6 +28,7 @@
     "chart.js": "^2.2.1",
     "d3": "^4.2.1",
     "express": "^4.14.0",
+    "node-sass": "^3.8.0",
     "nodemon": "^1.10.0",
     "path": "^0.12.7"
   }
