@@ -12,7 +12,8 @@ def main():
     lines = read_in()
  
     result = Train.trainModel(lines)
-    print result
+
+    print json.dumps(result)
 
 #start process
 if __name__ == '__main__':
