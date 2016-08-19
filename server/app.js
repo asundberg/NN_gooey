@@ -9,12 +9,14 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var indexHtmlPath = path.join(__dirname, '../index.html');
+var indexHtmlPath = path.join(__dirname, '../public/index.html');
 var npmPath = path.join(__dirname, '../node_modules');
 var browserPath = path.join(__dirname, '../browser');
+var publicPath = path.join(__dirname, '../public');
 
 app.use(Express.static(npmPath));
 app.use(Express.static(browserPath));
+app.use(Express.static(publicPath));
 
 app.get('/', function (req, res) {
 	res.sendFile(indexHtmlPath);
@@ -26,7 +28,7 @@ app.post('/train', function (req,res,next) {
 	//put py spawn here
 	var spawn = child_process.spawn;
 	var py = spawn('python', ['server/main.py']);
-	
+
 	var trainingData = req.body;
 	var input = trainingData.inputArr;
 	var output = trainingData.outputArr;
@@ -37,7 +39,7 @@ app.post('/train', function (req,res,next) {
 		input: input,
 		output: output,
 		hiddenLayer: hiddenLayer
-	} 
+	}
 	// var data = [input, output];
 	var finalArr = [];
 
