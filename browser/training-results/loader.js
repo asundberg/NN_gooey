@@ -6,3 +6,5 @@ app.directive('loader', function () {
     templateUrl: '/training-results/loader.html'
   };
 });
+
+
