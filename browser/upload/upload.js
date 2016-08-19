@@ -31,15 +31,17 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
   // FUNCTIONS
   $scope.uploadData = function() {
     var uploaded = $scope.upload;
-    convertToArr(uploaded.file, uploaded.delimiter);
+    console.log("uploading");
+    convertToArr(uploaded.file);
     $scope.showData = true;
   }
 
-  function convertToArr(str, delimiter){
-    if(delimiter == "Space") delimiter = " ";
+  function convertToArr(str){
+    var delimiter = detectDelimiter(str); // Detect delimiter
     var newArr = str.split("\n").map(row=>{
       return row.split(delimiter)
     })
+    // Detect headers/ classType here
     if($scope.upload.headers==='yes') {
       $scope.headers = newArr[0].slice();
       newArr.splice(0, 1);
@@ -54,6 +56,26 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     initColumns();
   }
 
+  function detectDelimiter(str) {
+    var delimiters = [" ",",",";","\t"];
+    var thisDelimiter = null;
+    delimiters.forEach(function(delimiter) {
+      if(str.indexOf(delimiter) > -1) thisDelimiter = delimiter;
+    })
+    if(thisDelimiter) return thisDelimiter;
+    else throw "Data is not properly delimited"
+  }
+
+  function detectHeaders(arr) {
+    if(!arr[0].length || !arr[1].length) throw "Dataset is too small"
+    for(var i = 0; i < arr[0].length; i++) {
+      if(typeof(arr[0][i]) !== typeof(arr[1][i])) {
+        return true
+      }
+    }
+    return false
+  }
+
   function initColumns() {
     var numColumns = $scope.headers.length
     for(var i = 0; i < numColumns; i++) {
@@ -64,7 +86,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
   }
 
   function transpose(array) {
-    if(!array.length) return [];
+    if(!array[0].length) return [];
     var newArr = []
     for(var i = 0; i < array[0].length; i++) {
         newArr.push([]);
@@ -114,7 +136,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     //console.log("inputArrayFInal", outputArr);
 
     //NEED TO FIX THE FORLOOP FOR THIS FILE, CREATING AN EXTRA ARRAY ELEMENT
-    
+
 
     var obj = {
       classType: $scope.upload.problemType,
