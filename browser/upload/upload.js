@@ -31,18 +31,16 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
   // FUNCTIONS
   $scope.uploadData = function() {
     var uploaded = $scope.upload;
-    console.log("uploading");
     convertToArr(uploaded.file);
     $scope.showData = true;
   }
 
   function convertToArr(str){
     var delimiter = detectDelimiter(str); // Detect delimiter
-    var newArr = str.split("\n").map(row=>{
+    var newArr = str.trim().split("\n").map(row=>{
       return row.split(delimiter)
     })
-    // Detect headers/ classType here
-    if($scope.upload.headers==='yes') {
+    if(hasHeaders(newArr)) {
       $scope.headers = newArr[0].slice();
       newArr.splice(0, 1);
     }
@@ -51,6 +49,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
         $scope.headers.push("Column " + i)
       }
     }
+    // console.log(newArr)
     var transposed = transpose(newArr);
     $scope.data = transposed;
     initColumns();
@@ -66,10 +65,10 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     else throw "Data is not properly delimited"
   }
 
-  function detectHeaders(arr) {
+  function hasHeaders(arr) {
     if(!arr[0].length || !arr[1].length) throw "Dataset is too small"
     for(var i = 0; i < arr[0].length; i++) {
-      if(typeof(arr[0][i]) !== typeof(arr[1][i])) {
+      if(isNaN(arr[0][i]) !== isNaN(arr[1][i])) {
         return true
       }
     }
@@ -87,11 +86,14 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
 
   function transpose(array) {
     if(!array[0].length) return [];
-    var newArr = []
+    var newArr = [];
+    var element;
     for(var i = 0; i < array[0].length; i++) {
         newArr.push([]);
         for(var j = 0; j < array.length; j++) {
-            newArr[i].push(Number(array[j][i]));
+            element = array[j][i];
+            if(!isNaN(element)) newArr[i].push(Number(element));
+            else newArr[i].push(element);
         }
     }
     return newArr;
