@@ -4,26 +4,37 @@ app.config(function ($stateProvider) {
   $stateProvider.state('results', {
     url: '/results',
     templateUrl: '/training-results/template.html',
-    controller: 'ResultsCtrl'
+    controller: 'ResultsCtrl',
+    resolve: {
+      accuracy: function(TrainerFactory){
+        console.log("running resolve");
+        return TrainerFactory.train()
+        .then(result=> {
+          console.log(result);
+          return result[0].accuracy;
+        })
+      }
+    }
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, $rootScope) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
 
   // example:
-  $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
+  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
-  //$scope.accuracyGraph = [];
+  $scope.accuracyGraph = accuracy;
+  console.log("acc",  $scope.accuracyGraph);
 
-  TrainerFactory.train(TrainerFactory)
-  .then(function (resultObj) {
-    $scope.showResult = true;
-    console.log("reached here");
-    //set accuaracy graph here
-    //$scope.accuracyGraph;
-  });
+  // TrainerFactory.train()
+  // .then(function (resultObj) {
+  //   $scope.showResult = true;
+  //   //set accuaracy graph here
+  //   $scope.accuracyGraph = resultObj.accuracy;
+  //   console.log($scope.accuracyGraph);
+  // });
 
-  $scope.showResult = false;
+  $scope.showResult = true;
   
 
   var margin = {

@@ -2,8 +2,7 @@ var Express = require('express');
 var child_process = require('child_process');
 var path = require('path');
 var app = Express(); // Create an express app!
-var spawn = child_process.spawn;
-var py = spawn('python', ['server/main.py']);
+
 module.exports = app;
 
 var bodyParser = require('body-parser');
@@ -24,6 +23,10 @@ app.get('/', function (req, res) {
 // app.post('/upload', function(req,res) )
 
 app.post('/train', function (req,res,next) {
+	//put py spawn here
+	var spawn = child_process.spawn;
+	var py = spawn('python', ['server/main.py']);
+	
 	var trainingData = req.body;
 	var input = trainingData.inputArr;
 	var output = trainingData.outputArr;
@@ -39,13 +42,13 @@ app.post('/train', function (req,res,next) {
 	var finalArr = [];
 
 	py.stdout.on('data', function (data) {
-		finalArr.push(data);
+		finalArr.push(JSON.parse(data));
 	});
 
 	py.stdout.on('end', function () {
-		console.log('ended')
-
-		console.log("final ARR", finalArr.toString('utf8'));
+		console.log('ended');
+		console.log(finalArr);
+		// console.log("final ARR", finalArr.toString('utf8'));
 		res.send(finalArr); //sends a buffer of arrays need to do res.data to retrieve
 		next();
 	});
