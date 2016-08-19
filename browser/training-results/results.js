@@ -23,6 +23,7 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
   // example:
   // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
+
   $scope.accuracyGraph = accuracy;
   console.log("acc",  $scope.accuracyGraph);
 
@@ -35,7 +36,6 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
   // });
 
   $scope.showResult = true;
-  
 
   var margin = {
     top: 30,
