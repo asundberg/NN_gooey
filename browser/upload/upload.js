@@ -22,18 +22,21 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      //console.log(textFile);
-      $scope.upload.file = textFile;
+      console.log("text",textFile);
+      var uploaded = textFile;
+      convertToArr(uploaded);
+      $scope.showData = true;
+      $scope.$digest();
     })
     fReader.readAsText(file); //emits loadended event
   })
 
-  // FUNCTIONS
-  $scope.uploadData = function() {
-    var uploaded = $scope.upload;
-    convertToArr(uploaded.file);
-    $scope.showData = true;
-  }
+  // // FUNCTIONS
+  // $scope.uploadData = function() {
+  //   var uploaded = $scope.upload;
+  //   convertToArr(uploaded.file);
+  //   $scope.showData = true;
+  // }
 
   function convertToArr(str){
     var delimiter = detectDelimiter(str); // Detect delimiter
@@ -49,7 +52,6 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
         $scope.headers.push("Column " + i)
       }
     }
-    // console.log(newArr)
     var transposed = transpose(newArr);
     $scope.data = transposed;
     initColumns();
@@ -73,6 +75,16 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
       }
     }
     return false
+  }
+
+  // Checks array (column) for amount of data
+  function getClassType(array) {
+    var unique = [];
+    array.forEach(function(element) {
+      if(unique.indexOf(element) == -1) unique.push(element);
+    })
+    if(unique.length <= 2) return "binary";
+    else return "multi_class";
   }
 
   function initColumns() {
@@ -118,6 +130,9 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var outputArr = [];
     var headerReference = {};
     var header;
+    var classType;
+
+    // Push into input and output arrays
     $scope.columnTracker.forEach(function(ele, index) {
       header = $scope.headers[index];
       if(ele == 1) {
@@ -130,22 +145,24 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
       }
     })
     // console.log("inputArr", inputArr);
-
+    // console.log("output", outputArr);
     inputArr = transpose(inputArr);
     inputArr.splice(inputArr.length-1, 1);
     outputArr = outputArr[0];
     outputArr.splice(outputArr.length-1,1);
+
     //console.log("inputArrayFInal", outputArr);
 
     //NEED TO FIX THE FORLOOP FOR THIS FILE, CREATING AN EXTRA ARRAY ELEMENT
 
 
     var obj = {
-      classType: $scope.upload.problemType,
+      classType: getClassType(outputArr),
       inputArr: inputArr,
       outputArr: outputArr,
       headerReference: headerReference
     }
+    console.log(obj.classType);
     TrainerFactory.setData(obj);
     //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);
