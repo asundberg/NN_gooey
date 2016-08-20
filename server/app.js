@@ -33,12 +33,24 @@ app.post('/train', function (req,res,next) {
 	var output = trainingData.outputArr;
 	var classType = trainingData.classType;
 	var hiddenLayer = trainingData.hiddenLayersArr;
-	var data = {
-		classType: classType,
-		input: input,
-		output: output,
-		hiddenLayer: hiddenLayer
-	};
+	var modelId;
+	var data;
+	//creating new so that we can get the modelId
+	Training.create({})
+	.then(newModel => {
+		//console.log("new model id: " + newModel.id);
+		modelId = newModel.id;
+		data = {
+			classType: classType,
+			input: input,
+			output: output,
+			hiddenLayer: hiddenLayer,
+			modelId: modelId
+		};
+		py.stdin.write(JSON.stringify(data));
+		py.stdin.end();
+	})
+
 	// var data = [input, output];
 	var finalArr = [];
 
@@ -48,27 +60,30 @@ app.post('/train', function (req,res,next) {
 
 	py.stdout.on('end', function () {
 		console.log('ended');
-		console.log(finalArr[0]);
+		console.log('finalArr', finalArr[0]);
 		var trainingObj = finalArr[0];
 		var sendBackObj = [{
 			predictions: trainingObj.predictions,
-			accuracy: trainingObj.accuracy 
-		}]
+			accuracy: trainingObj.accuracy,
+			modelId: trainingObj.modelId //url for testing is localhost:1337/#/test/5
+		}];
 
-		console.log('NEW WEIGHT', JSON.stringify(trainingObj.weights))
-		Training.create({
-			config: trainingObj.config.toString('utf-8'),
-			weights: JSON.stringify(trainingObj.weights),
-			lib: trainingObj.lib.toString('utf-8')
+		//console.log('NEW WEIGHT', JSON.stringify(trainingObj.weights))
+		Training.findById(sendBackObj.modelId)
+		.then(foundModel => {
+			return foundModel.update({
+				config: "modelStuff/config/"+sendBackObj.modelId+"_config.json",
+				weights: "modelStuff/weights/"+sendBackObj.modelId+"_model.h5",
+				lib: "modelStuff/lib/"+sendBackObj.modelId+"_lib.json"
+			})
 		})
-		.then(function (newObj) {
-			console.log("newobj",JSON.parse(newObj.weights));
-			res.send(newObj);
+		.then(function() { //update method does not return anything
+			res.send(sendBackObj);
 		})
 		.catch(next);
 	});
-	py.stdin.write(JSON.stringify(data));
-	py.stdin.end();
+
+
 });
 
 app.post('/test/:id', function(req,res,next){
@@ -78,18 +93,21 @@ app.post('/test/:id', function(req,res,next){
 	var inputs = [6,148,72,35,0,44.6,0.627,50]
 	var tempTraining = {};
 	tempTraining.inputs  = inputs;
-	
+
 	Training.findById(req.params.id)
 	.then(foundTraining => {
-		console.log("WEIGHT NEW", JSON.parse(foundTraining.weights))
-		var convertedWeights = JSON.parse(foundTraining.weights)
+		// console.log("WEIGHT NEW", JSON.parse(foundTraining.weights))
+		// var convertedWeights = JSON.parse(foundTraining.weights)
 		// var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
 
-		tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
-		tempTraining.weights = convertWeights;
-		tempTraining.lib = foundTraining.lib.toString('utf-8')
+		// tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
+		// tempTraining.weights = convertWeights;
+		// tempTraining.lib = foundTraining.lib.toString('utf-8')
+		tempTraining.configPath = foundTraining.config;
+		tempTraining.weightsPath = foundTraining.weights;
+		tempTraining.libPath = foundTraining.lib;
 		py.stdin.write(JSON.stringify(tempTraining));
-		py.stdin.end(); 
+		py.stdin.end();
 	})
 	.catch(next)
 

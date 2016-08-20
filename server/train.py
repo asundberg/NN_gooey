@@ -27,6 +27,7 @@ def trainModel(lines):
 			'outputNum':1
 		}
 	}
+	modelId = lines['modelId']
 
 	seed = 7
 	numpy.random.seed(seed)
@@ -82,8 +83,19 @@ def trainModel(lines):
 		'decoder': decoder.getDecoder()
 	}
 
-	config = model.to_json()
+	#ayako stuff
+	#example path for lib: NN_gooey/modelStuff/lib/5_lib.json
+	with open("/modelStuff/lib/"+ modelId + "_lib.json", "w") as json_data:
+		json.dump(lib, json_data)
 
+	config = model.to_json()
+	with open("/modelStuff/config/" + modelId + "_config.json", "w") as json_file:
+	    json_file.write(config)
+	# serialize weights to HDF5
+	model.save_weights("/modelStuff/weights/" + modelID + "_model.h5")
+	# print("Saved model to disk")
+
+	#iris stuff
 	weights = model.get_weights()
 
 	score = model.predict(X, batch_size=150, verbose=0)
@@ -112,7 +124,8 @@ def trainModel(lines):
 		'predictions': predictedScore,
 		'weights': [w.tolist() for w in weights],
 		'config': config,
-		'lib': lib
+		'lib': lib,
+		'modelId': modelId
 	}
 	return sendBack
 
