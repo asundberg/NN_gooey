@@ -55,14 +55,15 @@ app.post('/train', function (req,res,next) {
 			accuracy: trainingObj.accuracy 
 		}]
 
+		console.log('NEW WEIGHT', trainingObj.weights)
 		Training.create({
-			config: trainingObj.config,
+			config: trainingObj.config.toString('utf-8'),
 			weights: trainingObj.weights,
-			lib: trainingObj.lib
+			lib: trainingObj.lib.toString('utf-8')
 		})
 		.then(function (newObj) {
 			console.log(newObj);
-			res.send(sendBackObj);
+			res.send(newObj.weights);
 		})
 		.catch(next);
 	});
@@ -80,12 +81,13 @@ app.post('/test/:id', function(req,res,next){
 	
 	Training.findById(req.params.id)
 	.then(foundTraining => {
-		tempTraining.config = foundTraining.config;
-		tempTraining.weights = foundTraining.weights;
-		tempTraining.lib = foundTraining.lib
+		console.log("WEIGHT NEW", foundTraining.weights)
+		var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
+		tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
+		tempTraining.weights = convertWeights;
+		tempTraining.lib = foundTraining.lib.toString('utf-8')
 		py.stdin.write(JSON.stringify(tempTraining));
 		py.stdin.end(); 
-		console.log("FOUND IT", foundTraining)
 	})
 	.catch(next)
 
@@ -97,6 +99,7 @@ app.post('/test/:id', function(req,res,next){
 	py.stdout.on('end', function () {
 		console.log("ended")
 		console.log(predictedOutputs)
+		res.send(predictedOutputs)
 	});
 
 
