@@ -1,4 +1,5 @@
 #getstarted {
-  width: 100%;
   display: flex;
-  justify-content: center; }
+  width: 100%;
+  justify-content: center;
+  align-items: center; }
