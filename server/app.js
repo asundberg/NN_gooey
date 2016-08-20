@@ -55,15 +55,15 @@ app.post('/train', function (req,res,next) {
 			accuracy: trainingObj.accuracy 
 		}]
 
-		console.log('NEW WEIGHT', trainingObj.weights)
+		console.log('NEW WEIGHT', JSON.stringify(trainingObj.weights))
 		Training.create({
 			config: trainingObj.config.toString('utf-8'),
-			weights: trainingObj.weights,
+			weights: JSON.stringify(trainingObj.weights),
 			lib: trainingObj.lib.toString('utf-8')
 		})
 		.then(function (newObj) {
-			console.log(newObj);
-			res.send(newObj.weights);
+			console.log("newobj",JSON.parse(newObj.weights));
+			res.send(newObj);
 		})
 		.catch(next);
 	});
@@ -81,7 +81,7 @@ app.post('/test/:id', function(req,res,next){
 	
 	Training.findById(req.params.id)
 	.then(foundTraining => {
-		console.log("WEIGHT NEW", foundTraining.weights)
+		console.log("WEIGHT NEW", JSON.parse(foundTraining.weights))
 		var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
 		tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
 		tempTraining.weights = convertWeights;
