@@ -13,6 +13,7 @@ var indexHtmlPath = path.join(__dirname, '../index.html');
 var npmPath = path.join(__dirname, '../node_modules');
 var browserPath = path.join(__dirname, '../browser');
 
+
 app.use(Express.static(npmPath));
 app.use(Express.static(browserPath));
 
@@ -26,7 +27,9 @@ app.post('/train', function (req,res,next) {
 	//put py spawn here
 	var spawn = child_process.spawn;
 	var py = spawn('python', ['server/main.py']);
-	
+	var modelStuffPath = path.join(__dirname, '../modelStuff');
+	console.log("modelStuffPath", modelStuffPath);
+
 	var trainingData = req.body;
 	var input = trainingData.inputArr;
 	var output = trainingData.outputArr;
@@ -36,8 +39,9 @@ app.post('/train', function (req,res,next) {
 		classType: classType,
 		input: input,
 		output: output,
-		hiddenLayer: hiddenLayer
-	} 
+		hiddenLayer: hiddenLayer,
+		modelStuffPath: modelStuffPath
+	}
 	// var data = [input, output];
 	var finalArr = [];
 
