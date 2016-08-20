@@ -22,25 +22,27 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
       var textFile = event.target.result;
-      //console.log(textFile);
-      $scope.upload.file = textFile;
+      var uploaded = textFile;
+      convertToArr(uploaded);
+      $scope.showData = true;
+      $scope.$digest();
     })
     fReader.readAsText(file); //emits loadended event
   })
 
-  // FUNCTIONS
-  $scope.uploadData = function() {
-    var uploaded = $scope.upload;
-    convertToArr(uploaded.file, uploaded.delimiter);
-    $scope.showData = true;
-  }
+  // // FUNCTIONS
+  // $scope.uploadData = function() {
+  //   var uploaded = $scope.upload;
+  //   convertToArr(uploaded.file);
+  //   $scope.showData = true;
+  // }
 
-  function convertToArr(str, delimiter){
-    if(delimiter == "Space") delimiter = " ";
-    var newArr = str.split("\n").map(row=>{
+  function convertToArr(str){
+    var delimiter = detectDelimiter(str); // Detect delimiter
+    var newArr = str.trim().split("\n").map(row=>{
       return row.split(delimiter)
     })
-    if($scope.upload.headers==='yes') {
+    if(hasHeaders(newArr)) {
       $scope.headers = newArr[0].slice();
       newArr.splice(0, 1);
     }
@@ -54,6 +56,36 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     initColumns();
   }
 
+  function detectDelimiter(str) {
+    var delimiters = [" ",",",";","\t"];
+    var thisDelimiter = null;
+    delimiters.forEach(function(delimiter) {
+      if(str.indexOf(delimiter) > -1) thisDelimiter = delimiter;
+    })
+    if(thisDelimiter) return thisDelimiter;
+    else throw "Data is not properly delimited"
+  }
+
+  function hasHeaders(arr) {
+    if(!arr[0].length || !arr[1].length) throw "Dataset is too small"
+    for(var i = 0; i < arr[0].length; i++) {
+      if(isNaN(arr[0][i]) !== isNaN(arr[1][i])) {
+        return true
+      }
+    }
+    return false
+  }
+
+  // Checks array (column) for amount of data
+  function getClassType(array) {
+    var unique = [];
+    array.forEach(function(element) {
+      if(unique.indexOf(element) == -1) unique.push(element);
+    })
+    if(unique.length <= 2) return "binary";
+    else return "multi_class";
+  }
+
   function initColumns() {
     var numColumns = $scope.headers.length
     for(var i = 0; i < numColumns; i++) {
@@ -64,12 +96,15 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
   }
 
   function transpose(array) {
-    if(!array.length) return [];
-    var newArr = []
+    if(!array[0].length) return [];
+    var newArr = [];
+    var element;
     for(var i = 0; i < array[0].length; i++) {
         newArr.push([]);
         for(var j = 0; j < array.length; j++) {
-            newArr[i].push(Number(array[j][i]));
+            element = array[j][i];
+            if(!isNaN(element)) newArr[i].push(Number(element));
+            else newArr[i].push(element);
         }
     }
     return newArr;
@@ -94,6 +129,9 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     var outputArr = [];
     var headerReference = {};
     var header;
+    var classType;
+
+    // Push into input and output arrays
     $scope.columnTracker.forEach(function(ele, index) {
       header = $scope.headers[index];
       if(ele == 1) {
@@ -105,23 +143,19 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
         headerReference.output = header;
       }
     })
-    // console.log("inputArr", inputArr);
-
     inputArr = transpose(inputArr);
-    inputArr.splice(inputArr.length-1, 1);
     outputArr = outputArr[0];
-    outputArr.splice(outputArr.length-1,1);
     //console.log("inputArrayFInal", outputArr);
 
-    //NEED TO FIX THE FORLOOP FOR THIS FILE, CREATING AN EXTRA ARRAY ELEMENT
-    
-
     var obj = {
-      classType: $scope.upload.problemType,
+      classType: getClassType(outputArr),
       inputArr: inputArr,
       outputArr: outputArr,
       headerReference: headerReference
     }
+    console.log(obj.classType);
+    console.log("input", inputArr);
+    console.log("output", outputArr);
     TrainerFactory.setData(obj);
     //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);
