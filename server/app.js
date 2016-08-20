@@ -65,18 +65,42 @@ app.post('/train', function (req,res,next) {
 			res.send(sendBackObj);
 		})
 		.catch(next);
-		// console.log("final ARR", finalArr.toString('utf8'));
-		// res.send(finalArr); //sends a buffer of arrays need to do res.data to retrieve
-		// next();
 	});
 	py.stdin.write(JSON.stringify(data));
-	// py.stdin.write(JSON.stringify({'data':[1,2,3,4]}));
 	py.stdin.end();
 });
 
-app.post('/test', function(req,res,next){
+app.post('/test/:id', function(req,res,next){
 	var spawn = child_process.spawn;
 	var py = spawn('python', ['server/predict.py']);
+	// var inputs = req.body.inputArr;
+	var inputs = [6,148,72,35,0,44.6,0.627,50]
+	var tempTraining = {};
+	tempTraining.inputs  = inputs;
+	
+	Training.findById(req.params.id)
+	.then(foundTraining => {
+		tempTraining.config = foundTraining.config;
+		tempTraining.weights = foundTraining.weights;
+		tempTraining.lib = foundTraining.lib
+		py.stdin.write(JSON.stringify(tempTraining));
+		py.stdin.end(); 
+		console.log("FOUND IT", foundTraining)
+	})
+	.catch(next)
+
+	var predictedOutputs;
+	py.stdout.on('data', function (data) {
+		predictedOutputs = JSON.parse(data);
+	});
+
+	py.stdout.on('end', function () {
+		console.log("ended")
+		console.log(predictedOutputs)
+	});
+
+
+
 })
 
 
