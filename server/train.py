@@ -109,7 +109,7 @@ def trainModel(lines):
 
 	sendBack = {
 		'accuracy': history.history['acc'],
-		'predicted': predictedScore,
+		'predictions': predictedScore,
 		'weights': [w.tolist() for w in weights],
 		'config': config,
 		'lib': lib

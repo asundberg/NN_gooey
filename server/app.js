@@ -50,6 +50,11 @@ app.post('/train', function (req,res,next) {
 		console.log('ended');
 		console.log(finalArr[0]);
 		var trainingObj = finalArr[0];
+		var sendBackObj = [{
+			predictions: trainingObj.predictions,
+			accuracy: trainingObj.accuracy 
+		}]
+
 		Training.create({
 			config: trainingObj.config,
 			weights: trainingObj.weights,
@@ -57,7 +62,7 @@ app.post('/train', function (req,res,next) {
 		})
 		.then(function (newObj) {
 			console.log(newObj);
-			res.send(newObj);
+			res.send(sendBackObj);
 		})
 		.catch(next);
 		// console.log("final ARR", finalArr.toString('utf8'));
@@ -69,6 +74,11 @@ app.post('/train', function (req,res,next) {
 	// py.stdin.write(JSON.stringify({'data':[1,2,3,4]}));
 	py.stdin.end();
 });
+
+app.post('/test', function(req,res,next){
+	var spawn = child_process.spawn;
+	var py = spawn('python', ['server/predict.py']);
+})
 
 
 //{"input":"[[1,2],[3,4]]", "output":"[[5,6],[7,8]]"}
