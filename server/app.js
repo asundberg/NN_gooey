@@ -48,7 +48,7 @@ app.post('/train', function (req,res,next) {
 
 	py.stdout.on('end', function () {
 		console.log('ended');
-		console.log(finalArr[0]);
+		console.log('FINAL ARR', finalArr[0]);
 		var trainingObj = finalArr[0];
 		Training.create({
 			config: trainingObj.config,
@@ -56,8 +56,7 @@ app.post('/train', function (req,res,next) {
 			lib: trainingObj.lib
 		})
 		.then(function (newObj) {
-			console.log(newObj);
-			res.send(newObj);
+			res.send(finalArr[0].accuracy);
 		})
 		.catch(next);
 		// console.log("final ARR", finalArr.toString('utf8'));
