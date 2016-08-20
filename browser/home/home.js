@@ -5,7 +5,12 @@ app.config(function($stateProvider) {
     controller: 'HomeCtrl'
   })
 })
-app.controller('HomeCtrl', function($scope, TrainerFactory, $state) {
-
+app.controller('HomeCtrl', function($scope, TrainerFactory, $state, $mdSidenav) {
+  $scope.openRightMenu = function() {
+    $mdSidenav('right').toggle();
+  };
+  $scope.letsGo = function() {
+    $state.go('upload');
+  }
 
 })

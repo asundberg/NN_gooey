@@ -5,7 +5,7 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
+app.controller('UploadCtrl', function($scope, TrainerFactory, $state, $timeout) {
 
   // VARIABLES
   $scope.headers = [];
@@ -30,12 +30,14 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     fReader.readAsText(file); //emits loadended event
   })
 
-  // // FUNCTIONS
-  // $scope.uploadData = function() {
-  //   var uploaded = $scope.upload;
-  //   convertToArr(uploaded.file);
-  //   $scope.showData = true;
-  // }
+  $scope.upload = function () {
+    $timeout(function() {
+      console.log("triggering");
+      console.log(angular.element(document.querySelector('#files')));
+      console.log(document.getElementById('files'));
+    fileInput.click();
+    });
+  }
 
   function convertToArr(str){
     var delimiter = detectDelimiter(str); // Detect delimiter
