@@ -27,6 +27,7 @@ app.post('/train', function (req,res,next) {
 	//put py spawn here
 	var spawn = child_process.spawn;
 	var py = spawn('python', ['server/main.py']);
+
 	var trainingData = req.body;
 	var input = trainingData.inputArr;
 	var output = trainingData.outputArr;
@@ -69,6 +70,7 @@ app.post('/train', function (req,res,next) {
 		// next();
 	});
 	py.stdin.write(JSON.stringify(data));
+	// py.stdin.write(JSON.stringify({'data':[1,2,3,4]}));
 	py.stdin.end();
 });
 
