@@ -82,7 +82,9 @@ app.post('/test/:id', function(req,res,next){
 	Training.findById(req.params.id)
 	.then(foundTraining => {
 		console.log("WEIGHT NEW", JSON.parse(foundTraining.weights))
-		var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
+		var convertedWeights = JSON.parse(foundTraining.weights)
+		// var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
+
 		tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
 		tempTraining.weights = convertWeights;
 		tempTraining.lib = foundTraining.lib.toString('utf-8')
