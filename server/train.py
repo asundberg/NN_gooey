@@ -41,7 +41,7 @@ def trainModel(lines):
 	initOptimizer='adam'
 	initLoss=''
 	initDelimiter=",";
-	
+
 	Xframe = pandas.DataFrame(X)
 	Yframe = pandas.DataFrame(Y)
 	Xshape = Xframe.shape
@@ -82,15 +82,9 @@ def trainModel(lines):
 		'decoder': decoder.getDecoder()
 	}
 
-	with open("lib.json", 'w') as json_data:
-	    json.dump(lib, json_data)
+	config = model.to_json()
 
-	model_json = model.to_json()
-	with open("model.json", "w") as json_file:
-	    json_file.write(model_json)
-	# serialize weights to HDF5
-	model.save_weights("model.h5")
-	# print("Saved model to disk")
+	weights = model.get_weights()
 
 	score = model.predict(X, batch_size=150, verbose=0)
 
@@ -107,7 +101,7 @@ def trainModel(lines):
 	def decodePredictedOutput(arr):
 		if(testType == 'multi_class'):
 			arr = map(find_max, arr)
-		else: 
+		else:
 			arr = map(find_binary, arr)
 		return map(decoder.decode, arr)
 
@@ -115,6 +109,11 @@ def trainModel(lines):
 
 	sendBack = {
 		'accuracy': history.history['acc'],
-		'predicted': predictedScore
+		'predicted': predictedScore,
+		'weights': [w.tolist() for w in weights],
+		'config': config,
+		'lib': lib
 	}
 	return sendBack
+
+
