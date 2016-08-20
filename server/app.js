@@ -86,7 +86,7 @@ app.post('/test/:id', function(req,res,next){
 		// var convertWeights = foundTraining.weights.toString('utf-8').split(',').map(str=>Number(str))
 
 		tempTraining.config = JSON.stringify(JSON.parse(foundTraining.config.toString('utf-8')));
-		tempTraining.weights = convertWeights;
+		tempTraining.weights = convertedWeights;
 		tempTraining.lib = foundTraining.lib.toString('utf-8')
 		py.stdin.write(JSON.stringify(tempTraining));
 		py.stdin.end(); 

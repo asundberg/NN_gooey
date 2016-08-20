@@ -9,10 +9,11 @@ from keras.models import model_from_json
 #setUp Decoder as well
 
 def test(lines):
-    json_file = open('model.json', 'r')
+	json_file 
+    # json_file = open('model.json', 'r')
 
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    weights = loaded_model.get_weights
-    return [w.tolist() for w in weights]
+    # loaded_model_json = json_file.read()
+    # json_file.close()
+    # loaded_model = model_from_json(loaded_model_json)
+    # weights = loaded_model.get_weights
+    return len(lines['weights'])
