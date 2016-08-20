@@ -69,7 +69,7 @@ app.post('/train', function (req,res,next) {
 		// res.send(finalArr); //sends a buffer of arrays need to do res.data to retrieve
 		// next();
 	});
-
+	py.stdin.write('train');
 	py.stdin.write(JSON.stringify(data));
 	// py.stdin.write(JSON.stringify({'data':[1,2,3,4]}));
 	py.stdin.end();
