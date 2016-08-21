@@ -34,6 +34,7 @@ app.post('/train', function (req,res,next) {
 	var classType = trainingData.classType;
 	var hiddenLayer = trainingData.hiddenLayersArr;
 	var modelId;
+	var modelStuffPath = path.join(__dirname, '../modelStuff');
 	var data;
 	//creating new so that we can get the modelId
 	Training.create({})
@@ -45,8 +46,10 @@ app.post('/train', function (req,res,next) {
 			input: input,
 			output: output,
 			hiddenLayer: hiddenLayer,
-			modelId: modelId
+			modelId: modelId,
+			modelStuffPath: modelStuffPath
 		};
+		//console.log("data", data);
 		py.stdin.write(JSON.stringify(data));
 		py.stdin.end();
 	})
@@ -65,7 +68,7 @@ app.post('/train', function (req,res,next) {
 		var sendBackObj = [{
 			predictions: trainingObj.predictions,
 			accuracy: trainingObj.accuracy,
-			modelId: trainingObj.modelId //url for testing is localhost:1337/#/test/5
+			//modelId: trainingObj.modelId //url for testing is localhost:1337/#/test/5
 		}];
 
 		//console.log('NEW WEIGHT', JSON.stringify(trainingObj.weights))
