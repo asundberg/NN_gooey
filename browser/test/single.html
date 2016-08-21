@@ -1,1 +1,12 @@
-<h1> Hi</h1>
+<h2>Display Inputs: {{test.testInputs}}</h2>
+<form name='predictInput' ng-submit='submit()'>
+	<div layout='column'>
+		<div ng-repeat='h in sampleHeaders track by $index' layout-xs='row'>
+			<label>{{h}}</label>
+			<input required type='number' ng-model='test.testInputs[$index]'/>
+		</div>
+	</div>
+	<div>
+		<input type='submit' class="md-primary md-raised" value="Submit" />
+	</div>
+</form>

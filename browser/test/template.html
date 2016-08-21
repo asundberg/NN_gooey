@@ -12,10 +12,9 @@
 		  </tr>
 	</table>
 	</div>
-	<div layout="column" ng-cloak="">
-
+	<div layout="column" ng-cloak>
 	  <md-content class="md-padding">
-	    <md-tabs md-border-bottom="" md-autoselect="">
+	    <md-tabs md-dynamic-height md-border-bottom>
 	      <md-tab ng-repeat="tab in tabs" label="{{tab.name}}"'>
 	        <md-content class="md-padding">
 	        	<div ng-include=tab.url></div>
@@ -23,13 +22,5 @@
 	      </md-tab>
 	    </md-tabs>
 	  </md-content>
-	</div>
-
-	<div class="row">
-		<button class="btn btn-info btn-sm" id="test-inputs-button" ng-click="testInputs()">TEST SINGLE SAMPLE</button>
-		<button class="btn btn-info btn-sm" id="test-data-button" ng-click="testData()">TEST WITH DATA FILE</button>
-	</div>
-	<div>
-		<button ng-click="test()">TEST TRAINING</button>
 	</div>
 </div>
