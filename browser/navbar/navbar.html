@@ -1,6 +1,12 @@
 <nav>
-  <button ng-click="toggleStatus()">{{loginButtonText}}</button>
-  <button ng-if="!loggedIn" ng-hide="signupState" ng-click="signup()">{{signupButtonText}}</button>
+  <span ng-if="!loggedIn()">
+    <a ui-sref="login"><button>Log in</button></a>
+    <a ui-sref="signup"><button>Sign up</button></a>
+  </span>
+  <span ng-if="loggedIn()">
+    <a ui-sref="home"><button>Log out</button></a>
+    <a ui-sref="user({id: user.id})"><button>My Account</button></a>
+  </span>
 </nav>
 <!-- <nav class="navbar navbar-default">
   <div class="container">

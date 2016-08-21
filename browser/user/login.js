@@ -14,17 +14,6 @@ app.controller('LoginCtrl', function ($scope, UserFactory) { // $scope, Auth, $s
 
   $scope.loginUser = function (userInfo) {
     UserFactory.fetchUser(userInfo);
-    // .then(function (response) {
-    //   if (response.email === userInfo.email) {
-
-    //   }
-    // })
-    // $state.go('user', {id: userInfo.})
   };
-  // $scope.signupUser = function (credentials) {
-  //   Auth.signup(credentials)
-  //   .then(function (loggedinUser) {
-  //     $state.go('user', {id: loggedinUser.id});
-  //   });
-  // };
+
 });

@@ -18,5 +18,12 @@ app.factory('UserFactory', function ($http) {
       });
     };
 
+    UserFactory.showNewUser = function (id) {
+      return $http.get('/user/' + id)
+      .then(function (response) {
+        return response.data;
+      });
+    };
+
     return UserFactory;
 });

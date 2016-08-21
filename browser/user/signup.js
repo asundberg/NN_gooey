@@ -18,8 +18,8 @@ app.controller('SignupCtrl', function ($scope, UserFactory, $state) { // $scope,
       if (user.id) {
         $state.go('user', {id: user.id});
       } else {
-        // This is not currently functional, should be fixed at some point...
-        $scope.errorMessage = 'Please make sure all fields are completed and valid.'
+        // This is not currently functional because a 500 error in Sequelize will happen, should be fixed at some point...
+        $scope.errorMessage = 'Please make sure all fields are completed and valid.';
       }
     });
   };
