@@ -10,8 +10,8 @@ def read_in():
 def main():
     #get our data as an array from read_in()
     lines = read_in()
-    print json.dumps(lines)
-    #result = Train.trainModel(lines)
+    #print json.dumps(lines)
+    result = Train.trainModel(lines)
 
     #print json.dumps(result)
 
