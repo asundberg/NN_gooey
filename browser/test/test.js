@@ -34,6 +34,7 @@ app.controller('TestCtrl', function ($scope, $http, $stateParams) {
 		// .then(res =>{
 		// 	var response = res.data;
 		// 	console.log(response);
+    //  $scope.outputs = response
 		// })
 	}
 
