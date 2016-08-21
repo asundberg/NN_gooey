@@ -118,6 +118,7 @@ def trainModel(lines):
 
 	sendBack = {
 		'accuracy': history.history['acc'],
-		'predicted': predictedScore
+		'predicted': predictedScore,
+		'modelId': modelId
 	}
 	return sendBack
