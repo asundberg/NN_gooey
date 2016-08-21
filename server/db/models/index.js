@@ -18,4 +18,5 @@ module.exports = {
   Training: Training,
   Selections: Selections,
   User: User
+
 };

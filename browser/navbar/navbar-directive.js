@@ -30,11 +30,8 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
         } else {
           scope.loginButtonText = 'Log in';
           scope.logout();
-          console.log('clicked logout');
-        }
-      };
-      scope.signup = function () {
-        console.log('clicked signup');
+          scope.loggedIn = false;
+          // $state.go('home'); ??
         $state.go('signup');
       };
 

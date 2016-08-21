@@ -6,21 +6,28 @@ app.config(function ($stateProvider) {
     templateUrl: '/training-results/template.html',
     controller: 'ResultsCtrl',
     resolve: {
-      accuracy: function (TrainerFactory){
+      trainResult: function(TrainerFactory){
+        console.log("running resolve");
         return TrainerFactory.train()
         .then(result=> {
-          console.log('in resolve', result);
+          console.log(result);
           return result;
-        });
+        })
       }
     }
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
 
-  $scope.accuracyGraph = accuracy;
-  console.log('acc',  $scope.accuracyGraph);
+  // example:
+  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
+  // TrainerFactory.resultObj...
+
+  $scope.accuracyGraph = trainResult[0].accuracy;
+  $scope.maxAcc = Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100);
+  $scope.linkToTest = "http://localhost:1337/#/test/"+trainResult[0].modelId;
+  console.log("acc",  $scope.accuracyGraph);
 
   $scope.showResult = false;
 
