@@ -83,15 +83,16 @@ def trainModel(lines):
 	}
 
 	modelStuffPath = lines['modelStuffPath']
+	modelId = lines['modelId']
 
-	with open(modelStuffPath +"/lib/lib.json", 'w') as json_data:
+	with open(modelStuffPath +"/lib/" + str(modelId) + "_lib.json", 'w') as json_data:
 	    json.dump(lib, json_data)
 
 	config = model.to_json()
-	with open(modelStuffPath+ "/config/config.json", "w") as json_file:
+	with open(modelStuffPath+ "/config/" + str(modelId) + "_config.json", "w") as json_file:
 	    json_file.write(config)
 	# serialize weights to HDF5
-	model.save_weights(modelStuffPath+"/weights/model.h5")
+	model.save_weights(modelStuffPath+"/weights/" + str(modelId) + "_model.h5")
 	# print("Saved model to disk")
 
 	score = model.predict(X, batch_size=150, verbose=0)

@@ -40,7 +40,8 @@ app.post('/train', function (req,res,next) {
 		input: input,
 		output: output,
 		hiddenLayer: hiddenLayer,
-		modelStuffPath: modelStuffPath
+		modelStuffPath: modelStuffPath,
+		modelId: 1
 	}
 	// var data = [input, output];
 	var finalArr = [];
