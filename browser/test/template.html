@@ -1,10 +1,35 @@
 <div>
   <h1>Now you can test data with your network!</h1>
   <p>Choose if you want to test a single sample of inputs or an entire set of input samples:</p>
-  <div class="row">
-    <button class="btn btn-info btn-sm" id="test-inputs-button" ng-click="testInputs()">TEST SINGLE SAMPLE</button>
-    <button class="btn btn-info btn-sm" id="test-data-button" ng-click="testData()">TEST WITH DATA FILE</button>
-  </div>
+  <h3>Example Rows</h3>
+  <div>
+	  <table>
+		  <tr>
+		    <th ng-repeat='h in sampleHeaders'>{{h}}</th>
+		  </tr>
+		  <tr ng-repeat='row in sampleRows'>
+		    <td ng-repeat='data in row'>{{data}}</td>
+		  </tr>
+	</table>
+	</div>
+	<div layout="column" ng-cloak="">
+
+	  <md-content class="md-padding">
+	    <md-tabs md-border-bottom="" md-autoselect="">
+	      <md-tab ng-repeat="tab in tabs" label="{{tab.name}}"'>
+	        <md-content class="md-padding">
+	          <h1 class="md-display-2">{{tab.name}}</h1>
+	        	<div ng-include=tab.url></div>
+	        </md-content>
+	      </md-tab>
+	    </md-tabs>
+	  </md-content>
+	</div>
+
+	<div class="row">
+		<button class="btn btn-info btn-sm" id="test-inputs-button" ng-click="testInputs()">TEST SINGLE SAMPLE</button>
+		<button class="btn btn-info btn-sm" id="test-data-button" ng-click="testData()">TEST WITH DATA FILE</button>
+	</div>
 	<div>
 		<button ng-click="test()">TEST TRAINING</button>
 	</div>
