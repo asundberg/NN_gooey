@@ -68,7 +68,7 @@ app.post('/train', function (req,res,next) {
 		var sendBackObj = [{
 			predictions: trainingObj.predictions,
 			accuracy: trainingObj.accuracy,
-			//modelId: trainingObj.modelId //url for testing is localhost:1337/#/test/5
+			modelId: trainingObj.modelId //url for testing is localhost:1337/#/test/5
 		}];
 
 		//console.log('NEW WEIGHT', JSON.stringify(trainingObj.weights))
