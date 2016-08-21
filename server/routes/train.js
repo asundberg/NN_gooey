@@ -2,12 +2,16 @@
 
 const express = require('express');
 const router = new express.Router();
-const Training = require('./db/models').Training;
+var child_process = require('child_process');
+var path = require('path');
+const Training = require('../db/models').Training;
+module.exports = router;
 
-router.post('/train', function (req,res,next) {
+router.post('/', function (req,res,next) {
   //put py spawn here
+  console.log("reached here");
   var spawn = child_process.spawn;
-  var py = spawn('python', ['server/main.py']);
+  var py = spawn('python', ['../server/main.py']);
   var modelStuffPath = path.join(__dirname, '../modelStuff');
   var trainingData = req.body;
   var input = trainingData.inputArr;
@@ -33,6 +37,7 @@ router.post('/train', function (req,res,next) {
 
   })
   .catch(next);
+
   // var data = [input, output];
   var finalArr = [];
 
@@ -59,12 +64,10 @@ router.post('/train', function (req,res,next) {
     })
     .then(() => {
       res.send(finalArr);
-      //res.send(finalArr[0].accuracy);
     })
-    .catch(next);
+    // console.log("final ARR", finalArr.toString('utf8'));
+     //sends a buffer of arrays need to do res.data to retrieve
   });
 
 
 });
-
-module.exports = router;

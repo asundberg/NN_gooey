@@ -9,11 +9,12 @@ def read_in():
 
 def main():
     #get our data as an array from read_in()
-    lines = read_in()
+    #lines = read_in()
+    #print lines
+    print 'hello'
+    # result = Train.trainModel(lines)
 
-    result = Train.trainModel(lines)
-
-    print json.dumps(result)
+    # print json.dumps(result)
 
 #start process
 if __name__ == '__main__':
