@@ -155,9 +155,6 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state, $timeout) 
       outputArr: outputArr,
       headerReference: headerReference
     }
-    console.log(obj.classType);
-    console.log("input", inputArr);
-    console.log("output", outputArr);
     TrainerFactory.setData(obj);
     //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);

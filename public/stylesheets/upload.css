@@ -31,11 +31,23 @@
   height: fit-content;
   justify-content: flex-start; }
 
-.column-data {
-  margin: 5px; }
+.column-content {
+  margin: 15px 5px 15px 15px; }
+
+.header {
+  margin-bottom: 16px; }
 
 .input {
   background-color: #556270; }
 
 .output {
   background-color: #FF6B6B; }
+
+ul {
+  -webkit-padding-start: 20px; }
+
+md-checkbox:last-of-type {
+  margin-left: 20px; }
+
+.grey-out {
+  opacity: 0.5; }

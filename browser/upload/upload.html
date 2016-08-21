@@ -11,55 +11,35 @@
   <div class="main-container" layout="row">
     <div class="input-container" flex="70">
        <md-whiteframe class="input column-card md-whiteframe-1dp" layout="column" ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
-        <h3 class="column-data">{{headers[$index]}}</h3>
-        <div class="column-data" ng-repeat="data in column.slice(0, 5) track by $index">{{data}}</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
+       <div class="column-content">
+       <div class="header">
+        <h3>{{headers[$index]}}</h3>
+        </div>
+        <ul>
+        <li ng-repeat="data in column.slice(0, 3) track by $index">{{data}}</li>
+        <li>.</li>
+        <li>.</li>
+        <li>.</li>
+        </ul>
+        </div>
       </md-whiteframe>
     </div>
     <div class="output-container" flex="30">
       <md-whiteframe class="output column-card md-whiteframe-1dp" layout="column" ng-show="outputIndex">
-      <h3 class="column-data">{{headers[outputIndex]}}</h3>
-        <div class="column-data" ng-repeat="data in data[outputIndex].slice(0, 5) track by $index">{{data}}</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-        </md-whiteframe>
-    </div>
-  </div>
-
-</div>
-
- <!--  <div ng-show="showData" layout="row" layout-padding layout-wrap layout-fill>
-    <md-content class="content" layout-padding>
-    <h3>Input</h3>
-    <div class="input-section">
-      <md-whiteframe ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
-        <h5 class="column-data">{{headers[$index]}}</h5>
-        <div class="column-data" ng-repeat="data in column.slice(0, 5) track by $index">{{data}}</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
+      <div class="column-content">
+      <div class="output-header">
+      <h3>{{headers[outputIndex]}}</h3>
+      </div>
+      <ul>
+        <li ng-repeat="data in data[outputIndex].slice(0, 3) track by $index">{{data}}</li>
+        <li>.</li>
+        <li>.</li>
+        <li>.</li>
+        </ul>
+      </div>
       </md-whiteframe>
-    </div>
-    <div>
-    <h4>Output</h4>
-    <div class="output-section" ng-click="toggleOutputCol()">
-    <div class="container" ng-show="outputIndex">
-        <h5 class="column-data">{{headers[outputIndex]}}</h5>
-        <div class="column-data" ng-repeat="data in data[outputIndex].slice(0, 5) track by $index">{{data}}</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-        <div class="column-data elipses">.</div>
-    </div>
-    <div class="container" ng-show="!outputIndex">
-      <h5>Please choose a column to be the output column</h5>
-    </div>
-    </div>
+
     </div>
   </div>
-  </md-content>
-  </div>
+
 </div>
- -->
