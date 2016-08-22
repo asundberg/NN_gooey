@@ -1,30 +1,12 @@
 
-<div class="main-container">
-<progress-bar></progress-bar>
+<loader ng-show="showLoader"></loader>
+<div class="main-container" layout="column">
+<div>
 <md-button ng-click="trainNetwork()">
 TRAIN
 </md-button>
-<div>Hello</div>
 </div>
-
-<div class="state-2">
-
-<loader ng-show="showLoader"></loader>
-<div ng-show="!showLoader" class="state-2">
-
-    <!-- Header -->
-    <header>
-        <h1 class="l--page">Train a neural network with <b>Brain Lab</b> and test your own data against it.</h1>
-    </header>
-    <!-- Top Controls -->
-    <div id="top-controls">
-        <div class="container l--page">
-            <div class="timeline-controls">
-                <button class="btn btn-info btn-sm" id="train-button" title="Train" ng-click="trainNetwork()">TRAIN!</button>
-            </div>
-            <br> Now let's decide on how many hidden layers you would like, and how many neurons in each layer. What is the purpose of a hidden layer? We pass in a weighted input through the hidden neurons. Each neuron will take the sum of the inputs and perform an activation/nonlinear function. For large dimensional datasets, increasing number of hidden layer may increase performance, but only up to a certain point.
-        </div>
-    </div>
+<div class="train-content">
     <!-- Main Part -->
     <div id="main-part" class="l--page">
         <!--  Data Column-->
@@ -76,3 +58,14 @@ TRAIN
         </div>
     </div>
 </div>
+</div>
+
+<!-- <div class="state-2">
+
+<div ng-show="!showLoader">
+ -->
+    <!-- Header -->
+<!--     <header>
+        <h1 class="l--page">Train a neural network with <b>Brain Lab</b> and test your own data against it.</h1>
+    </header> -->
+    <!-- Top Controls -->
