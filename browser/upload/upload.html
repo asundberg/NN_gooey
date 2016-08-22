@@ -1,18 +1,21 @@
 <div class="main-container" layout="column">
   <progress-bar></progress-bar>
-  <div class="main-container" id="upload-start">
+  <div class="main-container" id="upload-start" layout="column" ng-show="!showData">
   <div>
     <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
     <md-button ng-click="upload()">Upload
     </md-button>
   </div>
-  </div>
-  <div id="next-button" ng-show="showData">
-    <md-button ng-click="sendToBuilder()" type="submit">Next
-    </md-button>
+  <div id="upload-prompt">
+    Upload a .csv or .txt file here to train your model.
+    The last column of your data should be the output data to predict.
+    </div>
   </div>
   <div class="main-container" ng-show="showData" layout="row">
     <div class="input-container" flex="70">
+      <div class="upload-header">
+        Input... *Click to add/remove columns*
+      </div>
        <md-whiteframe class="input column-card md-whiteframe-1dp" layout="column" ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
        <div class="column-content">
        <div class="header">
@@ -27,7 +30,10 @@
         </div>
       </md-whiteframe>
     </div>
-    <div class="output-container" flex="30">
+    <div class="output-container" layout="column" flex="30">
+    <div class="upload-header">
+      Output
+    </div>
       <md-whiteframe class="output column-card md-whiteframe-1dp" layout="column" ng-show="outputIndex">
       <div class="column-content">
       <div class="output-header">
@@ -41,7 +47,15 @@
         </ul>
       </div>
       </md-whiteframe>
-
+        <div>
+    <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
+    <md-button ng-click="upload()">Upload
+    </md-button>
+  </div>
+      <div id="next-button" ng-show="showData">
+      <md-button ng-click="sendToBuilder()" type="submit">next
+      </md-button>
+      </div>
     </div>
   </div>
 
