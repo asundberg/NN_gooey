@@ -26,7 +26,7 @@ def trainModel(lines):
       'outputNum':1
     }
   }
-
+  hiddenLayer = lines['hiddenLayer']
   seed = 7
   numpy.random.seed(seed)
 
@@ -63,7 +63,10 @@ def trainModel(lines):
   def create_baseline():
     # create model
     model = Sequential()
-    model.add(Dense(numInputs, input_dim=numInputs, init=initWgt, activation=initAct))
+    model.add(Dense(hiddenLayer[0], input_dim=numInputs, init=initWgt, activation=initAct))
+    hiddenLayer.pop(0)
+    for num in hiddenLayer:
+      model.add(Dense(num, init=initWgt, activation=initAct))
     model.add(Dense(currentTest['outputNum'], init=initWgt, activation=currentTest['outputAct']))
     # Compile model
     model.compile(loss=currentTest['loss'], optimizer=initOptimizer, metrics=['accuracy'])
