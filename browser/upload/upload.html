@@ -11,11 +11,17 @@
     The last column of your data should be the output data to predict.
     </div>
   </div>
-  <div class="main-container" ng-show="showData" layout="row">
-    <div class="input-container" flex="70">
-      <div class="upload-header">
+  <div class="data-grid" ng-show="showData" layout="row">
+  <div class="upload-header" flex="70">
         Input... *Click to add/remove columns*
-      </div>
+    </div>
+  <div class="upload-header" flex="30">
+      Output
+    </div>
+    </div>
+      <div class="main-container data-grid" ng-show="showData" layout="row">
+    <div class="input-container" flex="70">
+
        <md-whiteframe class="input column-card md-whiteframe-1dp" layout="column" ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
        <div class="column-content">
        <div class="header">
@@ -31,9 +37,6 @@
       </md-whiteframe>
     </div>
     <div class="output-container" layout="column" flex="30">
-    <div class="upload-header">
-      Output
-    </div>
       <md-whiteframe class="output column-card md-whiteframe-1dp" layout="column" ng-show="outputIndex">
       <div class="column-content">
       <div class="output-header">

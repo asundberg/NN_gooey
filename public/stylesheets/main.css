@@ -106,7 +106,12 @@ md-backdrop.md-opaque {
 #next-button {
   align-self: center; }
 
+.data-grid {
+  display: flex;
+  margin: 10px 40px 10px 40px; }
+
 .upload-header {
+  align-self: center;
   width: 100%;
   text-align: center;
   font-size: 20px;
@@ -116,11 +121,13 @@ md-backdrop.md-opaque {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  overflow: auto; }
+  overflow: auto;
+  border-style: single; }
 
 .output-container {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  border-style: single; }
 
 .column-card {
   display: flex;
