@@ -29,15 +29,11 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
   $scope.linkToTest = "http://localhost:1337/#/test/"+trainResult[0].modelId;
   console.log("acc",  $scope.accuracyGraph);
 
-  // TrainerFactory.train()
-  // .then(function (resultObj) {
-  //   $scope.showResult = true;
-  //   //set accuaracy graph here
-  //   $scope.accuracyGraph = resultObj.accuracy;
-  //   console.log($scope.accuracyGraph);
-  // });
+  $scope.showResult = false;
 
-  $scope.showResult = true;
+  if ($scope.accuracyGraph && $scope.accuracyGraph.length) {
+    $scope.showResult = true;
+  }
 
   var margin = {
     top: 30,
@@ -46,10 +42,8 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
     left: 50
   };
 
-  var width = 600 - margin.left - margin.right; // 530
-  var height = 350 - margin.top - margin.bottom; // 290
-
-  // var parseDate = d3.time.format("%d-%b-%y").parse;
+  var width = 600 - margin.left - margin.right;
+  var height = 350 - margin.top - margin.bottom;
 
   var x = d3.scaleLinear().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);

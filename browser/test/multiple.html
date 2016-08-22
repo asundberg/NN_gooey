@@ -3,16 +3,6 @@
 	<md-button ng-click="upload()">Upload
 	</md-button>
 </div>
-<div>
-	<table>
-		  <tr>
-		  		<th ng-repeat='h in sampleHeaders'>{{h}}</th>
-		  </tr>
-		  <tr ng-repeat='row in sampleRows track by $index'>
-		  		<td ng-repeat='data in row track by $index'>{{data}}</td>
-		  </tr>
-	</table>
-</div>
 <div ng-if='uploaded'>
 	<h3> Inputs </h3>
 	<table>
