@@ -10,22 +10,6 @@ router.post('/signup', function (req, res, next) {
   .catch(next);
 });
 
-router.post('/auth', function (req, res, next) {
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-  .then(function (response) {
-    if (response && response.password === req.body.password) {
-      res.send(response);
-    } else {
-      res.status(402).send('User not found');
-    }
-  })
-  .catch(next);
-});
-
 router.get('/:id', function (req, res, next) {
   User.findOne({
     where: {

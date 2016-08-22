@@ -12,34 +12,24 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
       //     { label: 'About', state: 'about' },
       //     { label: 'Products', state: 'products' },
       //     { label: 'My Account', state: 'account', auth: true }
-
       // ];
 
       scope.user = null;
-      scope.loginButtonText = 'Log in';
-      scope.signupButtonText = 'Sign up!';
-      scope.loggedIn = function () {
-        return AuthService.isAuthenticated();
-      };
-      // scope.signupState = false;
-      scope.toggleStatus = function () {
-        if (scope.loggedIn()) {
-          scope.loginButtonText = 'Log out';
-          $state.go('login');
-          console.log('clicked login');
-        } else {
-          scope.loginButtonText = 'Log in';
-          scope.logout();
-          scope.loggedIn = false;
-          // $state.go('home'); ??
-        $state.go('signup');
-      };
 
       scope.logout = function () {
         AuthService.logout().then(function () {
-          console.log('should move to home page');
-          // $state.go('home');
+          scope.user = null;
+          console.log('should eventually direct to landing page');
+          $state.go('upload');
         });
+      };
+
+      scope.onUserPage = function () {
+        if ($state.current.name === 'user') {
+          return true;
+        } else {
+          return false;
+        }
       };
 
       var setUser = function () {

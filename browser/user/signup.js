@@ -8,18 +8,29 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SignupCtrl', function ($scope, UserFactory, $state) { // $scope, Auth, $state ?
+app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state) {
 
   $scope.userInfo = {};
+  $scope.error = null;
 
   $scope.signupUser = function (userInfo) {
+    $scope.error = null;
     UserFactory.createUser(userInfo)
     .then(function (user) {
-      if (user.id) {
+      console.log('in signup! user: ', user);
+      if (user) {
+        AuthService.login(userInfo);
         $state.go('user', {id: user.id});
       } else {
-        // This is not currently functional because a 500 error in Sequelize will happen, should be fixed at some point...
-        $scope.errorMessage = 'Please make sure all fields are completed and valid.';
+        throw new Error('Please make sure all fields are completed and valid.');
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+      if (err.status === 409) {
+        $scope.error = 'Unable to create account. There is already an account with this email.';
+      } else {
+        $scope.error = 'Unable to complete login.';
       }
     });
   };
