@@ -11,7 +11,59 @@
     The last column of your data should be the output data to predict.
     </div>
   </div>
-  <div class="data-grid" ng-show="showData" layout="row">
+  <div class="main-container main-content" ng-show="showData" layout="row">
+    <div layout="column" flex="60">
+      <div class="upload-header">
+        Input *Click to add/remove columns*
+      </div>
+      <div class="input-container">
+        <md-whiteframe class="input column-card md-whiteframe-1dp" layout="column" ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
+         <div class="column-content">
+         <div class="header">
+          <h3>{{headers[$index]}}</h3>
+          </div>
+          <ul>
+          <li ng-repeat="data in column.slice(0, 3) track by $index">{{data}}</li>
+          <li>.</li>
+          <li>.</li>
+          <li>.</li>
+          </ul>
+          </div>
+        </md-whiteframe>
+      </div>
+    </div>
+    <div layout="column" flex="30">
+      <div class="upload-header">
+        Output
+      </div>
+      <div class="output-container" layout="column">
+        <md-whiteframe class="output column-card md-whiteframe-1dp" layout="column" ng-show="outputIndex">
+        <div class="column-content">
+        <div class="output-header">
+        <h3>{{headers[outputIndex]}}</h3>
+        </div>
+        <ul>
+          <li ng-repeat="data in data[outputIndex].slice(0, 3) track by $index">{{data}}</li>
+          <li>.</li>
+          <li>.</li>
+          <li>.</li>
+          </ul>
+        </div>
+        </md-whiteframe>
+        <div>
+          <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
+          <md-button ng-click="upload()">Upload
+          </md-button>
+        </div>
+        <div id="next-button" ng-show="showData">
+          <md-button ng-click="sendToBuilder()" type="submit">next
+          </md-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--   <div class="data-grid" ng-show="showData" layout="row">
   <div class="upload-header" flex="70">
         Input... *Click to add/remove columns*
     </div>
@@ -63,3 +115,4 @@
   </div>
 
 </div>
+ -->
