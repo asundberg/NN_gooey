@@ -9,12 +9,31 @@
   height: 100%;
   justify-content: center;
   align-items: center;
+  position: absolute;
+}
+
+#go-btn {
+  display: flex;
+  justify-content: center;
 }
 
 #info-panel {
   display: flex;
-  background-color: #556270;
-  color: #F4F8FC;
+  background-color: $dark-color;
+  color: $main-font-color;
+}
+
+#main-img {
+  align-self: flex-start;
+  position: absolute;
+  height: 100%;
+}
+
+#bl-title {
+  align-self: center;
+  font-size: 150px;
+  font-family: "Courier New", Courier, monospace;
+  position: relative;
 }
 
 md-backdrop {

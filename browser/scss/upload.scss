@@ -46,11 +46,14 @@
 }
 
 .input {
-  background-color: #556270;
+  background-color: $right-color;
+  // div, ul, li, h3 {
+  //   color: $dark-color;
+  // }
 }
 
 .output {
-  background-color: #FF6B6B;
+  background-color: $accent-color;
 }
 
 ul {
