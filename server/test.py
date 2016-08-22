@@ -36,3 +36,15 @@ def testModel(lines):
   with open(libPath) as json_data:
       lib_data = json.load(json_data)
   # evaluate loaded model on test data
+
+
+  loaded_model.compile(loss=lib_data['lossType'], optimizer='adam', metrics=['accuracy'])
+
+  score = loaded_model.predict(inputs, batch_size=150, verbose=0)
+
+  maxIndex = numpy.argmax(score[0])
+  result = lib_data['decoder'][maxIndex.astype('str')]
+
+  return result
+
+  # print "%s: %.2f%%" % (loaded_model.metrics_names[1], score[0]*100)

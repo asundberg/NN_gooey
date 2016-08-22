@@ -1,5 +1,4 @@
 import sys, json, numpy as np
-import data
 import test as Test
 
 #Read data from stdin

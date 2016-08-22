@@ -1,6 +1,5 @@
 import sys, json, numpy as np
 import train as Train
-import data
 #Read data from stdin
 def read_in():
     lines = sys.stdin.readlines()

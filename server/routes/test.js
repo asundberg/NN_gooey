@@ -31,6 +31,7 @@ router.post('/:id', function(req,res,next){
     tempTraining.config = foundTraining.config;
     tempTraining.weights = foundTraining.weights;
     tempTraining.lib = foundTraining.lib;
+    console.log("temptraining: ", tempTraining);
     py.stdin.write(JSON.stringify(tempTraining));
     py.stdin.end();
   })

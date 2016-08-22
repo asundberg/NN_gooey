@@ -3,6 +3,7 @@ var Express = require('express');
 var path = require('path');
 var app = Express(); // Create an express app!
 //var Training = require('./db/models').Training;
+const db = require('./db');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 

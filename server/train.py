@@ -2,7 +2,6 @@ import numpy
 import pandas
 import math
 import json
-import data
 from encoder import Encoder as LabelEncoder
 from encoder import Decoder
 from keras.utils import np_utils
