@@ -1,13 +1,24 @@
 var http = require('http');
+var startDb = require('./db');
 var server = http.createServer();
 
-// Require our express app from the app.js file.
-var app = require('./app');
+var createApplication = function () {
+    var app = require('./app');
+    server.on('request', app); // Attach the Express application.
+};
 
-// Every server request runs through our express app!
-server.on('request', app);
+var startServer = function () {
+  var PORT = process.env.PORT || 1337;
 
-// Export our server for this file to be require('')d
-server.listen(1337,function(){
-	console.log("listening to port 1337");
-})
+  server.listen(PORT, function () {
+      console.log('Server started on port', PORT);
+  });
+};
+
+startDb
+.then(createApplication)
+.then(startServer)
+.catch(function (err) {
+  console.error(err.stack);
+  process.kill(1);
+});

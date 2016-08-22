@@ -98,18 +98,18 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state, $timeout) 
   }
 
   function transpose(array) {
-    if(!array[0].length) return [];
-    var newArr = [];
+    if(!array[0].length) return [];
+    var newArr = [];
     var element;
-    for(var i = 0; i < array[0].length; i++) {
-        newArr.push([]);
-        for(var j = 0; j < array.length; j++) {
+    for(var i = 0; i < array[0].length; i++) {
+        newArr.push([]);
+        for(var j = 0; j < array.length; j++) {
             element = array[j][i];
             if(!isNaN(element)) newArr[i].push(Number(element));
             else newArr[i].push(element);
-        }
-    }
-    return newArr;
+        }
+    }
+    return newArr;
   }
 
   $scope.toggleInputCol = function(index) {

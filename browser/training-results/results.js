@@ -6,36 +6,34 @@ app.config(function ($stateProvider) {
     templateUrl: '/training-results/template.html',
     controller: 'ResultsCtrl',
     resolve: {
-      accuracy: function(TrainerFactory){
+      trainResult: function(TrainerFactory){
         console.log("running resolve");
         return TrainerFactory.train()
         .then(result=> {
           console.log(result);
-          return result[0].accuracy;
+          return result;
         })
       }
     }
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
 
   // example:
   // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
 
-  $scope.accuracyGraph = accuracy;
+  $scope.accuracyGraph = trainResult[0].accuracy;
+  $scope.maxAcc = Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100);
+  $scope.linkToTest = "http://localhost:1337/#/test/"+trainResult[0].modelId;
   console.log("acc",  $scope.accuracyGraph);
 
-  // TrainerFactory.train()
-  // .then(function (resultObj) {
-  //   $scope.showResult = true;
-  //   //set accuaracy graph here
-  //   $scope.accuracyGraph = resultObj.accuracy;
-  //   console.log($scope.accuracyGraph);
-  // });
+  $scope.showResult = false;
 
-  $scope.showResult = true;
+  if ($scope.accuracyGraph && $scope.accuracyGraph.length) {
+    $scope.showResult = true;
+  }
 
   var margin = {
     top: 30,
@@ -44,10 +42,8 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, accuracy) {
     left: 50
   };
 
-  var width = 600 - margin.left - margin.right; // 530
-  var height = 350 - margin.top - margin.bottom; // 290
-
-  // var parseDate = d3.time.format("%d-%b-%y").parse;
+  var width = 600 - margin.left - margin.right;
+  var height = 350 - margin.top - margin.bottom;
 
   var x = d3.scaleLinear().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);

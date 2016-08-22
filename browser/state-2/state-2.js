@@ -16,6 +16,7 @@ app.config(function($stateProvider) {
 
 app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr, $state) {
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
+    $scope.showLoader = false;
     $scope.numInputs = inputArr[0].length;
     $scope.inputLayer = {};
     $scope.inputLayer.neurons = [];
@@ -61,6 +62,7 @@ app.controller('State2Ctrl', function($scope, TrainerFactory, inputArr, $state) 
 
     $scope.trainNetwork = function(){
       console.log("clicked train");
+      $scope.showLoader = true;
       TrainerFactory.hiddenLayersArr = [];
       $scope.hiddenLayers.forEach(layer =>{
         TrainerFactory.hiddenLayersArr.push(layer.neurons.length);

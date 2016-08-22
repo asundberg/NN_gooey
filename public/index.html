@@ -5,44 +5,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Brain Lab</title>
-    <!-- <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" /> -->
-    <!-- <link rel="stylesheet" type="text/css" href="/angular-material/angular-material.min.css"> -->
+
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-<!--     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 
- -->
-    <!-- <script src="/angular/angular.js"></script> -->
-     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-    <!-- <script src="/angular-material/angular-material.min.js"></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <!-- <script src="/angular/angular.js" defer></script> -->
     <script src="/angular-ui-router/release/angular-ui-router.js" defer></script>
-    <!-- <script src="/angular-ui-bootstrap/dist/ui-bootstrap.js" defer></script> -->
+    <script src="/angular-cookies/angular-cookies.js" defer></script>
+    <script src="/fsa.pre-built.js" defer></script>
     <script src="/main.js" defer></script>
     <script src="/progress-bar/progress-bar.js" defer></script>
     <script src="/state-2/state-2.js" defer></script>
     <script src="/upload/upload.js" defer></script>
     <script src="/training-results/results.js" defer></script>
-<!--     <script src="/bootstrap/dist/js/bootstrap.min.js" defer></script> -->
     <script src="/d3/build/d3.js" defer></script>
-    <script src="trainer-factory.js" defer></script>
+    <script src="/trainer-factory.js" defer></script>
     <script src="/training-results/loader.js" defer></script>
     <script src="/test/test.js" defer></script>
+    <script src="/navbar/navbar-directive.js" defer></script>
+    <script src="/user/signup.js" defer></script>
+    <script src="/user/login.js" defer></script>
+    <script src="/user/user.js" defer></script>
+    <script src="/user-factory.js" defer></script>
     <script src="/home/home.js" defer></script>
-<!--     <link rel="stylesheet" href="/state-2/style.css" type="text/css">
-    <link rel="stylesheet" href="/state-2/bundle.css" type="text/css"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
-<!--     <link rel="stylesheet" href="/upload/upload.css" type="text/css">
-    <link rel="stylesheet" href="/training-results/style.css" type="text/css"> -->
+
+    <link rel="stylesheet" href="/state-2/style.css" type="text/css">
+    <link rel="stylesheet" href="/state-2/bundle.css" type="text/css">
+    <link rel="stylesheet" href="/upload/upload.css" type="text/css">
+    <link rel="stylesheet" href="/training-results/style.css" type="text/css">
+
     <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
+
 
   </head>
   <body ng-app='nn_gooey' layout="row">
+    <navbar></navbar>
     <ui-view></ui-view>
 </body>
 

@@ -1,0 +1,14 @@
+<div>
+  <h1 style="color: white">Log in</h1>
+  <form ng-submit="loginUser(userInfo)">
+    <div class="form-group">
+      <label style="color: white">Email</label>
+      <input type="text" class="form-control" ng-model="userInfo.email" required />
+    </div>
+    <div class="form-group">
+      <label style="color: white">Password</label>
+      <input type="password" class="form-control" ng-model="userInfo.password" required />
+    </div>
+    <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
+  </form>
+</div>
