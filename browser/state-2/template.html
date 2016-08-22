@@ -1,71 +1,61 @@
 
 <loader ng-show="showLoader"></loader>
 <div class="main-container" layout="column">
-<div>
+<div class="train-header" layout="row">
+<div class="column data">
+    <h4>
+    <span>Specs</span><br>
+    </h4>
+    <p>Input columns: {{numInputs}}</p>
+    <p>Classes: 4</p>
+</div>
 <md-button ng-click="trainNetwork()">
 TRAIN
 </md-button>
 </div>
-<div class="train-content">
-    <!-- Main Part -->
-    <div id="main-part" class="l--page">
-        <!--  Data Column-->
-        <div class="column data">
-            <h4>
-        <span>Specs</span><br>
-      </h4>
-            <p>Input columns: {{numInputs}}</p>
-            <p>Classes: 4</p>
-        </div>
-        <!-- Features Column -->
-        <div class="column features">
-            <h4>Input Layer</h4>
-            <p>Number of attributes equals number of nodes</p>
-            <div id="network">
-                <div ng-repeat="layer in hiddenLayers" class="plus-minus-neurons" style="left: {{layer.neurons[0].x - 30}}px;">
-                    <div class="ui-numNodes1">
-                        <button ng-click="addNeurons($index)" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
-                        <button ng-click="removeNeurons($index)" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
-                    </div>
-                    <div class="numNeurons">{{layer.neurons.length}} neurons</div>
-                </div>
-            </div>
-        </div>
-        <!-- Hidden Layers Column -->
-        <div class="column hidden-layers">
-            <h4>
-                  <div class="ui-numHiddenLayers">
-                    <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="addLayers()">
-                      <i class="material-icons">add</i>
-                    </button>
-                    <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeLayers()">
-                      <i class="material-icons">remove</i>
-                    </button>
-                  </div>
-                  <span id="num-layers">{{hiddenLayers.length}}</span>
-                  <span id="layers-label">Hidden Layers</span>
-                </h4>
-            <div class="bracket"></div>
-        </div>
-        <!-- Output Column -->
-        <div class="column output">
-            <h4>Output</h4>
-            <div class="metrics">
-                <div class="output-stats train">
-                    <span>One output column, hence one neuron</span>
-                </div>
-            </div>
-        </div>
+<div layout="row">
+    <div flex="25">
+        <h4>Input Layer</h4>
+        <p>Number of attributes equals number of nodes</p>
+    </div>
+    <div flex="50">
+    <h4>
+    <div class="ui-numHiddenLayers">
+    <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="addLayers()">
+    <i class="material-icons">add</i>
+    </button>
+    <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon" ng-click="removeLayers()">
+    <i class="material-icons">remove</i>
+    </button>
+    </div>
+    <span id="num-layers">{{hiddenLayers.length}}</span>
+    <span id="layers-label">Hidden Layers</span>
+    </h4>
+    <div class="bracket"></div>
+    </div>
+    <div flex="25">
+        <h4>Output</h4>
     </div>
 </div>
+<div class="train-content" layout="column">
+<!-- Features Column -->
+    <div class="column features">
+
+    <div id="network">
+    <div ng-repeat="layer in hiddenLayers" class="plus-minus-neurons" style="left: {{layer.neurons[0].x - 30}}px;">
+    <div class="ui-numNodes1">
+    <button ng-click="addNeurons($index)" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">add</i></button>
+    <button ng-click="removeNeurons($index)" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">remove</i></button>
+    </div>
+    <div class="numNeurons">{{layer.neurons.length}} neurons</div>
+    </div>
+    </div>
+    </div>
+<!-- Hidden Layers Column -->
+<div class="column hidden-layers">
+<!-- Output Column -->
+<div class="column output">
+</div>
+</div>
 </div>
 
-<!-- <div class="state-2">
-
-<div ng-show="!showLoader">
- -->
-    <!-- Header -->
-<!--     <header>
-        <h1 class="l--page">Train a neural network with <b>Brain Lab</b> and test your own data against it.</h1>
-    </header> -->
-    <!-- Top Controls -->

@@ -1,4 +1,13 @@
 .train-content {
   overflow: auto;
   display: flex;
-  height: 100%; }
+  height: 100%;
+  justify-content: center; }
+
+.train-header {
+  display: flex;
+  justify-content: center; }
+
+#network {
+  display: flex;
+  justify-content: center; }
