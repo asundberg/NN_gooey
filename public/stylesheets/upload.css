@@ -1,0 +1,41 @@
+#files {
+  display: none; }
+
+#upload-button {
+  align-self: center; }
+
+#next-button {
+  align-self: center; }
+
+.input-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  overflow: auto; }
+
+.output-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; }
+
+.column-card {
+  display: flex;
+  margin: 10px;
+  min-width: 150px;
+  min-height: 200px;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  justify-content: flex-start; }
+
+.column-data {
+  margin: 5px; }
+
+.input {
+  background-color: #556270; }
+
+.output {
+  background-color: #FF6B6B; }

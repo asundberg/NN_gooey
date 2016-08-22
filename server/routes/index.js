@@ -5,7 +5,7 @@ const path = require('path');
 
 const indexHtmlPath = path.join(__dirname, '../../public/index.html');
 
-// router.use('/train', require('./train'));
+router.use('/train', require('./train'));
 // router.use('/upload', require('./upload'));
 // router.use('/results', require('./results'));
 router.use('/user', require('./user'));

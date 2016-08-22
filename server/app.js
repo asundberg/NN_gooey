@@ -18,7 +18,7 @@ var publicPath = path.join(__dirname, '../public');
 app.use(Express.static(npmPath));
 app.use(Express.static(browserPath));
 app.use(Express.static(publicPath));
-//require('./config')(app, db);
+require('./config')(app, db);
 
 // app.get('/', function (req, res) {
 // 	res.sendFile(indexHtmlPath);
