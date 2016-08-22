@@ -10,12 +10,13 @@ class Encoder:
     counter = 0;
     #Make Dictionary of Key Values
     for x in uniqueVal:
-        self.keyVal[x] = counter
+        self.keyVal[str(x)] = counter
         counter+=1
     #transform Y
+    newarr=[]
     for index in range(0,len(Y)):
-      Y[index] = self.keyVal[Y[index]]
-    return Y
+      newarr.append(self.keyVal[str(Y[index])])
+    return newarr
 
   def getKeyVal(self):
     return self.keyVal
