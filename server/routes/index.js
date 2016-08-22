@@ -9,6 +9,7 @@ router.use('/train', require('./train'));
 // router.use('/upload', require('./upload'));
 // router.use('/results', require('./results'));
 router.use('/user', require('./user'));
+router.use('/test', require('./test'));
 
 router.get('/*', function (req, res) {
   res.sendFile(indexHtmlPath);
