@@ -1,13 +1,16 @@
 <div id="results">
-
-
-  <loader></loader>
+  <!-- <loader></loader> -->
    <!-- ng-if="!showResult" -->
     <!-- ng-if="showResult" -->
   <div>
     <h3>Accuracy rate per epoch</h3>
     <div id="graph">
       <graph></graph>
+    </div>
+    <h2>Max accuracy: {{maxAcc}} %</h2>
+    <div id="linkToTest">
+    <h3>Your link to test the model</h3>
+    <p><a href="{{linkToTest}}">{{linkToTest}}</a></p>
     </div>
   </div>
   <p></p>

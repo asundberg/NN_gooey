@@ -1,0 +1,10 @@
+<nav>
+  <span ng-if="!user">
+    <a ui-sref="login"><button style="color: black">Log in</button></a>
+    <a ui-sref="signup"><button style="color: black">Sign up</button></a>
+  </span>
+  <span ng-if="user">
+    <button style="color: black" ng-click="logout()">Log out</button>
+    <a ui-sref="user({id: user.id})"><button style="color: black" ng-hide="onUserPage()">My Account</button></a>
+  </span>
+</nav>

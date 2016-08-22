@@ -10,15 +10,22 @@
     <script src="/angular/angular.js" defer></script>
     <script src="/angular-ui-router/release/angular-ui-router.js" defer></script>
     <script src="/angular-ui-bootstrap/dist/ui-bootstrap.js" defer></script>
+    <script src="/angular-cookies/angular-cookies.js" defer></script>
+    <script src="/fsa.pre-built.js" defer></script>
     <script src="/main.js" defer></script>
     <script src="/state-2/state-2.js" defer></script>
     <script src="/upload/upload.js" defer></script>
     <script src="/training-results/results.js" defer></script>
 <!--     <script src="/bootstrap/dist/js/bootstrap.min.js" defer></script> -->
     <script src="/d3/build/d3.js" defer></script>
-    <script src="trainer-factory.js" defer></script>
+    <script src="/trainer-factory.js" defer></script>
     <script src="/training-results/loader.js" defer></script>
     <script src="/test/test.js" defer></script>
+    <script src="/navbar/navbar-directive.js" defer></script>
+    <script src="/user/signup.js" defer></script>
+    <script src="/user/login.js" defer></script>
+    <script src="/user/user.js" defer></script>
+    <script src="/user-factory.js" defer></script>
     <link rel="stylesheet" href="/state-2/style.css" type="text/css">
     <link rel="stylesheet" href="/state-2/bundle.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
@@ -28,6 +35,7 @@
 
   </head>
   <body ng-app='nn_gooey'>
+    <navbar></navbar>
     <ui-view></ui-view>
 </body>
 
