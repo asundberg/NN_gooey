@@ -16,13 +16,14 @@ router.post('/:id', function(req,res,next){
   // for pima
   //var inputs = [6,148,72,35,0,44.6,0.627,50]
   // for soybean
-  // var inputs = [4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0];
+  var inputs = [4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0];
 
   var tempTraining = {};
   tempTraining.testType = (Array.isArray(inputTest[0])) ? 'multiple' : 'single';
 
   console.log("testtype", tempTraining.testType);
-  tempTraining.inputs  = inputTest;
+  //tempTraining.inputs  = inputTest; //once front end is fixed to have nec amount of columns
+  tempTraining.inputs = inputs;
   var modelId = req.params.id;
 
   Training.findById(modelId)

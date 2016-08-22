@@ -21,7 +21,7 @@ def testModel(lines):
   else:
     inputs = numpy.asarray(userInputs).reshape(len(userInputs), len(userInputs[0]))
 
-
+  #inputs = numpy.array([4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0]).reshape(1,35)
   json_file = open(configPath, 'r')
   loaded_model_json = json_file.read()
   json_file.close()
@@ -36,11 +36,11 @@ def testModel(lines):
   with open(libPath) as json_data:
       lib_data = json.load(json_data)
   # evaluate loaded model on test data
-  input= numpy.array([4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0]).reshape(1,35)
+
 
   loaded_model.compile(loss=lib_data['lossType'], optimizer='adam', metrics=['accuracy'])
 
-  score = loaded_model.predict(input, batch_size=150, verbose=0)
+  score = loaded_model.predict(inputs, batch_size=150, verbose=0)
 
   maxIndex = numpy.argmax(score[0])
   result = lib_data['decoder'][maxIndex.astype('str')]
