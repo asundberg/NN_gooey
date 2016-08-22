@@ -195,11 +195,32 @@ a {
   overflow: auto;
   display: flex;
   height: 100%;
+  padding: 0px 40px 0px 40px;
   justify-content: center; }
 
 .train-header {
+  height: 100px;
+  margin: 20px 0px 20px 0px;
   display: flex;
   justify-content: center; }
+
+.layer-names {
+  height: 150px; }
+
+.train-blurb {
+  margin-left: 40px; }
+
+.train-hidden {
+  display: flex;
+  justify-content: center; }
+
+.train-input {
+  display: flex;
+  justify-content: flex-end; }
+
+.train-output {
+  display: flex;
+  justify-content: flex-start; }
 
 #network {
   display: flex;
