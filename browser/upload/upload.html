@@ -1,14 +1,17 @@
 <div class="main-container" layout="column">
-  <div id="upload-button">
+  <progress-bar></progress-bar>
+  <div class="main-container" id="upload-start">
+  <div>
     <input id='files' type="file" ng-model="upload.dataFile" accept=".csv,.txt" required >
     <md-button ng-click="upload()">Upload
     </md-button>
+  </div>
   </div>
   <div id="next-button" ng-show="showData">
     <md-button ng-click="sendToBuilder()" type="submit">Next
     </md-button>
   </div>
-  <div class="main-container" layout="row">
+  <div class="main-container" ng-show="showData" layout="row">
     <div class="input-container" flex="70">
        <md-whiteframe class="input column-card md-whiteframe-1dp" layout="column" ng-repeat="column in data track by $index" class="input-columns col-lg-3" ng-click="toggleInputCol($index)" ng-class="{'grey-out':columnTracker[$index] == -1}" ng-hide="columnTracker[$index] == 0">
        <div class="column-content">

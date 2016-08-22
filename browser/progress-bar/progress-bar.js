@@ -3,7 +3,6 @@ app.directive('progressBar', function () {
         restrict: 'E',
         templateUrl: '/progress-bar/progress-bar.html',
         link: function (scope, element, attrs) {
-            console.log("progressbar");
         }
     };
 });

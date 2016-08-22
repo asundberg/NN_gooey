@@ -46,15 +46,18 @@ ui-view {
   border: 2px solid $main-font-color;
 }
 
-.circle-btn {
+.little-btn {
   margin: 6px;
   min-width: 40px;
   min-height: 40px;
+}
+
+.dotted {
   border-radius: 20px;
   border: dotted;
 }
 
-.current-btn {
+.current {
   border-radius: 20px 0px 20px 20px;
   background-color: $main-font-color;
   color: $right-color;
@@ -68,3 +71,4 @@ input:focus {
 
 @import "home";
 @import "upload";
+@import "progress-bar";
