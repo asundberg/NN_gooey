@@ -3,7 +3,7 @@
 const router = require('express').Router();
 const path = require('path');
 
-const indexHtmlPath = path.join(__dirname, '../../index.html');
+const indexHtmlPath = path.join(__dirname, '../../public/index.html');
 
 router.use('/train', require('./train'));
 // router.use('/upload', require('./upload'));
