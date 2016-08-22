@@ -1,10 +1,16 @@
 <div class="main-container" layout="column">
-  <div id="home-header">
-    <md-button class="circle-btn current-btn" ng-click="openRightMenu()">?
+<img id="main-img" src="/img/boxes.svg">
+ <div id="home-header">
+    <md-button class="little-btn current" ng-click="openRightMenu()">?
     </md-button>
   </div>
   <div id="home-content" layout="row">
+  <div layout="column">
+  <div id="bl-title">BraiNLaB</div>
+  <div id="go-btn">
   <md-button ng-click="letsGo()">Let's go</md-button>
+  </div>
+  </div>
   <md-sidenav id="info-panel" md-component-id="right" class="md-sidenav-right">
     <md-list>
       <md-list-item><h3>Welcome to the BrainLab!</h3></md-list-item>
