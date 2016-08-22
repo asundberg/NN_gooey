@@ -17,7 +17,7 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state, $timeout) 
 
   // EVENT LISTENERS
   var fReader = new FileReader();
-  var fileInput = document.getElementById('files');
+  var fileInput = document.getElementById('inputFile');
   fileInput.addEventListener('change', function(event){
     var file = event.target.files[0];
     fReader.addEventListener("loadend", function(event) {
