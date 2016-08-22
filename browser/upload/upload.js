@@ -5,7 +5,7 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
+app.controller('UploadCtrl', function($scope, TrainerFactory, $state, $timeout) {
 
   // VARIABLES
   $scope.headers = [];
@@ -30,12 +30,14 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
     fReader.readAsText(file); //emits loadended event
   })
 
-  // // FUNCTIONS
-  // $scope.uploadData = function() {
-  //   var uploaded = $scope.upload;
-  //   convertToArr(uploaded.file);
-  //   $scope.showData = true;
-  // }
+  $scope.upload = function () {
+    $timeout(function() {
+      console.log("triggering");
+      console.log(angular.element(document.querySelector('#files')));
+      console.log(document.getElementById('files'));
+    fileInput.click();
+    });
+  }
 
   function convertToArr(str){
     var delimiter = detectDelimiter(str); // Detect delimiter
@@ -96,18 +98,18 @@ app.controller('UploadCtrl', function($scope, TrainerFactory, $state) {
   }
 
   function transpose(array) {
-    if(!array[0].length) return [];
-    var newArr = [];
+    if(!array[0].length) return [];
+    var newArr = [];
     var element;
-    for(var i = 0; i < array[0].length; i++) {
-        newArr.push([]);
-        for(var j = 0; j < array.length; j++) {
+    for(var i = 0; i < array[0].length; i++) {
+        newArr.push([]);
+        for(var j = 0; j < array.length; j++) {
             element = array[j][i];
             if(!isNaN(element)) newArr[i].push(Number(element));
             else newArr[i].push(element);
-        }
-    }
-    return newArr;
+        }
+    }
+    return newArr;
   }
 
   $scope.toggleInputCol = function(index) {

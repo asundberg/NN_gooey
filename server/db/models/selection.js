@@ -3,7 +3,7 @@
 const db = require('../db');
 const Sequelize = db.Sequelize;
 
-module.exports = db.define('selections', {
+module.exports = db.define('selection', {
   headers: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },

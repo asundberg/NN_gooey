@@ -5,17 +5,18 @@
 // to get access to the xxx model.
 
 const Training = require('./training');
-const Selections = require('./selections');
+const Selection = require('./selection');
 const User = require('./user');
 
 Training.belongsTo(User);
 User.hasMany(Training);
 
-Selections.belongsTo(User);
-User.hasMany(Selections);
+//Selection.belongsTo(User);
+Selection.belongsTo(Training);
+User.hasMany(Selection);
 
 module.exports = {
   Training: Training,
-  Selections: Selections,
+  Selections: Selection,
   User: User
 };
