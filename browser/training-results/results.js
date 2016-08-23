@@ -14,9 +14,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
 
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];
-  console.log("hi");
   if (cookieStoreItems) {
-    console.log("reached cookie");
     $scope.view = cookieStoreItems;
     TrainerFactory.getModel($scope.view.modelId)
     .then(function (response) {
@@ -24,10 +22,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     });
     setResults();
   } else {
-    console.log("reached ELSE");
     TrainerFactory.train()
     .then(trainResult => {
-      console.log("TRaiN result", trainResult);
       $scope.view = {
         modelId: trainResult[0].modelId,
         accuracyGraph: trainResult[0].accuracy,
@@ -41,8 +37,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   }
 
   function setResults () {
-    console.log("in here");
-    console.log("$scope.view", $scope.view);
     if ($scope.view.accuracyGraph && $scope.view.accuracyGraph.length) {
       $scope.showResult = true;
 
@@ -72,7 +66,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function clearView () {
     $scope.view = {};
     $cookieStore.put('view', undefined);
-    console.log($cookieStore.get('view'));
   }
 
   $scope.dontSave = function () {
@@ -85,7 +78,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   //ADDING AND REMOVING ITEMS
   $scope.saveModel = function (model) {
     model.userId = $scope.user.id;
-    console.log('userId: ', model.userId, 'model id: ', model.modelId);
     // Find out if model is already in the savedModelsArr that comes from the cookie.
     // The 'find' method returns the item it looks for from the array or undefined.
     TrainerFactory.addUserId(model.modelId, model)
