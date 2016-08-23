@@ -7,12 +7,24 @@ app.config(function ($stateProvider) {
         controller: 'UserCtrl',
         resolve: {
           userAccount: function (UserFactory, $stateParams) {
-            return UserFactory.showNewUser($stateParams.id);
+            var userObj;
+            return UserFactory.getUser($stateParams.id)
+            .then(function (user) {
+              userObj = user;
+              return UserFactory.getModelsForUser($stateParams.id);
+            })
+            .then(function (models) {
+              if (models) {
+                userObj.models = models;
+              }
+              return userObj;
+            });
           }
         }
     });
 });
 
-app.controller('UserCtrl', function ($scope, userAccount) { // $scope, Auth, $state ?
+app.controller('UserCtrl', function ($scope, userAccount) {
   $scope.user = userAccount;
+  $scope.models = userAccount.models;
 });

@@ -1,8 +1,7 @@
 <div>
-  <h1 style="color: white">{{user.name}}</h1>
-  <h3 style="color: white">Your training models:</h3>
-  <ul>
-    <li style="color: white">What are we going to call these, ie how will we list them?</li>
-    <li></li>
+  <h1>{{user.name}}</h1>
+  <h3>Your training models:</h3>
+  <ul ng-repeat="model in models">
+    <li>{{model.name}}</li>
   </ul>
 </div>

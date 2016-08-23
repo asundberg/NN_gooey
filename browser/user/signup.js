@@ -26,7 +26,6 @@ app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state)
       }
     })
     .catch(function (err) {
-      console.log(err);
       if (err.status === 409) {
         $scope.error = 'Unable to create account. There is already an account with this email.';
       } else {

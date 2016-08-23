@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, UserFactory) { // Auth, $location ?
+app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, UserFactory) {
   return {
     restrict: 'E',
     templateUrl: '/navbar/navbar.html',
@@ -19,8 +19,8 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;
-          console.log('should eventually direct to landing page');
-          $state.go('upload');
+          $rootScope.$broadcast('resetStorage', scope.storage);
+          $state.go('home');
         });
       };
 

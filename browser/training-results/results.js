@@ -6,35 +6,86 @@ app.config(function ($stateProvider) {
     templateUrl: '/training-results/template.html',
     controller: 'ResultsCtrl',
     resolve: {
-      trainResult: function(TrainerFactory){
-        console.log("running resolve");
+      trainResult: function (TrainerFactory){
         return TrainerFactory.train()
-        .then(result=> {
-          console.log(result);
+        .then(result => {
           return result;
-        })
+        });
       }
     }
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, AuthService, $cookieStore) {
 
-  // example:
-  // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
-  // TrainerFactory.resultObj...
+  var cookieStoreItems = $cookieStore.get('view');
 
-  $scope.accuracyGraph = trainResult[0].accuracy;
-  $scope.maxAcc = Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100);
-  $scope.linkToTest = "http://localhost:1337/#/test/"+trainResult[0].modelId;
-  console.log("acc",  $scope.accuracyGraph);
+  if (trainResult) {
+    $scope.view = {
+      modelId: trainResult[0].id,
+      accuracyGraph: trainResult[0].accuracy,
+      maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
+      linkToTest: 'http://localhost:1337/#/test/' + trainResult[0].modelId
+    };
+    $scope.model = trainResult[0];
+    $cookieStore.put('view', $scope.view);
+  } else if (cookieStoreItems) {
+    $scope.view = cookieStoreItems;
+    TrainerFactory.getModel($scope.view.modelId)
+    .then(function (response) {
+      $scope.model = response;
+  });
 
   $scope.showResult = false;
+  $scope.user = null;
 
-  if ($scope.accuracyGraph && $scope.accuracyGraph.length) {
+  var setUser = function () {
+    AuthService.getLoggedInUser().then(function (user) {
+      $scope.user = user;
+    });
+  };
+
+  setUser();
+
+  if ($scope.view.accuracyGraph && $scope.view.accuracyGraph.length) {
     $scope.showResult = true;
   }
 
+  // cookie store stuff:
+  $scope.showSaveForm = false;
+  $scope.showAlert = false;
+
+  $scope.enterName = function () {
+    $scope.showSaveForm = true;
+  };
+
+  function emptyModelStorage () {
+    $scope.storage = {};
+    $cookieStore.put('storage', $scope.storage);
+  }
+
+  $scope.dontSave = function () {
+    $scope.showAlert = true;
+    emptyModelStorage();
+  };
+
+  $scope.$on('resetStorage',function () {
+      emptyModelStorage();
+      $cookieStore.put('storage', $scope.storage);
+  });
+
+  //ADDING AND REMOVING ITEMS
+  $scope.saveModel = function (model) {
+    model.userId = $scope.user.id;
+    // Find out if model is already in the savedModelsArr that comes from the cookie.
+    // The 'find' method returns the item it looks for from the array or undefined.
+    if(!$scope.storage.model) {
+      $scope.storage = $scope.view;
+    }
+    return TrainerFactory.addUserId(model.id, model);
+  };
+
+  // graph stuff:
   var margin = {
     top: 30,
     right: 20,
@@ -77,7 +128,7 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
     }
   }
 
-  setData($scope.accuracyGraph);
+  setData($scope.view.accuracyGraph);
 
   // Scale the range of the data
   x.domain(d3.extent(data, function (d) {
