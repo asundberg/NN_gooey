@@ -16,6 +16,7 @@ app.config(function ($stateProvider) {
 
 app.controller('State2Ctrl', function ($rootScope, $cookieStore, $scope, TrainerFactory, inputArr, $state) {
     $rootScope.state = 'state2';
+    $rootScope.homeButtonStatus();
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
     $scope.showLoader = false;
     $scope.numInputs = inputArr[0].length;

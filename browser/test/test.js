@@ -68,6 +68,7 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     console.log("rows", JSON.parse(selection.rows))
     $scope.selection = selection;
 
+    $rootScope.homeButtonStatus();
 
     let modelId = $stateParams.id;
 

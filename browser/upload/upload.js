@@ -10,6 +10,7 @@ app.controller('UploadCtrl', function($rootScope, $scope, TestingFactory,Trainer
 
 
   $rootScope.state = 'upload';
+  $rootScope.homeButtonStatus();
   // VARIABLES
   $scope.headers = [];
   $scope.data = [];

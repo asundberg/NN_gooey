@@ -25,7 +25,9 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('UserCtrl', function ($scope, userAccount) {
+app.controller('UserCtrl', function ($rootScope, $scope, userAccount) {
+  $rootScope.state = 'user';
+  $rootScope.homeButtonStatus();
   $scope.user = userAccount;
   $scope.models = userAccount.models;
   $scope.selectedModel = null;
