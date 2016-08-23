@@ -17,6 +17,7 @@ app.config(function ($stateProvider) {
               if (models) {
                 userObj.models = models;
               }
+              console.log('Yay - the user state resolve function is working! This is the userObj: ', userObj);
               return userObj;
             });
           }
@@ -27,4 +28,8 @@ app.config(function ($stateProvider) {
 app.controller('UserCtrl', function ($scope, userAccount) {
   $scope.user = userAccount;
   $scope.models = userAccount.models;
+  $scope.selectedModel = null;
+  $scope.selectModelToTest = function (model) {
+    $scope.selectedModel = model;
+  };
 });

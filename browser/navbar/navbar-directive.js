@@ -19,7 +19,7 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;
-          $rootScope.$broadcast('resetStorage', scope.storage);
+          $rootScope.$broadcast('resetCookie');
           $state.go('home');
         });
       };

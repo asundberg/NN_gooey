@@ -8,19 +8,31 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state) {
+app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state, $cookieStore, TrainerFactory) {
 
   $scope.userInfo = {};
   $scope.error = null;
+  var cookieStoreItems = $cookieStore.get('view');
 
   $scope.signupUser = function (userInfo) {
     $scope.error = null;
     UserFactory.createUser(userInfo)
     .then(function (user) {
-      console.log('in signup! user: ', user);
       if (user) {
         AuthService.login(userInfo);
-        $state.go('user', {id: user.id});
+        if (cookieStoreItems) {
+          TrainerFactory.getModel(cookieStoreItems.modelId)
+          .then(function (result) {
+            var model = result;
+            model.userId = user.id;
+            return TrainerFactory.addUserId(cookieStoreItems.modelId, model);
+          })
+          .then(function () {
+            $state.go('user', {id: user.id});
+          });
+        } else {
+          $state.go('user', {id: user.id});
+        }
       } else {
         throw new Error('Please make sure all fields are completed and valid.');
       }

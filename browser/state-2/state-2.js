@@ -14,7 +14,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('State2Ctrl', function ($scope, TrainerFactory, inputArr, $state) {
+app.controller('State2Ctrl', function ($cookieStore, $scope, TrainerFactory, inputArr, $state) {
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
     $scope.showLoader = false;
     $scope.numInputs = inputArr[0].length;
@@ -61,6 +61,7 @@ app.controller('State2Ctrl', function ($scope, TrainerFactory, inputArr, $state)
 
 
     $scope.trainNetwork = function (){
+      $cookieStore.put('view', undefined);
       $scope.showLoader = true;
       TrainerFactory.hiddenLayersArr = [];
       $scope.hiddenLayers.forEach(layer =>{
