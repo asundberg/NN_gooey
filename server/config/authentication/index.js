@@ -40,6 +40,7 @@ module.exports = function (app, db) {
     // logged in already.
     app.get('/session', function (req, res) {
         if (req.user) {
+            // if (req.model)
             res.send({ user: req.user.sanitize() });
         } else {
             res.status(401).send('No authenticated user.');

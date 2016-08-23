@@ -9,6 +9,9 @@ const Sequelize = db.Sequelize;
 //this is a much more elegant solution than trying to save model information in the database as a Sequelize.BLOB, which later makes our life harder when we want to load models in keras. i.e. keras expects a .h5 file than a .json of the contents of .h5 (.h5 stores the weights)
 //
 module.exports = db.define('training', {
+  name: {
+    type: Sequelize.STRING
+  },
   config: {
     type: Sequelize.STRING
   },

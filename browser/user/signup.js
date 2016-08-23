@@ -8,25 +8,41 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state) {
+app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state, $cookieStore, TrainerFactory) {
 
   $scope.userInfo = {};
   $scope.error = null;
+  var cookieStoreItems = $cookieStore.get('view');
+
+  if (cookieStoreItems) {
+    $scope.showModelNameField = true;
+  }
 
   $scope.signupUser = function (userInfo) {
     $scope.error = null;
     UserFactory.createUser(userInfo)
     .then(function (user) {
-      console.log('in signup! user: ', user);
       if (user) {
         AuthService.login(userInfo);
-        $state.go('user', {id: user.id});
+        if (cookieStoreItems) {
+          TrainerFactory.getModel(cookieStoreItems.modelId)
+          .then(function (result) {
+            var model = result;
+            model.userId = user.id;
+            model.name = userInfo.modelName;
+            return TrainerFactory.addUserId(cookieStoreItems.modelId, model);
+          })
+          .then(function () {
+            $state.go('user', {id: user.id});
+          });
+        } else {
+          $state.go('user', {id: user.id});
+        }
       } else {
         throw new Error('Please make sure all fields are completed and valid.');
       }
     })
     .catch(function (err) {
-      console.log(err);
       if (err.status === 409) {
         $scope.error = 'Unable to create account. There is already an account with this email.';
       } else {

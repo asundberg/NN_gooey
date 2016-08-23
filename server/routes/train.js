@@ -31,7 +31,7 @@ router.post('/', function (req,res,next) {
       hiddenLayer: hiddenLayer,
       modelStuffPath: modelStuffPath,
       modelId: newModel.id
-    }
+    };
 
     py.stdin.write(JSON.stringify(data));
     // py.stdin.write(JSON.stringify({'data':[1,2,3,4]}));
@@ -67,16 +67,58 @@ router.post('/', function (req,res,next) {
         config: configPath,
         weights: weightsPath,
         lib: libPath
-      })
+      });
     })
     .then(() => {
       res.send(finalArr);
-    })
+    });
     // console.log("final ARR", finalArr.toString('utf8'));
      //sends a buffer of arrays need to do res.data to retrieve
   });
 
 
 });
+
+router.get('/:id', function (req, res, next) {
+  Training.findById(req.params.id)
+  .then(function (response) {
+    if (response) {
+      res.json(response);
+    }
+  })
+  .catch(next);
+});
+
+router.get('/all/:userId', function (req, res, next) {
+  Training.findAll({
+    where: {
+      userId: req.params.userId
+    }
+  })
+  .then(function (response) {
+    res.json(response);
+  })
+  .catch(next);
+});
+
+router.put('/:id', function (req, res, next) {
+  Training.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(function (model) {
+    return model.update(req.body);
+  })
+  .then(function (updatedModel) {
+    var responseObj = {
+      message: 'Updated successfully',
+      model: updatedModel
+    };
+    res.json(responseObj);
+  })
+  .catch(next);
+});
+
 
 module.exports = router;
