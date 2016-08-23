@@ -1,6 +1,8 @@
 <div id="bar" layout="row">
-<md-button class="little-btn current" ng-click="state1()">1</md-button>
-<md-button class="little-btn circle" ng-click="state2()">2</md-button>
-<md-button class="little-btn circle" ng-click="state3()">3</md-button>
-<md-button class="little-btn circle" ng-click="state4()">4</md-button>
+
+
+<md-button class="little-btn circle" ng-repeat="item in items" ng-click="goTo(item.state)">{{item.label}}
+</md-button>
+
 </div>
+
