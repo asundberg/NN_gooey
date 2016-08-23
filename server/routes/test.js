@@ -7,6 +7,28 @@ var path = require('path');
 const Training = require('../db/models').Training;
 const Selection = require('../db/models').Selection;
 
+router.post('/selection', function(req,res,next){
+  console.log("reached here", req.body);
+  Selection.create(req.body)
+  .then(createdSelection => {
+    res.send(createdSelection);
+  })
+  .catch(next);
+})
+
+router.get('/selection/:id', function(req,res,next){
+  Selection.findOne({
+    where: {
+      trainingId: req.params.id
+    }
+  })
+  .then(foundSelection => {
+    console.log("foundSelection", foundSelection);
+    res.send(foundSelection);
+  })
+  .catch(next);
+})
+
 //test/:id
 router.post('/:id', function(req,res,next){
   console.log("test route reached", req.body);
@@ -16,14 +38,14 @@ router.post('/:id', function(req,res,next){
   // for pima
   //var inputs = [6,148,72,35,0,44.6,0.627,50]
   // for soybean
-  var inputs = [4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0];
+  // var inputs = [4, 0, 2, 1, 1, 1, 0, 1, 0, 2, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 3, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0];
 
   var tempTraining = {};
   tempTraining.testType = (Array.isArray(inputTest[0])) ? 'multiple' : 'single';
-
+  console.log("inputTest", inputTest);
   console.log("testtype", tempTraining.testType);
-  //tempTraining.inputs  = inputTest; //once front end is fixed to have nec amount of columns
-  tempTraining.inputs = inputs;
+  tempTraining.inputs  = inputTest; //once front end is fixed to have nec amount of columns
+  //tempTraining.inputs = inputs;
   var modelId = req.params.id;
 
   Training.findById(modelId)
