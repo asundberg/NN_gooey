@@ -7,19 +7,13 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
     link: function (scope, element, attrs) {
       angular.extend(scope, UserFactory);
 
-      // scope.items = [
-      //     { label: 'Home', state: 'home' },
-      //     { label: 'About', state: 'about' },
-      //     { label: 'Products', state: 'products' },
-      //     { label: 'My Account', state: 'account', auth: true }
-      // ];
-
       scope.user = null;
 
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;
           $cookieStore.put('view', undefined);
+          $rootScope.inHomeState = true;
           $state.go('home');
         });
       };
