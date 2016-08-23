@@ -8,7 +8,8 @@ app.config(function ($stateProvider) {
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, AuthService, $cookieStore, $state) {
+app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, AuthService, $cookieStore, $state) {
+  $rootScope.state = 'results';
 
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];

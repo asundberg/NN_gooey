@@ -14,7 +14,8 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('State2Ctrl', function ($cookieStore, $scope, TrainerFactory, inputArr, $state) {
+app.controller('State2Ctrl', function ($rootScope, $cookieStore, $scope, TrainerFactory, inputArr, $state) {
+    $rootScope.state = 'state2';
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
     $scope.showLoader = false;
     $scope.numInputs = inputArr[0].length;

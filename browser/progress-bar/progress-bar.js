@@ -1,4 +1,4 @@
-app.directive('progressBar', function ($state) {
+app.directive('progressBar', function ($rootScope, $state) {
     return {
         restrict: 'E',
         scope: {},
@@ -14,6 +14,9 @@ app.directive('progressBar', function ($state) {
 
             scope.goTo = function(itemState) {
                 $state.go(itemState);
+            };
+            scope.isState = function(itemState) {
+                return itemState == $rootScope.state;
             }
         }
     };
