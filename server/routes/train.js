@@ -5,6 +5,7 @@ const router = new express.Router();
 var child_process = require('child_process');
 var path = require('path');
 const Training = require('../db/models').Training;
+const Selection = require('../db/models').Selection;
 
 
 //for /train
@@ -20,6 +21,8 @@ router.post('/', function (req,res,next) {
   var output = trainingData.outputArr;
   var classType = trainingData.classType;
   var hiddenLayer = trainingData.hiddenLayersArr;
+  var selectionId = trainingData.selectionId;
+  console.log("selectionId", selectionId);
   var data;
 
   Training.create({})
@@ -61,9 +64,25 @@ router.post('/', function (req,res,next) {
     let libPath = modelStuffPath + "/lib/" +  modelId + "_lib.json";
     let weightsPath = modelStuffPath + "/weights/" +  modelId + "_model.h5";
 
-    Training.findById(modelId)
-    .then(foundModel => {
-      return foundModel.update({
+
+    Selection.findById(selectionId)
+    .then(foundSelection => {
+      return foundSelection.update({
+        where: {
+          trainingId: modelId
+        }
+      })
+    })
+
+    var promise1 = Training.findById(modelId);
+    var promise2 = Selection.findById(selectionId);
+
+    Promise.all([promise1, promise2])
+    .then(arr => {
+      return [arr[0], arr[1].setTraining(arr[0])]
+    })
+    .then(arr => {
+      return arr[0].update({
         config: configPath,
         weights: weightsPath,
         lib: libPath
@@ -72,8 +91,7 @@ router.post('/', function (req,res,next) {
     .then(() => {
       res.send(finalArr);
     })
-    // console.log("final ARR", finalArr.toString('utf8'));
-     //sends a buffer of arrays need to do res.data to retrieve
+
   });
 
 

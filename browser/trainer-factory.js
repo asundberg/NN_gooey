@@ -7,7 +7,8 @@ app.factory('TrainerFactory', function ($http) {
       inputArr: null,
       outputArr: null,
       headerReference: null,
-      hiddenLayersArr: [] // array of numbers, each indicating number of neurons in that layer
+      hiddenLayersArr: [], // array of numbers, each indicating number of neurons in that layer
+      selectionId: null
     };
 
     TrainerFactory.setData = function(data){
@@ -15,6 +16,7 @@ app.factory('TrainerFactory', function ($http) {
       TrainerFactory.inputArr = data.inputArr;
       TrainerFactory.outputArr = data.outputArr;
       TrainerFactory.headerReference = data.headerReference;
+      TrainerFactory.selectionId = data.selectionId
     };
 
     TrainerFactory.train = function () {

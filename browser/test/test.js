@@ -4,12 +4,13 @@ app.config(function($stateProvider) {
     $stateProvider.state('test', {
         url: '/test/:id',
         templateUrl: '/test/template.html',
-        controller: 'TestCtrl'
-            // resolve: {
-            //  sample: function(TestingFactory, $stateParams){
-            //    return TestingFactory.getSamples($stateParams.id)
-            //    .then(sampleInput => sampleInput)
-            // }
+        controller: 'TestCtrl',
+        resolve: {
+         selection: function(TestingFactory, $stateParams){
+                return TestingFactory.getSamples($stateParams.id)
+                .then(foundSelection => foundSelection)
+            }
+        }
     });
     $stateProvider.state('test.single', {
         url: '/single',
@@ -31,7 +32,7 @@ app.config(function($stateProvider) {
                     $scope.uploaded = true;
                     var textFile = event.target.result;
                     var uploaded = textFile;
-                    var delimiter = detectDelimiter(uploaded); 
+                    var delimiter = detectDelimiter(uploaded);
                     inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
                     $scope.test.testInputs = [];
                     $scope.test.testInputs = inputArr;
@@ -56,18 +57,24 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('TestCtrl', function($scope, $http, $stateParams, TestingFactory, $state) {
+app.controller('TestCtrl', function($scope, $http, $stateParams, TestingFactory, $state, selection) {
+
+    console.log("selection", selection);
+    console.log("rows", JSON.parse(selection.rows))
+
 
     let modelId = $stateParams.id;
-    console.log("modelId to test", modelId);
 
     $scope.receivedResult = false;
 
-    $scope.sampleHeaders = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7', 'col8'];
-    $scope.sampleRows = [
-        [6, 148, 72, 35, 0, 33.6, 0.627, 50],
-        [1, 85, 66, 29, 0, 26.6, 0.351, 31]
-    ];
+    // $scope.sampleHeaders = ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7', 'col8'];
+    // $scope.sampleRows = [
+    //     [6, 148, 72, 35, 0, 33.6, 0.627, 50],
+    //     [1, 85, 66, 29, 0, 26.6, 0.351, 31]
+    // ];
+    $scope.sampleHeaders = selection.headers;
+    $scope.sampleRows = JSON.parse(selection.rows);
+
     $scope.tabs = [{ name: 'Single Input', url: "/test/single.html", state: 'test.single' }, { name: 'Multiple Input', url: '/test/multiple.html', state: 'test.multiple'  }];
 
     $scope.test = {}; //in case you need other properties
@@ -91,10 +98,14 @@ app.controller('TestCtrl', function($scope, $http, $stateParams, TestingFactory,
 app.factory('TestingFactory', function($http) {
 
     var TestingFactory = {};
+    TestingFactory.setSamples = function(sampleObj){
+        return $http.post('/test/selection', sampleObj)
+        .then(res => res.data);
+    }
 
     //for fetching the sample rows for inputs
-    TestingFactory.getSamples = function(id){
-       return $http.get('/selection/'+ id)
+    TestingFactory.getSamples = function(modelId){
+       return $http.get('/test/selection/'+ modelId)
       .then(res => res.data);
     }
 
