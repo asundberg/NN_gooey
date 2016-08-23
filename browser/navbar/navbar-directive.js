@@ -9,6 +9,20 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
 
       scope.user = null;
 
+      console.log('this is the state we are in: ', $rootScope.$state);
+
+      $rootScope.homeButtonStatus = function () {
+        if ($rootScope.state === 'home') {
+          scope.showHomeButton = false;
+        } else if ($rootScope.state === 'state2' || $rootScope.state === 'test' || $rootScope.state === 'upload' || $rootScope.state === 'login' || $rootScope.state === 'user' || $rootScope.state === 'signup') {
+          scope.showHomeButton = true;
+        }
+      };
+
+      scope.goHome = function () {
+        $state.go('home');
+      };
+
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;

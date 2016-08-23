@@ -58,6 +58,7 @@ app.config(function($stateProvider) {
 
 app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state) {
     $rootScope.state = 'test';
+    $rootScope.homeButtonStatus();
 
     let modelId = $stateParams.id;
     console.log("modelId to test", modelId);

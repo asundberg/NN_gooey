@@ -1,6 +1,6 @@
 <nav layout="row">
   <div flex="30">
-    <div ng-hide="inHomeState">
+    <div ng-if="showHomeButton">
       <a ui-sref="home"><md-button ng-click="goHome()">Home</md-button></a>
     </div>
   </div>

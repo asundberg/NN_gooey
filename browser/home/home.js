@@ -6,6 +6,8 @@ app.config(function ($stateProvider) {
   })
 })
 app.controller('HomeCtrl', function ($rootScope, $scope, TrainerFactory, $state, $mdSidenav) {
+  $rootScope.state = 'home';
+  $rootScope.homeButtonStatus();
   $scope.openRightMenu = function () {
     $mdSidenav('right').toggle();
   };
