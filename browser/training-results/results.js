@@ -16,16 +16,16 @@ app.config(function ($stateProvider) {
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, AuthService, $cookieStore) {
+app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, AuthService, $cookieStore, $state) {
 
   var cookieStoreItems = $cookieStore.get('view');
 
   if (trainResult) {
     $scope.view = {
-      modelId: trainResult[0].id,
+      modelId: trainResult[0].modelId,
       accuracyGraph: trainResult[0].accuracy,
       maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
-      linkToTest: 'http://localhost:1337/#/test/' + trainResult[0].modelId
+      linkToTest: '#/test/' + trainResult[0].modelId
     };
     $scope.model = trainResult[0];
     $cookieStore.put('view', $scope.view);
@@ -34,7 +34,8 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, Aut
     TrainerFactory.getModel($scope.view.modelId)
     .then(function (response) {
       $scope.model = response;
-  });
+    });
+  }
 
   $scope.showResult = false;
   $scope.user = null;
@@ -61,7 +62,7 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, Aut
 
   function emptyModelStorage () {
     $scope.storage = {};
-    $cookieStore.put('storage', $scope.storage);
+    $cookieStore.put('view', $scope.view);
   }
 
   $scope.dontSave = function () {
@@ -71,18 +72,19 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult, Aut
 
   $scope.$on('resetStorage',function () {
       emptyModelStorage();
-      $cookieStore.put('storage', $scope.storage);
+      $cookieStore.put('view', $scope.view);
   });
 
   //ADDING AND REMOVING ITEMS
   $scope.saveModel = function (model) {
     model.userId = $scope.user.id;
+    console.log('userId: ', model.userId, 'model id: ', model.modelId);
     // Find out if model is already in the savedModelsArr that comes from the cookie.
     // The 'find' method returns the item it looks for from the array or undefined.
-    if(!$scope.storage.model) {
-      $scope.storage = $scope.view;
-    }
-    return TrainerFactory.addUserId(model.id, model);
+    TrainerFactory.addUserId(model.modelId, model)
+    .then(function () {
+      $state.go('user', {id: $scope.user.id});
+    });
   };
 
   // graph stuff:

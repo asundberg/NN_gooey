@@ -14,11 +14,11 @@
     <button ng-click="dontSave()">No</button>
     <p ng-hide="!showAlert" style="color: red">Your model is not saved and will disappear when you leave this page.</p>
     <h3 ng-hide="user">Don't have an account yet? Sign up <a ui-sref="signup">here</a> to save your model!</h3>
-    <form ng-submit="saveModel(view.model)">
+    <form ng-submit="saveModel(model)">
       <div ng-show="showSaveForm" class="form-group">
         <label>Model name</label>
-        <input type="modelName" class="form-control" ng-model="view.model.name" required />
-        <button type="submit" ui-sref="user({id: user.id})" class="btn btn-block btn-primary">SAVE</button>
+        <input type="text" class="form-control" ng-model="model.name" required />
+        <button type="submit" class="btn btn-block btn-primary">SAVE</button>
       </div>
     </form>
   </div>
