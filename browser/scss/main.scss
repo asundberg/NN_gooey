@@ -26,6 +26,10 @@ h1, h2, h3 {
   text-transform: uppercase;
 }
 
+h4 {
+  color: $main-font-color;
+}
+
 .main-container {
   display: flex;
   width: 100%;

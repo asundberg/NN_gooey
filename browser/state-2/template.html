@@ -1,20 +1,21 @@
 
 <loader ng-show="showLoader"></loader>
-<div class="main-container" layout="column">
+<div ng-show="!showLoader" class="main-container" layout="column">
+<div class="train-section">
 <div class="train-header" layout="row">
 <div class="train-blurb" flex="75">
-    <h4>
-    <span>Specs: </span>
-    </h4>
-    <span>Input columns: {{numInputs}}</span>
-    <span>Classes: 4</span>
+    <span><h4>Your data has: </h4></span>
+    <span>{{numInputs}} input features</span>
+    <span>and 4 classes</span>
 </div>
-<div flex="25">
+<div class="train-net-btn" flex="25">
     <md-button ng-click="trainNetwork()">
-    TRAIN
+    TRAIN!
     </md-button>
 </div>
 </div>
+</div>
+<div class="train-section" layout="row">
 <div class="layer-names" layout="row">
     <div class="train-input" flex="25">
         <h4>Input Layer</h4>
@@ -35,8 +36,9 @@
     <div class="bracket"></div>
     </div>
     <div class="train-output" flex="25">
-        <h4>Output</h4>
+        <h4>Output Layer</h4>
     </div>
+</div>
 </div>
 <div class="train-content" layout="row">
 <div class="train-network" layout="column">

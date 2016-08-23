@@ -13,12 +13,18 @@
 
 .train-header {
   height: 100px;
+  width: 800px;
   margin: 20px 0px 20px 0px;
   display: flex;
   justify-content: center; }
 
+.train-section {
+  display: flex;
+  justify-content: center; }
+
 .layer-names {
-  height: 150px; }
+  width: 800px;
+  height: 100px; }
 
 .train-blurb {
   margin-left: 40px; }
@@ -29,11 +35,11 @@
 
 .train-input {
   display: flex;
-  justify-content: flex-end; }
+  justify-content: center; }
 
 .train-output {
   display: flex;
-  justify-content: flex-start; }
+  justify-content: center; }
 
 #network {
   display: flex;
@@ -41,3 +47,12 @@
 
 .ui-numNodes1 {
   display: flex; }
+
+.ui-numHiddenLayers {
+  display: flex;
+  justify-content: center; }
+
+.train-net-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
