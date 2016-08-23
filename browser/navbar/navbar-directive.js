@@ -1,6 +1,6 @@
 'use strict';
 
-app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, UserFactory) {
+app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, UserFactory, $cookieStore) {
   return {
     restrict: 'E',
     templateUrl: '/navbar/navbar.html',
@@ -19,7 +19,7 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;
-          $rootScope.$broadcast('resetCookie');
+          $cookieStore.put('view', undefined);
           $state.go('home');
         });
       };

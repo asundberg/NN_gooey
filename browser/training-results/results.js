@@ -64,6 +64,7 @@ app.controller('ResultsCtrl', function ($scope, TrainerFactory, AuthService, $co
   function clearView () {
     $scope.view = {};
     $cookieStore.put('view', undefined);
+    console.log($cookieStore.get('view'));
   }
 
   $scope.dontSave = function () {

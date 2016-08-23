@@ -14,6 +14,10 @@ app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state,
   $scope.error = null;
   var cookieStoreItems = $cookieStore.get('view');
 
+  if (cookieStoreItems) {
+    $scope.showModelNameField = true;
+  }
+
   $scope.signupUser = function (userInfo) {
     $scope.error = null;
     UserFactory.createUser(userInfo)
@@ -25,6 +29,7 @@ app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state,
           .then(function (result) {
             var model = result;
             model.userId = user.id;
+            model.name = userInfo.modelName;
             return TrainerFactory.addUserId(cookieStoreItems.modelId, model);
           })
           .then(function () {
