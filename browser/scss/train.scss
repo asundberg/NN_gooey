@@ -1,0 +1,71 @@
+.train-content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  overflow: auto;
+}
+
+.train-network {
+  display: flex;
+  height: 100%;
+  width: 800px;
+  padding: 0px 40px 0px 40px;
+  align-items: flex-start;
+}
+
+.train-header {
+  height: 100px;
+  width: 800px;
+  margin: 20px 0px 20px 0px;
+  display: flex;
+  justify-content: center;
+  background-color: $right-color;
+}
+
+.train-section {
+  display: flex;
+  justify-content: center;
+}
+
+.layer-names {
+  width: 800px;
+  height: 100px;
+}
+.train-blurb {
+  margin-left: 40px;
+}
+
+.train-hidden {
+  display: flex;
+  justify-content: center;
+}
+
+.train-input {
+  display: flex;
+  justify-content: center;
+}
+
+.train-output {
+  display: flex;
+  justify-content: center;
+}
+
+#network {
+  display: flex;
+  justify-content: center;
+}
+
+.ui-numNodes1 {
+  display: flex;
+}
+
+.ui-numHiddenLayers {
+  display: flex;
+  justify-content: center;
+}
+
+.train-net-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

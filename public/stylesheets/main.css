@@ -1,6 +1,6 @@
 body {
   display: flex;
-  overflow: auto;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   background: #43a1b2;
@@ -10,7 +10,7 @@ body {
   background: linear-gradient(to left, #43a1b2, #b3efe7);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }
 
-body, ul, li, h1, h2, h3 {
+body, ul, li, h1, h2, h3, a {
   margin: 0;
   list-style: none;
   color: #f2fffd; }
@@ -19,6 +19,9 @@ h1, h2, h3 {
   font-weight: 400;
   font-size: 16px;
   text-transform: uppercase; }
+
+h4 {
+  color: #f2fffd; }
 
 .main-container {
   display: flex;
@@ -64,7 +67,8 @@ ui-view {
 
 #go-btn {
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  margin-top: 50px; }
 
 #info-panel {
   display: flex;
@@ -118,8 +122,7 @@ md-backdrop.md-opaque {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  overflow: auto;
-  border-style: solid; }
+  overflow: auto; }
 
 .output-container {
   padding: 20px;
@@ -180,6 +183,73 @@ md-checkbox:last-of-type {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(0, 0, 0, 0.05); }
 
+a {
+  color: #f2fffd !important; }
+
+.user-btns {
+  display: flex;
+  justify-content: flex-end; }
+
 #bar {
   display: flex;
+  justify-content: center; }
+
+.train-content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  overflow: auto; }
+
+.train-network {
+  display: flex;
+  height: 100%;
+  width: 800px;
+  padding: 0px 40px 0px 40px;
+  align-items: flex-start; }
+
+.train-header {
+  height: 100px;
+  width: 800px;
+  margin: 20px 0px 20px 0px;
+  display: flex;
+  justify-content: center;
+  background-color: #43a1b2; }
+
+.train-section {
+  display: flex;
+  justify-content: center; }
+
+.layer-names {
+  width: 800px;
+  height: 100px; }
+
+.train-blurb {
+  margin-left: 40px; }
+
+.train-hidden {
+  display: flex;
+  justify-content: center; }
+
+.train-input {
+  display: flex;
+  justify-content: center; }
+
+.train-output {
+  display: flex;
+  justify-content: center; }
+
+#network {
+  display: flex;
+  justify-content: center; }
+
+.ui-numNodes1 {
+  display: flex; }
+
+.ui-numHiddenLayers {
+  display: flex;
+  justify-content: center; }
+
+.train-net-btn {
+  display: flex;
+  align-items: center;
   justify-content: center; }
