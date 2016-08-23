@@ -1,10 +1,15 @@
-<nav>
-  <span ng-if="!user">
-    <a ui-sref="login"><button style="color: black">Log in</button></a>
-    <a ui-sref="signup"><button style="color: black">Sign up</button></a>
-  </span>
-  <span ng-if="user">
-    <button style="color: black" ng-click="logout()">Log out</button>
-    <a ui-sref="user({id: user.id})"><button style="color: black" ng-hide="onUserPage()">My Account</button></a>
-  </span>
+<nav layout="row">
+<div flex="30">
+</div>
+  <progress-bar flex="40"></progress-bar>
+  <div flex="30" class="user-btns" >
+  <div ng-if="!user">
+    <a ui-sref="login"><md-button>Log in</md-button></a>
+    <a ui-sref="signup"><md-button>Sign up</md-button></a>
+  </div>
+  <div ng-if="user">
+    <md-button ng-click="logout()">Log out</md-button>
+    <a ui-sref="user({id: user.id})"><md-button ng-hide="onUserPage()">My Account</md-button></a>
+  </div>
+  </div>
 </nav>
