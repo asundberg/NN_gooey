@@ -103,7 +103,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     var height = 350 - margin.top - margin.bottom;
 
     var x = d3.scaleLinear().range([0, width]);
-    var y = d3.scaleLinear().range([height, 0]);
+    var y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
 
     var svg = d3.select('graph')
         .append('svg')
@@ -116,7 +116,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         .ticks(5);
 
     var yAxis = d3.axisLeft().scale(y) // How frequent marks on y-axis
-        .ticks(5);
+        .ticks(10);
 
     var valueline = d3.line()
         .x(function (d) {

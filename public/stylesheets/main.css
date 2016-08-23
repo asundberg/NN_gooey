@@ -28,6 +28,20 @@ h4 {
   width: 100%;
   height: 100%; }
 
+.main-view {
+  align-self: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  align-content: center;
+  justify-content: center; }
+
+.tab-container {
+  overflow-y: auto;
+  width: 100%;
+  height: 100%; }
+
 .content {
   background-color: transparent; }
 
@@ -253,3 +267,6 @@ a {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.md-progress-linear {
+  align-self: center; }
