@@ -1,9 +1,15 @@
 .train-content {
-  overflow: auto;
   display: flex;
   height: 100%;
+  justify-content: center;
+  overflow: auto; }
+
+.train-network {
+  display: flex;
+  height: 100%;
+  width: 800px;
   padding: 0px 40px 0px 40px;
-  justify-content: center; }
+  align-items: flex-start; }
 
 .train-header {
   height: 100px;
@@ -32,3 +38,6 @@
 #network {
   display: flex;
   justify-content: center; }
+
+.ui-numNodes1 {
+  display: flex; }
