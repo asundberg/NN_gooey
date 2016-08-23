@@ -10,6 +10,7 @@ app.config(function ($stateProvider) {
 
 app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, AuthService, $cookieStore, $state) {
   $rootScope.state = 'results';
+  $rootScope.homeButtonStatus();
 
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];

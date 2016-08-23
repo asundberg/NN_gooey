@@ -7,19 +7,27 @@ app.directive('navbar', function ($state, $rootScope, AuthService, AUTH_EVENTS, 
     link: function (scope, element, attrs) {
       angular.extend(scope, UserFactory);
 
-      // scope.items = [
-      //     { label: 'Home', state: 'home' },
-      //     { label: 'About', state: 'about' },
-      //     { label: 'Products', state: 'products' },
-      //     { label: 'My Account', state: 'account', auth: true }
-      // ];
-
       scope.user = null;
+
+      console.log('this is the state we are in: ', $rootScope.$state);
+
+      $rootScope.homeButtonStatus = function () {
+        if ($rootScope.state === 'home') {
+          scope.showHomeButton = false;
+        } else if ($rootScope.state === 'state2' || $rootScope.state === 'test' || $rootScope.state === 'upload' || $rootScope.state === 'login' || $rootScope.state === 'user' || $rootScope.state === 'signup') {
+          scope.showHomeButton = true;
+        }
+      };
+
+      scope.goHome = function () {
+        $state.go('home');
+      };
 
       scope.logout = function () {
         AuthService.logout().then(function () {
           scope.user = null;
           $cookieStore.put('view', undefined);
+          $rootScope.inHomeState = true;
           $state.go('home');
         });
       };

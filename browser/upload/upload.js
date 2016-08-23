@@ -8,6 +8,7 @@ app.config(function($stateProvider) {
 app.controller('UploadCtrl', function($rootScope, $scope, TrainerFactory, $state, $timeout) {
 
   $rootScope.state = 'upload';
+  $rootScope.homeButtonStatus();
   // VARIABLES
   $scope.headers = [];
   $scope.data = [];
