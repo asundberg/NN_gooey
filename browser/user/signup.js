@@ -8,8 +8,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SignupCtrl', function ($scope, UserFactory, AuthService, $state, $cookieStore, TrainerFactory) {
+app.controller('SignupCtrl', function ($rootScope, $scope, UserFactory, AuthService, $state, $cookieStore, TrainerFactory) {
 
+  $rootScope.state = 'signup';
+  $rootScope.homeButtonStatus();
   $scope.userInfo = {};
   $scope.error = null;
   var cookieStoreItems = $cookieStore.get('view');

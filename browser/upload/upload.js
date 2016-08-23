@@ -5,9 +5,12 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($rootScope, $scope, TrainerFactory, $state, $timeout) {
+
+app.controller('UploadCtrl', function($rootScope, $scope, TestingFactory,TrainerFactory, $state, $timeout) {
+
 
   $rootScope.state = 'upload';
+  $rootScope.homeButtonStatus();
   // VARIABLES
   $scope.headers = [];
   $scope.data = [];
@@ -133,7 +136,7 @@ app.controller('UploadCtrl', function($rootScope, $scope, TrainerFactory, $state
     var headerReference = {};
     var header;
     var classType;
-
+    var selectionId;
     // Push into input and output arrays
     $scope.columnTracker.forEach(function(ele, index) {
       header = $scope.headers[index];
@@ -156,10 +159,32 @@ app.controller('UploadCtrl', function($rootScope, $scope, TrainerFactory, $state
       outputArr: outputArr,
       headerReference: headerReference
     }
-    TrainerFactory.setData(obj);
+
+    var headerInputs = [];
+    for(let key in headerReference){
+      if(headerReference.hasOwnProperty(key) && key !== 'output'){
+        headerInputs.push(headerReference[key]);
+      }
+    }
+
+    var selectionObj = {
+      headers: headerInputs,
+      numColumns: inputArr[0].length,
+      rows: JSON.stringify(inputArr.slice(0,2))
+    }
+
+    TestingFactory.setSamples(selectionObj)
+    .then(newSelection => {
+      selectionId = newSelection.id;
+      obj.selectionId = selectionId;
+      TrainerFactory.setData(obj);
+      $state.go('state2');
+    })
+
+
     //console.log(obj);
     // console.log("INPUTARR", TrainerFactory);
-    $state.go('state2')
+
   }
 
 })

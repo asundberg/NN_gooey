@@ -1,15 +1,18 @@
 <nav layout="row">
-<div flex="30">
-</div>
+  <div flex="30">
+    <div ng-if="showHomeButton">
+      <a ui-sref="home"><md-button ng-click="goHome()">Home</md-button></a>
+    </div>
+  </div>
   <progress-bar flex="40"></progress-bar>
   <div flex="30" class="user-btns" >
-  <div ng-if="!user">
-    <a ui-sref="login"><md-button>Log in</md-button></a>
-    <a ui-sref="signup"><md-button>Sign up</md-button></a>
-  </div>
-  <div ng-if="user">
-    <md-button ng-click="logout()">Log out</md-button>
-    <a ui-sref="user({id: user.id})"><md-button ng-hide="onUserPage()">My Account</md-button></a>
-  </div>
+    <div ng-if="!user">
+      <a ui-sref="login"><md-button ng-click="notInHomeState()">Log in</md-button></a>
+      <a ui-sref="signup"><md-button>Sign up</md-button></a>
+    </div>
+    <div ng-if="user">
+      <md-button ng-click="logout()">Log out</md-button>
+      <a ui-sref="user({id: user.id})"><md-button ng-hide="onUserPage()" ng-click="notInHomeState()">My Account</md-button></a>
+    </div>
   </div>
 </nav>

@@ -42,9 +42,18 @@ def testModel(lines):
 
   score = loaded_model.predict(inputs, batch_size=150, verbose=0)
 
-  maxIndex = numpy.argmax(score[0])
-  result = lib_data['decoder'][maxIndex.astype('str')]
+  def getTheHotOne(scoreRow):
+    maxIndex = numpy.argmax(scoreRow)
+    result = lib_data['decoder'][maxIndex.astype('str')]
+    return result
 
-  return result
+  results = []
+  for row in score:
+    res = getTheHotOne(row)
+    results.append(res)
+
+
+
+  return results
 
   # print "%s: %.2f%%" % (loaded_model.metrics_names[1], score[0]*100)
