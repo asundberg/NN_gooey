@@ -1,20 +1,20 @@
 'use strict';
 
-app.config(function($stateProvider) {
+app.config(function ($stateProvider) {
 
     $stateProvider.state('state2', {
         url: '/train',
         templateUrl: '/state-2/template.html',
         controller: 'State2Ctrl',
         resolve: {
-            inputArr: function(TrainerFactory) {
+            inputArr: function (TrainerFactory) {
                 return TrainerFactory.inputArr;
             }
         }
     });
 });
 
-app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputArr, $state) {
+app.controller('State2Ctrl', function ($rootScope, $cookieStore, $scope, TrainerFactory, inputArr, $state) {
     $rootScope.state = 'state2';
     //console.log("STATE2 INPUTLENGTH ",inputArr.length);
     $scope.showLoader = false;
@@ -37,14 +37,14 @@ app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputA
     let allLayers = [];
 
 
-    function Neuron(id) {
+    function Neuron (id) {
         this.id = id;
         this.x = null;
         this.y = null;
         this.layerType = "h";
     }
 
-    function HiddenLayer() {
+    function HiddenLayer () {
         this.neurons = [];
         //console.log(defaultNumNeurons);
         for (var i = 0; i < defaultNumNeurons; i++) { //default of 5 neurons
@@ -52,47 +52,47 @@ app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputA
         }
     }
 
-    HiddenLayer.prototype.addToNeurons = function() {
+    HiddenLayer.prototype.addToNeurons = function () {
         this.neurons.push(new Neuron(this.neurons.length + 1));
     };
 
-    HiddenLayer.prototype.removeFromNeurons = function() {
+    HiddenLayer.prototype.removeFromNeurons = function () {
         this.neurons.pop();
     };
 
 
-    $scope.trainNetwork = function(){
-      console.log("clicked train");
+    $scope.trainNetwork = function (){
+      $cookieStore.put('view', undefined);
       $scope.showLoader = true;
       TrainerFactory.hiddenLayersArr = [];
       $scope.hiddenLayers.forEach(layer =>{
         TrainerFactory.hiddenLayersArr.push(layer.neurons.length);
-      })
+      });
       $state.go('results');
       //console.log("TrainerFactory", TrainerFactory);
     };
 
-    $scope.addLayers = function() {
+    $scope.addLayers = function () {
       if($scope.hiddenLayers.length > 2) return; //No more than 3 layers
         $scope.hiddenLayers.push(new HiddenLayer());
         drawNetwork(false);
     };
 
-    $scope.removeLayers = function() {
+    $scope.removeLayers = function () {
         if ($scope.hiddenLayers.length > 1) { //No less than 1 layer
             $scope.hiddenLayers.pop();
         }
         drawNetwork(false);
     };
 
-    $scope.addNeurons = function(index) {
+    $scope.addNeurons = function (index) {
 
         $scope.hiddenLayers[index].addToNeurons();
         //console.log("added neurons", $scope.hiddenLayers[index]);
         drawNetwork(false);
     };
 
-    $scope.removeNeurons = function(index) {
+    $scope.removeNeurons = function (index) {
       if($scope.hiddenLayers[index].neurons.length <= 1) return;
         $scope.hiddenLayers[index].removeFromNeurons();
         //console.log("removed neurons", $scope.hiddenLayers[index]);
@@ -101,17 +101,17 @@ app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputA
 
 
 
-    function getAllLayers() {
+    function getAllLayers () {
         allLayers = [];
         allLayers.push($scope.inputLayer);
         $scope.hiddenLayers.forEach(layer => {
             allLayers.push(layer);
-        })
+        });
         allLayers.push($scope.outputLayer);
         return allLayers;
     }
 
-    function drawNetwork(initial) {
+    function drawNetwork (initial) {
         if (!initial) d3.select("svg").remove();
 
         let width = 700,
@@ -126,7 +126,7 @@ app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputA
         let domainArr = Array.apply(null, Array(allLayers.length))
             .map((d, i) => i);
         X = d3.scalePoint().domain(domainArr).range([0, width]).padding(0.10);
-        allLayers.forEach(function(layer, indexLayer) {
+        allLayers.forEach(function (layer, indexLayer) {
             layer.neurons.forEach(function(neuron, index) {
                 neuron.x = X(indexLayer);
                 neuron.y = (index * 40) + 10;
@@ -144,8 +144,8 @@ app.controller('State2Ctrl', function($rootScope, $scope, TrainerFactory, inputA
                 sourceLayer.neurons.forEach(sn => {
                     destLayer.neurons.forEach(dn => {
                         links.push({ source: sn, target: dn });
-                    })
-                })
+                    });
+                });
             }
         }
 

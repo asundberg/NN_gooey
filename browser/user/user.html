@@ -1,8 +1,9 @@
 <div>
-  <h1 style="color: white">{{user.name}}</h1>
-  <h3 style="color: white">Your training models:</h3>
-  <ul>
-    <li style="color: white">What are we going to call these, ie how will we list them?</li>
-    <li></li>
-  </ul>
+  <h1>{{user.name}}</h1>
+  <h3>Your training models:</h3>
+  <p>If you want to test new data, please choose a model to test against.</p>
+  <div ng-repeat="model in models">
+    <span><input name="test" type="checkbox" ng-model="model.modelId" ng-click="selectModelToTest(model)">{{model.name}}</span>
+  </div>
+  <button ng-disabled="!selectedModel" ui-sref="test({modelId: selectedModel.id})">TEST!</button>
 </div>

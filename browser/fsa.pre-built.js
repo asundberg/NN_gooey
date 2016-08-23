@@ -102,6 +102,7 @@
 
     });
 
+
     app.service('Session', function ($rootScope, AUTH_EVENTS) {
 
         var self = this;
