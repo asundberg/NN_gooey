@@ -1,4 +1,4 @@
-window.app = angular.module('nn_gooey', ['fsaPreBuilt','ui.router', 'ngMaterial']);
+window.app = angular.module('nn_gooey', ['fsaPreBuilt','ui.router', 'ngMaterial', 'ngCookies']);
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {

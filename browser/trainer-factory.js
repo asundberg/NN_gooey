@@ -11,7 +11,7 @@ app.factory('TrainerFactory', function ($http) {
       selectionId: null
     };
 
-    TrainerFactory.setData = function(data){
+    TrainerFactory.setData = function (data) {
       TrainerFactory.classType = data.classType;
       TrainerFactory.inputArr = data.inputArr;
       TrainerFactory.outputArr = data.outputArr;
@@ -20,11 +20,23 @@ app.factory('TrainerFactory', function ($http) {
     };
 
     TrainerFactory.train = function () {
-      console.log('The network is being trained! (Cool graphic is showing...)', TrainerFactory);
       return $http.post('/train', TrainerFactory)
       .then(function (response) {
-        var resultObj = response.data;
-        return resultObj;
+        return response.data;
+      });
+    };
+
+    TrainerFactory.getModel = function (id) {
+      return $http.get('/train/' + id)
+      .then(function (response) {
+        return response.data;
+      });
+    };
+
+    TrainerFactory.addUserId = function (id, data) {
+      return $http.put('/train/' + id, data)
+      .then(function (response) {
+        return response.data;
       });
     };
 

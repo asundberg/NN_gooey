@@ -15,6 +15,10 @@
       <label style="color: white">Password</label>
       <input type="password" class="form-control" ng-model="userInfo.password" required />
     </div>
+    <div class="form-group" ng-show="showModelNameField">
+      <label style="color: white">Model name</label>
+      <input type="modelName" class="form-control" ng-model="userInfo.modelName"/>
+    </div>
     <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
     <p style="color: red">{{errorMessage}}</p>
   </form>

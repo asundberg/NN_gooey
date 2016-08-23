@@ -61,11 +61,13 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('TestCtrl', function($scope, $http, $stateParams, TestingFactory, $state, selection) {
 
+app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection) {
+    $rootScope.state = 'test';
     console.log("selection", selection);
     console.log("rows", JSON.parse(selection.rows))
     $scope.selection = selection;
+
 
     let modelId = $stateParams.id;
 

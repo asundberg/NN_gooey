@@ -5,8 +5,11 @@ app.config(function($stateProvider) {
     controller: 'UploadCtrl'
   })
 })
-app.controller('UploadCtrl', function($scope, TrainerFactory, TestingFactory, $state, $timeout) {
 
+app.controller('UploadCtrl', function($rootScope, $scope, TestingFactory,TrainerFactory, $state, $timeout) {
+
+
+  $rootScope.state = 'upload';
   // VARIABLES
   $scope.headers = [];
   $scope.data = [];
