@@ -31,7 +31,7 @@ app.config(function($stateProvider) {
                     $scope.uploaded = true;
                     var textFile = event.target.result;
                     var uploaded = textFile;
-                    var delimiter = detectDelimiter(uploaded); 
+                    var delimiter = detectDelimiter(uploaded);
                     inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
                     $scope.test.testInputs = [];
                     $scope.test.testInputs = inputArr;
@@ -56,7 +56,8 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('TestCtrl', function($scope, $http, $stateParams, TestingFactory, $state) {
+app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state) {
+    $rootScope.state = 'test';
 
     let modelId = $stateParams.id;
     console.log("modelId to test", modelId);

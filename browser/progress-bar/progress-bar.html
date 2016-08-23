@@ -1,7 +1,7 @@
 <div id="bar" layout="row">
 
 
-<md-button class="little-btn circle" ng-repeat="item in items" ng-click="goTo(item.state)">{{item.label}}
+<md-button class="little-btn circle" ng-class="{current:isState(item.state)}" ng-repeat="item in items" ng-click="goTo(item.state)">{{item.label}}
 </md-button>
 
 </div>

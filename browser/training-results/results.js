@@ -18,8 +18,9 @@ app.config(function ($stateProvider) {
   });
 });
 
-app.controller('ResultsCtrl', function ($scope, TrainerFactory, trainResult) {
+app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, trainResult) {
 
+  $rootScope.state = 'results';
   // example:
   // $scope.accuracyGraph = [0.5, 0.80, 0.81, 0.85, 0.88, 0.90, 0.92, 0.93, 0.94, 0.95, 1.99];
   // TrainerFactory.resultObj...
