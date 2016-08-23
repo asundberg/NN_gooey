@@ -1,25 +1,33 @@
 <!-- <login text="signup" user-info="credentials" submit="signupUser(credentials)"></login> -->
-<div>
+<div class="container">
   <h1 style="color: white">Sign up for an account</h1>
   <p style="color: white">Save your own training models to test data anytime!</p>
   <form ng-submit="signupUser(userInfo)">
-    <div class="form-group">
-      <label style="color: white">Name</label>
-      <input type="text" class="form-control" ng-model="userInfo.name" required />
-    </div>
-    <div class="form-group">
-      <label style="color: white">Email</label>
-      <input type="text" class="form-control" ng-model="userInfo.email" required />
-    </div>
-    <div class="form-group">
-      <label style="color: white">Password</label>
-      <input type="password" class="form-control" ng-model="userInfo.password" required />
-    </div>
+    <md-input-container class="md-block">
+      <div class="form-group">
+        <label style="color: white">Name</label>
+        <input type="text" class="form-control" ng-model="userInfo.name" required />
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <div class="form-group">
+        <label style="color: white">Email</label>
+        <input type="text" class="form-control" ng-model="userInfo.email" required />
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <div class="form-group">
+        <label style="color: white">Password</label>
+        <input type="password" class="form-control" ng-model="userInfo.password" required />
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
     <div class="form-group" ng-show="showModelNameField">
       <label style="color: white">Model name</label>
       <input type="modelName" class="form-control" ng-model="userInfo.modelName"/>
     </div>
-    <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
+    </md-input-container>
+    <md-button type="submit" class="btn btn-block btn-primary">SUBMIT</md-button>
     <p style="color: red">{{errorMessage}}</p>
   </form>
 </div>
