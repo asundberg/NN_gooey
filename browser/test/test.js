@@ -34,8 +34,10 @@ app.config(function($stateProvider) {
                     var uploaded = textFile;
                     var delimiter = detectDelimiter(uploaded);
                     inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
-                    if(inputArr[0].length !== $scope.selection.numberColumns){
-                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numberColumns + " columns.";
+                    console.log("inputArr[0]", inputArr[0])
+                    console.log("inspect", $scope.selection.numColumns);
+                    if(inputArr[0].length !== $scope.selection.numColumns){
+                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numColumns + " columns.";
                         console.log($scope.errorMessage);
                     }
                     $scope.test.testInputs = [];
