@@ -24,7 +24,9 @@
                 <md-content class="md-padding">
                     <ui-view ng-show="!receivedResult" layout="column"></ui-view>
                     <!-- <div ng-include=tab.url></div> -->
-                    <md-progress-circular ng-show="showLoader" md-mode="indeterminate"></md-progress-circular><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+                    <div ng-show="showLoader" id="testingLoader">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
                 </md-content>
             </md-tab>
         </md-tabs>
