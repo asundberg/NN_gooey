@@ -6,10 +6,14 @@
 
 <div>
 	<p>{{errorMessage}}</p>
+	</div>
+	<div>
   <md-button ng-if='uploaded' ng-click="submit()">Submit</md-button>
 </div>
 <div ng-if='uploaded'>
-	<h3> Inputs </h3>
+<div class="test-section">
+	<p>Snippet of your uploaded input file:</p>
+	</div>
 	<table>
 		<tr>
 				<th ng-repeat='h in sampleHeaders'>{{h}}</th>

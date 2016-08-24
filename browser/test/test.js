@@ -35,10 +35,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     var uploaded = textFile;
                     var delimiter = detectDelimiter(uploaded);
                     inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
-                    if(inputArr[0].length !== $scope.selection.numberColumns){
-                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numColumns + " columns.";
-                        console.log($scope.errorMessage);
-                    }
+                    // if(inputArr[0].length !== $scope.selection.numberColumns){
+
+                    //     $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numColumns + " columns. Please refresh this page and re-upload another file.";
+                    //     console.log(inputArr[0]);
+                    //     $scope.isError = true;
+                    // }
                     $scope.test.testInputs = [];
                     $scope.test.testInputs = inputArr;
                     $scope.displayInputRows = inputArr.slice(0,10);
@@ -66,8 +68,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection) {
     $rootScope.state = 'test';
     $state.go('test.single');
-    console.log("selection", selection);
-    console.log("rows", JSON.parse(selection.rows))
+    // console.log("selection", selection);
+    // console.log("rows", JSON.parse(selection.rows))
     $scope.selection = selection;
 
     $rootScope.homeButtonStatus();
@@ -91,12 +93,13 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     //SOYBEAN SMALL TEST
 
     $scope.submit = function() {
-        console.log($scope.test.testInputs)
+        $scope.test.testType = (Array.isArray($scope.test.testInputs[0])) ? 'multiple' : 'single';
+        console.log($scope.test)
         TestingFactory.test(modelId, $scope.test)
         .then(result => {
           $scope.outputs = result;
           $scope.receivedResult = true;
-          console.log('RESULT', $scope.outputs);
+          console.log('RESULT', $scope.outputs[0]);
         });
     }
 
