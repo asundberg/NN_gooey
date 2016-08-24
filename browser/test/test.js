@@ -54,14 +54,32 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     //SOYBEAN SMALL TEST
 
     $scope.submit = function() {
-        console.log($scope.test.testInputs)
+        console.log("testInputs", $scope.test.testInputs)
         TestingFactory.test(modelId, $scope.test)
         .then(result => {
           $scope.outputs = result;
           $scope.receivedResult = true;
           console.log('RESULT', $scope.outputs);
-          exportToCsv("this.csv", $scope.outputs)
+          //get model name
+          // selection.getTraining()
+          // .then(training=>{
+            var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, result);
+            exportToCsv("testResult.csv", prettyPrint)
+          // })
         });
+    }
+
+    function prettyOutput(headers,inputs, outputs){
+        var finalHeaders = headers;
+        finalHeaders.push("Output");
+        var prettyArr = [];
+        prettyArr.push(finalHeaders);
+        for(var i=0; i<inputs.length; i++){
+            var inputCopy = inputs[i];
+            inputCopy.push(outputs[0][i]);
+            prettyArr.push(inputCopy);
+        }
+        return prettyArr;
     }
 
     function exportToCsv(filename, rows) {
