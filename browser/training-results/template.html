@@ -1,29 +1,31 @@
-<div id="results">
-  <loader ng-show="!view"></loader>
-  <div ng-show="view">
-    <h3>Accuracy rate per epoch</h3>
-    <div id="graph">
-      <graph></graph>
-    </div>
-    <h2>Max accuracy: {{view.maxAcc}} %</h2>
-    <div id="linkToTest">
-      <h3>Your link to test the model</h3>
-      <p><a href="{{view.linkToTest}}">{{view.linkToTest}}</a></p>
-    </div>
-    <div ng-hide="!user">
-      <h3>Do you want to save this model to your account?</h3>
-      <button ng-click="enterName()">Yes</button>
-      <button ng-click="dontSave()">No</button>
-      <p ng-hide="!showAlert" style="color: red">Your model is not saved and will disappear when you leave this page.</p>
-    </div>
-    <h3 ng-hide="user">Don't have an account yet? Sign up <a ui-sref="signup">here</a> to save your model!</h3>
-    <form ng-submit="saveModel(model)">
-      <div ng-show="showSaveForm" class="form-group">
-        <label>Model name</label>
-        <input type="text" class="form-control" ng-model="model.name"/>
-        <button type="submit" class="btn btn-block btn-primary">SAVE</button>
-      </div>
-    </form>
-  </div>
+<div class="main-container" id="loading" ng-show="!view" layout="column">
+    <font class="big">Your network is being trained...</font>
+    <img src="http://i.imgur.com/LAs4PVe.gif"></div>
 </div>
-
+<div id="results">
+    <div ng-show="view">
+        <h3>Accuracy rate per epoch</h3>
+        <div id="graph">
+            <graph></graph>
+        </div>
+        <h2>Max accuracy: {{view.maxAcc}} %</h2>
+        <div id="linkToTest">
+            <h3>Your link to test the model</h3>
+            <p><a href="{{view.linkToTest}}">{{view.linkToTest}}</a></p>
+        </div>
+        <div ng-hide="!user">
+            <h3>Do you want to save this model to your account?</h3>
+            <button ng-click="enterName()">Yes</button>
+            <button ng-click="dontSave()">No</button>
+            <p ng-hide="!showAlert" style="color: red">Your model is not saved and will disappear when you leave this page.</p>
+        </div>
+        <h3 ng-hide="user">Don't have an account yet? Sign up <a ui-sref="signup">here</a> to save your model!</h3>
+        <form ng-submit="saveModel(model)">
+            <div ng-show="showSaveForm" class="form-group">
+                <label>Model name</label>
+                <input type="text" class="form-control" ng-model="model.name" />
+                <button type="submit" class="btn btn-block btn-primary">SAVE</button>
+            </div>
+        </form>
+    </div>
+</div>

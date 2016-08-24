@@ -1,1 +1,1 @@
-{"lossType": "categorical_crossentropy", "decoder": {"0": "1", "1": "2", "2": "3", "3": "4"}}
+{"lossType": "binary_crossentropy", "decoder": {"0": "0", "1": "1"}}

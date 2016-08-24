@@ -1,7 +1,12 @@
 <div id="uploadFiles">
 	<input id='inputFile' type="file" class="md-primary md-raised" accept=".csv,.txt" required />
-	<md-button ng-click="upload()">Upload
+	<md-button ng-if='!uploaded' ng-click="upload()">Upload
 	</md-button>
+</div>
+
+<div>
+	<p>{{errorMessage}}</p>
+  <md-button ng-if='uploaded' ng-click="submit()">Submit</md-button>
 </div>
 <div ng-if='uploaded'>
 	<h3> Inputs </h3>
@@ -13,8 +18,4 @@
 				<td ng-repeat='d in ir track by $index'>{{d}}</td>
 		</tr>
 	</table>
-</div>
-
-<div>
-  <md-button ng-click="submit()">Submit</md-button>
 </div>

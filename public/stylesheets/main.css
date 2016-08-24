@@ -256,3 +256,51 @@ a {
 
 .md-progress-linear {
   align-self: center; }
+
+.test-section {
+  display: flex;
+  justify-content: center; }
+
+.big {
+  font-size: 25px; }
+
+.form-section {
+  padding: 40px; }
+
+#inputFile {
+  display: none; }
+
+#sampleTable {
+  display: flex;
+  flex-wrap: wrap; }
+
+.sampleRowDiv {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around; }
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
+  padding: 2px; }
+
+table {
+  display: block; }
+
+td {
+  display: inline-block; }
+
+th {
+  display: inline-block; }
+
+#loading {
+  display: flex;
+  align-items: center;
+  margin: 0 auto; }
+
+.big {
+  font-size: 25px;
+  text-transform: none;
+  line-height: 30px;
+  margin: 30px 0; }

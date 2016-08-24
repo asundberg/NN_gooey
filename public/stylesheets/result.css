@@ -1,0 +1,10 @@
+#loading {
+  display: flex;
+  align-items: center;
+  margin: 0 auto; }
+
+.big {
+  font-size: 25px;
+  text-transform: none;
+  line-height: 30px;
+  margin: 30px 0; }

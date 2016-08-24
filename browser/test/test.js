@@ -1,6 +1,7 @@
 'use strict';
 
-app.config(function($stateProvider) {
+app.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.when('/test', '/test/:id/single');
     $stateProvider.state('test', {
         url: '/test/:id',
         templateUrl: '/test/template.html',
@@ -35,7 +36,7 @@ app.config(function($stateProvider) {
                     var delimiter = detectDelimiter(uploaded);
                     inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
                     if(inputArr[0].length !== $scope.selection.numberColumns){
-                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numberColumns + " columns.";
+                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numColumns + " columns.";
                         console.log($scope.errorMessage);
                     }
                     $scope.test.testInputs = [];
@@ -64,6 +65,7 @@ app.config(function($stateProvider) {
 
 app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection) {
     $rootScope.state = 'test';
+    $state.go('test.single');
     console.log("selection", selection);
     console.log("rows", JSON.parse(selection.rows))
     $scope.selection = selection;
