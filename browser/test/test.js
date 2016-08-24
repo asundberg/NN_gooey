@@ -52,15 +52,17 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     $scope.tabs = [{ name: 'Single Input', url: "/test/single.html", state: 'test.single' }, { name: 'Multiple Input', url: '/test/multiple.html', state: 'test.multiple'  }];
 
     $scope.test = {}; //in case you need other properties
-
+    $scope.showLoader = false;
     //SOYBEAN SMALL TEST
 
     $scope.submit = function() {
+        $scope.showLoader = true;
         $scope.test.testType = (Array.isArray($scope.test.testInputs[0])) ? 'multiple' : 'single';
         console.log($scope.test)
         TestingFactory.test(modelId, $scope.test)
         .then(result => {
           $scope.outputs = result;
+          $scope.showLoader=false;
           $scope.receivedResult = true;
             var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, result[0]);
             exportToCsv("testResult.csv", prettyPrint)
@@ -68,6 +70,10 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
         });
     }
 
+    $scope.testAgain = function(){
+        $state.reload();
+    }
+    
     function prettyOutput(headers,inputs, outputs){
         console.log("sample headers", $scope.sampleHeaders)
         var finalHeaders = headers.slice();

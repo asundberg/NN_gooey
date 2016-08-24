@@ -19,11 +19,12 @@
                 </table>
             </div>
         </div>
-        <md-tabs md-dynamic-height md-border-bottom>
+        <md-tabs md-dynamic-height md-border-bottom ng-hide='receivedResult'>
             <md-tab ng-repeat="tab in tabs track by $index" label="{{tab.name}}" ui-sref='{{tab.state}}'>
                 <md-content class="md-padding">
                     <ui-view ng-show="!receivedResult" layout="column"></ui-view>
                     <!-- <div ng-include=tab.url></div> -->
+                    <md-progress-circular ng-show="showLoader" md-mode="indeterminate"></md-progress-circular><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                 </md-content>
             </md-tab>
         </md-tabs>
@@ -45,6 +46,9 @@
 
                 </tr>
             </table>
+        </div>
+        <div ng-show='receivedResult' ng-click='testAgain()'>
+             <md-button>Test Again?</md-button>
         </div>
         <!-- </md-content> -->
     </div>
