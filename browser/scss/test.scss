@@ -1,0 +1,54 @@
+.test-section {
+  display: flex;
+  padding: 20px 20px 0px 20px;
+}
+
+.form-section{
+  margin: 50px;
+  background-color: white;
+  color: #565656;
+  font-family: roboto;
+  overflow: auto;
+}
+
+
+#inputFile {
+  display: none;
+}
+
+#sampleTable {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.sampleRowDiv{
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+}
+
+.inputField{
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
+  padding: 2px;
+}
+
+table {
+  padding: 5px 15px 10px 15px;
+}
+
+td {
+  padding: 5px 7px;
+  background-color: #FFFAFA;
+}
+
+th {
+  background-color: #FCECEC;
+  padding: 5px 7px;
+}
+
+.outputTh {
+  background-color: #F5ADAD;
+}

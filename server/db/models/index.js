@@ -10,13 +10,12 @@ const User = require('./user');
 
 Training.belongsTo(User);
 User.hasMany(Training);
-
-//Selection.belongsTo(User);
 Selection.belongsTo(Training);
-User.hasMany(Selection);
+Training.hasOne(Selection);
+
 
 module.exports = {
   Training: Training,
-  Selections: Selection,
+  Selection: Selection,
   User: User
 };

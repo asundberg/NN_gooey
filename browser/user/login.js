@@ -8,8 +8,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('LoginCtrl', function ($scope, UserFactory, AuthService, $state) {
+app.controller('LoginCtrl', function ($rootScope,$scope, UserFactory, AuthService, $state) {
 
+  $rootScope.state = 'login';
+  $rootScope.homeButtonStatus();
   $scope.userInfo = {};
   $scope.error = null;
 

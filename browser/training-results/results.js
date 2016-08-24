@@ -10,10 +10,10 @@ app.config(function ($stateProvider) {
 
 app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, AuthService, $cookieStore, $state) {
   $rootScope.state = 'results';
+  $rootScope.homeButtonStatus();
 
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];
-
   if (cookieStoreItems) {
     $scope.view = cookieStoreItems;
     TrainerFactory.getModel($scope.view.modelId)
@@ -39,6 +39,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function setResults () {
     if ($scope.view.accuracyGraph && $scope.view.accuracyGraph.length) {
       $scope.showResult = true;
+
     }
     setData($scope.view.accuracyGraph);
   }
@@ -65,7 +66,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function clearView () {
     $scope.view = {};
     $cookieStore.put('view', undefined);
-    console.log($cookieStore.get('view'));
   }
 
   $scope.dontSave = function () {
@@ -78,7 +78,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   //ADDING AND REMOVING ITEMS
   $scope.saveModel = function (model) {
     model.userId = $scope.user.id;
-    console.log('userId: ', model.userId, 'model id: ', model.modelId);
     // Find out if model is already in the savedModelsArr that comes from the cookie.
     // The 'find' method returns the item it looks for from the array or undefined.
     TrainerFactory.addUserId(model.modelId, model)

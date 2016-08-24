@@ -1,32 +1,52 @@
-<div>
-  <h1>Now you can test data with your network!</h1>
-  <p>Choose if you want to test a single sample of inputs or an entire set of input samples:</p>
-  <h3>Example Rows</h3>
-  <div>
-    <table>
-      <tr>
-        <th ng-repeat='h in sampleHeaders'>{{h}}</th>
-      </tr>
-      <tr ng-repeat='row in sampleRows'>
-        <td ng-repeat='data in row'>{{data}}</td>
-      </tr>
-    </table>
-  </div>
-  <div layout="column" ng-cloak>
-    <md-content class="md-padding">
-      <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab ng-repeat="tab in tabs track by $index" label="{{tab.name}}" ui-sref='{{tab.state}}'>
-          <md-content class="md-padding">
-            <ui-view></ui-view>
-            <!-- <div ng-include=tab.url></div> -->
-          </md-content>
-        </md-tab>
-      </md-tabs>
-    </md-content>
-  </div>
-  <div ng-show="receivedResult">
-    <h3>Testing Result</h3>
-    <p>Based on your input(s), the neural network predicts the output(s) to be:</p>
-    <p ng-repeat='o in outputs'>{{o}}</p>
-  </div>
+<div class="main-container" layout='column'>
+    <div class="form-section" ng-cloak>
+        <!-- <md-content class="md-padding"> -->
+        <div class="test-section">
+            Now you can test data with your network! Choose if you want to test a single sample of inputs or an entire set of input samples:
+        </div>
+        <div class="test-section">
+            Here is a sample of what the inputs for this model should look like:
+        </div>
+        <div class="test-section">
+            <div>
+                <table id="sampleTable">
+                    <tr>
+                        <th ng-repeat='h in sampleHeaders track by $index'>{{h}}</th>
+                    </tr>
+                    <tr ng-repeat='row in sampleRows track by $index'>
+                        <td ng-repeat='data in row track by $index'>{{data}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab ng-repeat="tab in tabs track by $index" label="{{tab.name}}" ui-sref='{{tab.state}}'>
+                <md-content class="md-padding">
+                    <ui-view ng-show="!receivedResult" layout="column"></ui-view>
+                    <!-- <div ng-include=tab.url></div> -->
+                </md-content>
+            </md-tab>
+        </md-tabs>
+        <div class="test-section" ng-show="receivedResult">
+            <table id="sampleTable">
+                <tr>
+                    <th ng-repeat='h in sampleHeaders track by $index'>{{h}}</th>
+                    <th class="outputTh">Output</th>
+                </tr>
+                <!--multiple display-->
+                <tr ng-if="test.testType === 'multiple'" ng-repeat='row in test.testInputs track by $index'>
+                  <td ng-if="test.testType === 'multiple'" ng-repeat='data in row track by $index'>{{data}}</td>
+                  <td ng-if="test.testType === 'multiple'">{{outputs[0][$index]}}</td>
+
+                 <!--single display-->
+                <tr ng-if="test.testType === 'single'">
+                   <td ng-if="test.testType === 'single'" ng-repeat='data in test.testInputs track by $index'>{{data}}</td>
+                    <td ng-if="test.testType === 'single'">{{outputs[0][0]}}</td>
+
+
+                </tr>
+            </table>
+        </div>
+        <!-- </md-content> -->
+    </div>
 </div>

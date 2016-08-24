@@ -15,9 +15,25 @@ body, ul, li, h1, h2, h3, a {
   list-style: none;
   color: #f2fffd; }
 
-h1, h2, h3 {
+.container {
+  margin: 40px 500px; }
+
+.test-container {
+  margin: 40px 100px; }
+
+h1 {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 30px;
+  text-transform: uppercase; }
+
+h2 {
+  font-weight: 400;
+  font-size: 25px;
+  text-transform: uppercase; }
+
+h3 {
+  font-weight: 400;
+  font-size: 18px;
   text-transform: uppercase; }
 
 h4 {
@@ -270,3 +286,65 @@ a {
 
 .md-progress-linear {
   align-self: center; }
+
+.test-section {
+  display: flex;
+  padding: 20px 20px 0px 20px; }
+
+.form-section {
+  margin: 50px;
+  background-color: white;
+  color: #565656;
+  font-family: roboto;
+  overflow: auto; }
+
+#inputFile {
+  display: none; }
+
+#sampleTable {
+  display: flex;
+  flex-wrap: wrap; }
+
+.sampleRowDiv {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around; }
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
+  padding: 2px; }
+
+table {
+  padding: 5px 15px 10px 15px; }
+
+td {
+  padding: 5px 7px;
+  background-color: #FFFAFA; }
+
+th {
+  background-color: #FCECEC;
+  padding: 5px 7px; }
+
+.outputTh {
+  background-color: #F5ADAD; }
+
+#loading {
+  display: flex;
+  align-items: center;
+  margin: 0 auto; }
+
+#stats {
+  display: flex;
+  margin: 20px; }
+
+#results {
+  display: flex;
+  justify-content: space-between; }
+
+.big {
+  font-size: 25px;
+  text-transform: none;
+  line-height: 30px;
+  margin: 30px 0px 20px 0px; }

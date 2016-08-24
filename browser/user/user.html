@@ -1,9 +1,13 @@
-<div>
-  <h1>{{user.name}}</h1>
-  <h3>Your training models:</h3>
-  <p>If you want to test new data, please choose a model to test against.</p>
-  <div ng-repeat="model in models">
-    <span><input name="test" type="checkbox" ng-model="model.modelId" ng-click="selectModelToTest(model)">{{model.name}}</span>
+<div class="container">
+  <div>
+    <div>
+      <h1>{{user.name}}</h1>
+      <h3>Your training models:</h3>
+      <p>If you want to test new data, please choose a model to test against.</p>
+      <div ng-repeat="model in models">
+        <md-checkbox aria-label="modelOption" name="test" type="checkbox" ng-click="selectModelToTest(model)">{{model.name}}</md-checkbox>
+      </div>
+      <md-button ng-disabled="!selectedModel" ng-click="goToTest()">TEST!</md-button>
+    </div>
   </div>
-  <button ng-disabled="!selectedModel" ui-sref="test({modelId: selectedModel.id})">TEST!</button>
 </div>
