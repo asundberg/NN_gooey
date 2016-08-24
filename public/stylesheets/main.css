@@ -356,3 +356,7 @@ th {
 #circles {
   overflow: auto;
   width: 90vw; }
+
+.header {
+  height: 100px;
+  width: flex; }

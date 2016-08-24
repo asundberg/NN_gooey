@@ -166,7 +166,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     var bigRadius = 150;
     var lilRadius = 5;
     var width = bigRadius * 2 * numClasses;
-    var height = 300;
+    var height = 400;
 
     var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
 
@@ -221,7 +221,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
           .selectAll("div")
           .data($scope.allClassesArr)
           .enter()
-          .append("div");
+          .append("div")
+          .attr("class", "header")
 
     var yClass = canvas.append("g")
           .attr("class", "yClass");
