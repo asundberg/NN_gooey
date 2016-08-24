@@ -357,6 +357,6 @@ th {
   overflow: auto;
   width: 90vw; }
 
-.header {
-  height: 100px;
-  width: flex; }
+.result-header {
+  font-size: 25px;
+  fill: white; }

@@ -180,7 +180,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         if (i >= colors.length) {
           colorIndex = 0;
         }
-        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2, "radius": bigRadius, "color" : colors[colorIndex] };
+        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2 + 50, "radius": bigRadius, "color" : colors[colorIndex] };
         bigCircles.push(circle);
         colorIndex++;
       }
@@ -192,7 +192,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         allClasses[key].forEach(function (result) {
           point = randomPoint(bigRadius);
           point.x += bigRadius + (bigRadius * 2 * i);
-          point.y += height / 2;
+          point.y += height / 2 + 50;
           circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
           smallCircles.push(circle);
         })
@@ -217,12 +217,17 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
           .attr("height", height);
 
     var headers = canvas.append("g")
-          .attr("class", "headers")
-          .selectAll("div")
+          .attr("class", "result-headers")
+          .selectAll("text")
           .data($scope.allClassesArr)
           .enter()
-          .append("div")
-          .attr("class", "header")
+          .append("text")
+          .text(function (d) { return d; })
+          .data(bigCircles)
+          .attr("class", "result-header")
+          .attr("x", function (d) { return d.x_axis; })
+          .attr("y", "50")
+          .attr("text-anchor", "middle");
 
     var yClass = canvas.append("g")
           .attr("class", "yClass");
