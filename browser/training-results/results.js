@@ -28,7 +28,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         modelId: trainResult[0].modelId,
         accuracyGraph: trainResult[0].accuracy,
         maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
-        linkToTest: '#/test/' + trainResult[0].modelId
+        linkToTest: '#/test/' + trainResult[0].modelId,
+        predicted: trainResult[0].predicted
       };
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
@@ -143,6 +144,90 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     svg.append('g') // Add the Y Axis
     .attr('class', 'y axis')
     .call(yAxis);
+  }
+
+  function classifier () {
+    // var classes = $scope.view.predicted;
+    var classes = [1, 2, 3, 4]
+    var classified = {};
+    classes.forEach(function(yClass, index) {
+      if(!classified[yClass]) classified[yClass] = [];
+      classified[yClass].push(index)
+    })
+    $scope.allClasses = classified;
+  }
+
+  $scope.drawClassCircles = function() {
+    classifier();
+    var numClasses = Object.keys($scope.allClasses).length;
+    var bigRadius = 150;
+    var lilRadius = 8;
+    var width = bigRadius * 2 * numClasses;
+    var height = 500;
+
+    var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
+
+    var bigCircles = [
+     // { "x_axis": middle.x / 2, "y_axis": middle.y, "radius": bigRadius, "color" : "purple"},
+     // { "x_axis": middle.x / 2 + middle.x, "y_axis": middle.y, "radius": bigRadius, "color" : "red"},
+     // { "x_axis": middle.x, "y_axis": middle.y, "radius": bigRadius, "color" : "green" }
+    ];
+
+    // var lilCircles = [
+    //    { "x_axis": middle.x, "y_axis": middle.y, "radius": lilRadius, "color" : "pink" },
+    //    { "x_axis": middle.x + 10, "y_axis": middle.y + 10, "radius": lilRadius, "color" : "pink"},
+    //    { "x_axis": middle.x + 20, "y_axis": middle.y - 20, "radius": lilRadius, "color" : "pink"}
+    // ];
+
+    function drawCircles (numClasses) {
+      var colorIndex = 0;
+      for(var i = 0; i < numClasses; i++) {
+        if (i >= colors.length) {
+          colorIndex = 0;
+        }
+        var circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2, "radius": bigRadius, "color" : colors[colorIndex] };
+        bigCircles.push(circle);
+        colorIndex++;
+      }
+
+    }
+
+    drawCircles(numClasses);
+    console.log(bigCircles);
+
+    var canvas = d3.select("#circles")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+    var yClass = canvas.append("g")
+          .attr("class", "yClass");
+
+    var yCircles = yClass.selectAll("circle")
+          .data(bigCircles)
+          .enter()
+          .append("circle");
+
+    var yCircleAttributes = yCircles
+         .attr("cx", function (d) { return d.x_axis; })
+         .attr("cy", function (d) { return d.y_axis; })
+         .attr("r", function (d) { return d.radius; })
+         .style("fill", function(d) { return d.color; });
+
+
+    var sample = canvas.append("g")
+                  .attr("class", "sample");
+    var samples = sample.selectAll("circle")
+                  .data(lilCircles)
+                  .enter()
+                  .append("circle");
+
+    var sampleAttributes = samples
+           .attr("cx", function (d) { return d.x_axis; })
+           .attr("cy", function (d) { return d.y_axis; })
+           .attr("r", function (d) { return d.radius; })
+           .style("fill", function(d) { return d.color; });
+
   }
 
 });
