@@ -146,24 +146,27 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     .call(yAxis);
   }
 
+
+  // circle stuff:
   function classifier () {
-    // var classes = $scope.view.predicted;
-    var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
+    var classes = $scope.view.predicted;
+    // var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
     var classified = {};
     classes.forEach(function(yClass, index) {
       if(!classified[yClass]) classified[yClass] = [];
       classified[yClass].push(index)
-    })
+    });
     $scope.allClasses = classified;
   }
 
   $scope.drawClassCircles = function() {
     classifier();
-    var numClasses = Object.keys($scope.allClasses).length;
+    $scope.allClassesArr = Object.keys($scope.allClasses);
+    var numClasses = $scope.allClassesArr.length;
     var bigRadius = 150;
     var lilRadius = 5;
     var width = bigRadius * 2 * numClasses;
-    var height = 500;
+    var height = 300;
 
     var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
 
@@ -190,7 +193,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
           point = randomPoint(bigRadius);
           point.x += bigRadius + (bigRadius * 2 * i);
           point.y += height / 2;
-          console.log(point);
           circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
           smallCircles.push(circle);
         })
@@ -214,6 +216,13 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
           .attr("width", width)
           .attr("height", height);
 
+    var headers = canvas.append("g")
+          .attr("class", "headers")
+          .selectAll("div")
+          .data($scope.allClassesArr)
+          .enter()
+          .append("div");
+
     var yClass = canvas.append("g")
           .attr("class", "yClass");
 
@@ -227,7 +236,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
          .attr("cy", function (d) { return d.y_axis; })
          .attr("r", function (d) { return d.radius; })
          .style("fill", function(d) { return d.color; });
-
 
     var sample = canvas.append("g")
                   .attr("class", "sample");
