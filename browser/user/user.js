@@ -15,9 +15,9 @@ app.config(function ($stateProvider) {
             })
             .then(function (models) {
               if (models) {
+                console.log('this is MODELS: ', models);
                 userObj.models = models;
               }
-              console.log('Yay - the user state resolve function is working! This is the userObj: ', userObj);
               return userObj;
             });
           }
@@ -25,7 +25,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('UserCtrl', function ($rootScope, $scope, userAccount) {
+app.controller('UserCtrl', function ($rootScope, $scope, $state, userAccount) {
   $rootScope.state = 'user';
   $rootScope.homeButtonStatus();
   $scope.user = userAccount;
@@ -33,5 +33,9 @@ app.controller('UserCtrl', function ($rootScope, $scope, userAccount) {
   $scope.selectedModel = null;
   $scope.selectModelToTest = function (model) {
     $scope.selectedModel = model;
+    console.log('this is selectedModel: ', $scope.selectedModel);
+  };
+  $scope.goToTest = function () {
+    $state.go('test', {id: $scope.selectedModel.id});
   };
 });
