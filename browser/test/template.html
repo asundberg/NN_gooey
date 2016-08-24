@@ -52,6 +52,11 @@
         <div ng-show='receivedResult' ng-click='testAgain()'>
              <md-button>Test Again?</md-button>
         </div>
+        <div ng-if='receivedResult'>
+            <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
+              Download
+            </md-button>
+        </div>
         <!-- </md-content> -->
     </div>
 </div>

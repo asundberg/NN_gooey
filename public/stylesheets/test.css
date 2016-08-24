@@ -9,6 +9,15 @@
   font-family: roboto;
   overflow: auto; }
 
+md-dialog-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start; }
+
+h2.md-title {
+  color: black;
+  text-transform: none; }
+
 #inputFile {
   display: none; }
 
