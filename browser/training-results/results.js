@@ -148,7 +148,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
 
   function classifier () {
     // var classes = $scope.view.predicted;
-    var classes = [1, 2, 3, 4]
+    var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
     var classified = {};
     classes.forEach(function(yClass, index) {
       if(!classified[yClass]) classified[yClass] = [];
@@ -161,39 +161,53 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     classifier();
     var numClasses = Object.keys($scope.allClasses).length;
     var bigRadius = 150;
-    var lilRadius = 8;
+    var lilRadius = 5;
     var width = bigRadius * 2 * numClasses;
     var height = 500;
 
     var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
 
-    var bigCircles = [
-     // { "x_axis": middle.x / 2, "y_axis": middle.y, "radius": bigRadius, "color" : "purple"},
-     // { "x_axis": middle.x / 2 + middle.x, "y_axis": middle.y, "radius": bigRadius, "color" : "red"},
-     // { "x_axis": middle.x, "y_axis": middle.y, "radius": bigRadius, "color" : "green" }
-    ];
+    var bigCircles = [];
+    var smallCircles = [];
 
-    // var lilCircles = [
-    //    { "x_axis": middle.x, "y_axis": middle.y, "radius": lilRadius, "color" : "pink" },
-    //    { "x_axis": middle.x + 10, "y_axis": middle.y + 10, "radius": lilRadius, "color" : "pink"},
-    //    { "x_axis": middle.x + 20, "y_axis": middle.y - 20, "radius": lilRadius, "color" : "pink"}
-    // ];
-
-    function drawCircles (numClasses) {
+    function drawBigCircles (numClasses) {
       var colorIndex = 0;
+      var circle;
       for(var i = 0; i < numClasses; i++) {
         if (i >= colors.length) {
           colorIndex = 0;
         }
-        var circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2, "radius": bigRadius, "color" : colors[colorIndex] };
+        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2, "radius": bigRadius, "color" : colors[colorIndex] };
         bigCircles.push(circle);
         colorIndex++;
       }
-
     }
 
-    drawCircles(numClasses);
-    console.log(bigCircles);
+    function drawSmallCircles (allClasses) {
+      var circle, point, i = 0;
+      for(var key in allClasses) {
+        allClasses[key].forEach(function (result) {
+          point = randomPoint(bigRadius);
+          point.x += bigRadius + (bigRadius * 2 * i);
+          point.y += height / 2;
+          console.log(point);
+          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
+          smallCircles.push(circle);
+        })
+        i++;
+      }
+    }
+
+    function randomPoint(radius) {
+      var point = {};
+      var angle = Math.random()*Math.PI*2;
+      point.x = Math.random()*Math.cos(angle)*radius;
+      point.y = Math.random()*Math.sin(angle)*radius;
+      return point;
+    }
+
+    drawBigCircles(numClasses);
+    drawSmallCircles($scope.allClasses);
 
     var canvas = d3.select("#circles")
           .append("svg")
@@ -218,7 +232,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     var sample = canvas.append("g")
                   .attr("class", "sample");
     var samples = sample.selectAll("circle")
-                  .data(lilCircles)
+                  .data(smallCircles)
                   .enter()
                   .append("circle");
 

@@ -348,3 +348,7 @@ th {
   text-transform: none;
   line-height: 30px;
   margin: 30px 0px 20px 0px; }
+
+#circles {
+  overflow: auto;
+  width: 90vw; }
