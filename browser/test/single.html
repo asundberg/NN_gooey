@@ -1,14 +1,14 @@
 <!-- <h2>Display Inputs: {{test.testInputs}}</h2> -->
-
-<form name='predictInput' ng-submit='submit()'>
-  <div class="sampleRowDiv inputField">
-    <md-input-container class="md-block" ng-repeat='h in sampleHeaders track by $index' layout='row'>
-      <label>{{h}}</label>
-      <input  required type="number" step="any" ng-model="test.testInputs[$index]"/>
-    </md-input-container>
-  </div>
-  <div>
-  <md-button type="submit">Submit</md-button>
-  </div>
-</form>
-
+<div ng-hide="showLoader">
+	<form name='predictInput' ng-submit='submit()'>
+	  <div class="sampleRowDiv inputField">
+	    <md-input-container class="md-block" ng-repeat='h in sampleHeaders track by $index' layout='row'>
+	      <label>{{h}}</label>
+	      <input  required type="number" step="any" ng-model="test.testInputs[$index]"/>
+	    </md-input-container>
+	  </div>
+	  <div>
+	  <md-button type="submit">Submit</md-button>
+	  </div>
+	</form>
+</div>
