@@ -22,42 +22,7 @@ app.config(function($stateProvider) {
     $stateProvider.state('test.multiple', {
         url: '/multiple',
         templateUrl: '/test/multiple.html',
-        controller: function($scope){
-            var fReader = new FileReader();
-            var fileInput = document.getElementById('inputFile');
-            var inputArr;
-            fileInput.addEventListener('change', function(event){
-                var file = event.target.files[0];
-                fReader.addEventListener("loadend", function(event) {
-                    $scope.uploaded = true;
-                    var textFile = event.target.result;
-                    var uploaded = textFile;
-                    var delimiter = detectDelimiter(uploaded);
-                    inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
-                    if(inputArr[0].length !== $scope.selection.numberColumns){
-                        $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numberColumns + " columns.";
-                        console.log($scope.errorMessage);
-                    }
-                    $scope.test.testInputs = [];
-                    $scope.test.testInputs = inputArr;
-                    $scope.displayInputRows = inputArr.slice(0,10);
-                    $scope.$digest()
-                })
-                fReader.readAsText(file); //emits loadended event
-            })
-            $scope.upload = function () {
-                fileInput.click();
-            }
-            function detectDelimiter(str) {
-                var delimiters = [" ",",",";","\t"];
-                var thisDelimiter = null;
-                delimiters.forEach(function(delimiter) {
-                  if(str.indexOf(delimiter) > -1) thisDelimiter = delimiter;
-                })
-                if(thisDelimiter) return thisDelimiter;
-                else throw "Data is not properly delimited"
-            }
-        }
+        controller: 'OutputCtrl'
     });
 });
 
@@ -95,9 +60,88 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
           $scope.outputs = result;
           $scope.receivedResult = true;
           console.log('RESULT', $scope.outputs);
+          exportToCsv("this.csv", $scope.outputs)
         });
     }
 
+    function exportToCsv(filename, rows) {
+        var processRow = function (row) {
+            var finalVal = '';
+            for (var j = 0; j < row.length; j++) {
+                var innerValue = row[j] === null ? '' : row[j].toString();
+                if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                };
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+            }
+            return finalVal + '\n';
+        };
+
+        var csvFile = '';
+        for (var i = 0; i < rows.length; i++) {
+            csvFile += processRow(rows[i]);
+        }
+
+        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+});
+
+app.controller('OutputCtrl', function($scope) {
+    var fReader = new FileReader();
+    var fileInput = document.getElementById('inputFile');
+    var inputArr;
+    fileInput.addEventListener('change', function(event){
+        var file = event.target.files[0];
+        fReader.addEventListener("loadend", function(event) {
+            $scope.uploaded = true;
+            var textFile = event.target.result;
+            var uploaded = textFile;
+            var delimiter = detectDelimiter(uploaded);
+            inputArr = uploaded.trim().split("\n").map(row=> row.split(delimiter).map(data=>Number(data)))
+            if(inputArr[0].length !== $scope.selection.numColumns){
+                $scope.errorMessage = "ERROR: Mismatch number of input columns. You should have only " + $scope.selection.numColumns + " columns.";
+                console.log($scope.errorMessage);
+            }
+            $scope.test.testInputs = [];
+            $scope.test.testInputs = inputArr;
+            $scope.displayInputRows = inputArr.slice(0,10);
+            $scope.$digest()
+        })
+        fReader.readAsText(file); //emits loadended event
+    })
+    $scope.upload = function () {
+        fileInput.click();
+    }
+    function detectDelimiter(str) {
+        var delimiters = [" ",",",";","\t"];
+        var thisDelimiter = null;
+        delimiters.forEach(function(delimiter) {
+          if(str.indexOf(delimiter) > -1) thisDelimiter = delimiter;
+        })
+        if(thisDelimiter) return thisDelimiter;
+        else throw "Data is not properly delimited"
+    }
 });
 
 
