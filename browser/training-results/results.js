@@ -186,12 +186,12 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     function drawSmallCircles (allClasses) {
       var circle, point, i = 0;
       for(var key in allClasses) {
-        allClasses[key].forEach(function (result) {
+        allClasses[key].forEach(function (sampleIndex) {
           point = randomPoint(bigRadius);
           point.x += bigRadius + (bigRadius * 2 * i);
           point.y += height / 2;
           console.log(point);
-          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
+          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484", sampleIndex: sampleIndex};
           smallCircles.push(circle);
         })
         i++;
@@ -201,8 +201,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     function randomPoint(radius) {
       var point = {};
       var angle = Math.random()*Math.PI*2;
-      point.x = Math.random()*Math.cos(angle)*radius;
-      point.y = Math.random()*Math.sin(angle)*radius;
+      point.x = Math.random(0, 1)*Math.cos(angle)*radius*0.9;
+      point.y = Math.random(0, 1)*Math.sin(angle)*radius*0.9;
       return point;
     }
 
@@ -213,6 +213,10 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
           .append("svg")
           .attr("width", width)
           .attr("height", height);
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .html(function(d) { return "sample #" + d.sampleIndex; })
+    canvas.call(tip);
 
     var yClass = canvas.append("g")
           .attr("class", "yClass");
@@ -240,8 +244,17 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
            .attr("cx", function (d) { return d.x_axis; })
            .attr("cy", function (d) { return d.y_axis; })
            .attr("r", function (d) { return d.radius; })
+           .attr("value", function(d) {return d.sampleIndex})
            .style("fill", function(d) { return d.color; });
 
+    var mouseover = sampleAttributes
+           .on('mouseover', tip.show)
+           .on('mouseout', tip.hide);
+
+  }
+
+  function onSampleClick(sample) {
+    console.log("I'm sample " + sample);
   }
 
 });
