@@ -1,6 +1,7 @@
 'use strict';
 
-app.config(function($stateProvider) {
+app.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.when('/test', '/test/:id/single');
     $stateProvider.state('test', {
         url: '/test/:id',
         templateUrl: '/test/template.html',
@@ -29,8 +30,9 @@ app.config(function($stateProvider) {
 
 app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection) {
     $rootScope.state = 'test';
-    console.log("selection", selection);
-    console.log("rows", JSON.parse(selection.rows))
+    $state.go('test.single');
+    // console.log("selection", selection);
+    // console.log("rows", JSON.parse(selection.rows))
     $scope.selection = selection;
 
     $rootScope.homeButtonStatus();
@@ -54,29 +56,27 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     //SOYBEAN SMALL TEST
 
     $scope.submit = function() {
-        console.log("testInputs", $scope.test.testInputs)
+        $scope.test.testType = (Array.isArray($scope.test.testInputs[0])) ? 'multiple' : 'single';
+        console.log($scope.test)
         TestingFactory.test(modelId, $scope.test)
         .then(result => {
           $scope.outputs = result;
           $scope.receivedResult = true;
-          console.log('RESULT', $scope.outputs);
-          //get model name
-          // selection.getTraining()
-          // .then(training=>{
-            var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, result);
+            var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, result[0]);
             exportToCsv("testResult.csv", prettyPrint)
-          // })
+            console.log('RESULT', $scope.outputs[0]);
         });
     }
 
     function prettyOutput(headers,inputs, outputs){
-        var finalHeaders = headers;
+        console.log("sample headers", $scope.sampleHeaders)
+        var finalHeaders = headers.slice();
         finalHeaders.push("Output");
         var prettyArr = [];
         prettyArr.push(finalHeaders);
         for(var i=0; i<inputs.length; i++){
-            var inputCopy = inputs[i];
-            inputCopy.push(outputs[0][i]);
+            var inputCopy = inputs[i].slice();
+            inputCopy.push(outputs[i].slice());
             prettyArr.push(inputCopy);
         }
         return prettyArr;
