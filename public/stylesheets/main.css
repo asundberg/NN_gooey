@@ -70,6 +70,9 @@ ui-view {
   color: #43a1b2;
   border: none; }
 
+.alert {
+  color: red; }
+
 #home-header {
   display: flex;
   justify-content: flex-end; }
@@ -330,6 +333,9 @@ th {
   align-items: center;
   margin: 20px auto;
   padding: 20px; }
+
+.testButton {
+  padding-left: 20px; }
 
 #loading {
   display: flex;

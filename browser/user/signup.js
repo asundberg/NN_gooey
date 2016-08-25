@@ -22,6 +22,7 @@ app.controller('SignupCtrl', function ($rootScope, $scope, UserFactory, AuthServ
 
   $scope.signupUser = function (userInfo) {
     $scope.error = null;
+    $scope.errorPresent = false;
     UserFactory.createUser(userInfo)
     .then(function (user) {
       if (user) {
@@ -45,7 +46,8 @@ app.controller('SignupCtrl', function ($rootScope, $scope, UserFactory, AuthServ
       }
     })
     .catch(function (err) {
-      if (err.status === 409) {
+      $scope.errorPresent = true;
+      if (err.status === 500) {
         $scope.error = 'Unable to create account. There is already an account with this email.';
       } else {
         $scope.error = 'Unable to complete login.';

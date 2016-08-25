@@ -30,6 +30,16 @@
                 </md-content>
             </md-tab>
         </md-tabs>
+        <div class='testButton' layout='row'>
+            <div ng-show='receivedResult' ng-click='testAgain()'>
+                 <md-button>Test Again?</md-button>
+            </div>
+            <div ng-if='receivedResult'>
+                <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
+                  Download
+                </md-button>
+            </div>
+        </div>
         <div class="test-section" ng-show="receivedResult">
             <table id="sampleTable">
                 <tr>
@@ -48,14 +58,6 @@
 
                 </tr>
             </table>
-        </div>
-        <div ng-show='receivedResult' ng-click='testAgain()'>
-             <md-button>Test Again?</md-button>
-        </div>
-        <div ng-if='receivedResult'>
-            <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
-              Download
-            </md-button>
         </div>
         <!-- </md-content> -->
     </div>

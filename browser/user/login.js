@@ -14,6 +14,7 @@ app.controller('LoginCtrl', function ($rootScope,$scope, UserFactory, AuthServic
   $rootScope.homeButtonStatus();
   $scope.userInfo = {};
   $scope.error = null;
+  $scope.errorPresent = false;
 
   $scope.loginUser = function (userInfo) {
     $scope.error = null;
@@ -22,8 +23,9 @@ app.controller('LoginCtrl', function ($rootScope,$scope, UserFactory, AuthServic
       .then(function (user) {
         $state.go('user', {id: user.id});
       });
-    }).catch(function () {
-      $scope.error = 'Invalid login credentials.';
+    }).catch(function (error) {
+      $scope.errorPresent=true;
+      $scope.error = error.message;
     });
   };
 
