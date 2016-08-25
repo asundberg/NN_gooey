@@ -88,6 +88,10 @@ ui-view {
   border: none;
 }
 
+.alert{
+  color: red;
+}
+
 @import "home";
 @import "upload";
 @import "navbar";

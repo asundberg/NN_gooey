@@ -70,6 +70,9 @@ ui-view {
   color: #43a1b2;
   border: none; }
 
+.alert {
+  color: red; }
+
 #home-header {
   display: flex;
   justify-content: flex-end; }
@@ -284,6 +287,15 @@ a {
   font-family: roboto;
   overflow: auto; }
 
+md-dialog-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start; }
+
+h2.md-title {
+  color: black;
+  text-transform: none; }
+
 #inputFile {
   display: none; }
 
@@ -321,6 +333,9 @@ th {
   align-items: center;
   margin: 20px auto;
   padding: 20px; }
+
+.testButton {
+  padding-left: 20px; }
 
 #loading {
   display: flex;

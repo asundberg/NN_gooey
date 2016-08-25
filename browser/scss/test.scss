@@ -11,6 +11,16 @@
   overflow: auto;
 }
 
+md-dialog-actions{
+  display:flex;
+  flex-direction:row-reverse;
+  justify-content:flex-start;
+}
+
+h2.md-title{
+  color:black;
+  text-transform: none;
+}
 
 #inputFile {
   display: none;
@@ -58,4 +68,8 @@ th {
   align-items: center;
   margin: 20px auto;
   padding: 20px;
+}
+
+.testButton{
+  padding-left: 20px;
 }

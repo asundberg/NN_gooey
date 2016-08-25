@@ -13,6 +13,7 @@
         <input type="password" class="form-control" ng-model="userInfo.password" required />
       </div>
     </md-input-container>
+    <div class='alert' ng-message='errorPresent' role="alert">{{error}}</div>
     <md-button type="submit" class="btn btn-block btn-primary">SUBMIT</md-button>
   </form>
 </div>

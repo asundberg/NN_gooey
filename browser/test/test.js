@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection) {
+app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, TestingFactory, $state, selection, $mdDialog) {
     $rootScope.state = 'test';
     $state.go('test.single');
     // console.log("selection", selection);
@@ -64,8 +64,6 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
           $scope.outputs = result;
           $scope.showLoader=false;
           $scope.receivedResult = true;
-            var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, result[0]);
-            exportToCsv("testResult.csv", prettyPrint)
             console.log('RESULT', $scope.outputs[0]);
         });
     }
@@ -73,6 +71,22 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
     $scope.testAgain = function(){
         $state.reload();
     }
+
+    $scope.showConfirm = function(ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+              .title('Would you like to download the test results?')
+              .ariaLabel('Lucky day')
+              .targetEvent(ev)
+              .ok('Yes')
+              .cancel('No');
+        $mdDialog.show(confirm).then(function() {
+            var prettyPrint = prettyOutput($scope.sampleHeaders, $scope.test.testInputs, $scope.outputs[0]);
+            exportToCsv("testResult.csv", prettyPrint)
+        }, function() {
+          // $scope.status = 'You decided to keep your debt.';
+        });
+    };
     
     function prettyOutput(headers,inputs, outputs){
         console.log("sample headers", $scope.sampleHeaders)
@@ -80,10 +94,17 @@ app.controller('TestCtrl', function($rootScope, $scope, $http, $stateParams, Tes
         finalHeaders.push("Output");
         var prettyArr = [];
         prettyArr.push(finalHeaders);
-        for(var i=0; i<inputs.length; i++){
-            var inputCopy = inputs[i].slice();
-            inputCopy.push(outputs[i].slice());
+        var inputCopy;
+        if($scope.test.testType === 'single'){
+            inputCopy = inputs.slice();
+            inputCopy.push(outputs[0].slice())
             prettyArr.push(inputCopy);
+        }else{
+            for(var i=0; i<inputs.length; i++){
+                inputCopy = inputs[i].slice();
+                inputCopy.push(outputs[i].slice());
+                prettyArr.push(inputCopy);
+            }
         }
         return prettyArr;
     }
