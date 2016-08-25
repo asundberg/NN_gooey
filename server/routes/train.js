@@ -11,7 +11,7 @@ const Selection = require('../db/models').Selection;
 //for /train
 router.post('/', function (req,res,next) {
   //put py spawn here
-
+  console.log("reached here");
   var spawn = child_process.spawn;
   var py = spawn('python', ['server/main.py']);
 
@@ -45,10 +45,11 @@ router.post('/', function (req,res,next) {
 
   // var data = [input, output];
   var finalArr = [];
+  var finalStr = "";
 
 
   py.stdout.on('data', function (data) {
-    finalArr.push(JSON.parse(data));
+    finalStr += data;
   });
 
   py.stderr.on('data', function(data) {
@@ -57,7 +58,12 @@ router.post('/', function (req,res,next) {
 
   py.stdout.on('end', function () {
     console.log('ended');
-    console.log(finalArr);
+    //console.log("finalStr", finalStr);
+    //console.log("json", json);
+    var json = JSON.parse(finalStr);
+    finalArr.push(json);
+    console.log('finalArr',finalArr);
+
 
     let modelId = finalArr[0].modelId;
     let configPath = modelStuffPath + "/config/" +  modelId + "_config.json";
