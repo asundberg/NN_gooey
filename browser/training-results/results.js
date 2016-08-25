@@ -11,7 +11,6 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, AuthService, $cookieStore, $state) {
   $rootScope.state = 'results';
   $rootScope.homeButtonStatus();
-
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];
   if (cookieStoreItems) {
@@ -19,10 +18,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     TrainerFactory.getModel($scope.view.modelId)
     .then(function (response) {
       $scope.model = response;
-      setResults();
-      drawClassCircles()
-    });
-    setResults();
+      setPage();
+    })
   } else {
     TrainerFactory.train()
     .then(trainResult => {
@@ -35,9 +32,21 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
       };
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
-      setResults();
-      drawClassCircles()
+      setPage();
     });
+  }
+
+  function setPage() {
+      setResults();
+      drawClassCircles();
+      console.log(TrainerFactory);
+      console.log(TrainerFactory.headerReference)
+      $scope.currentSample = null;
+      $scope.headerReference = TrainerFactory.headerReference;
+      $scope.headerKeys = Object.keys($scope.headerReference);
+      $scope.outputIndex = $scope.headerKeys.length - 1;
+      $scope.inputArr = TrainerFactory.inputArr;
+      $scope.outputArr = TrainerFactory.outputArr;
   }
 
   function setResults () {
@@ -263,7 +272,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
            .attr("cy", function (d) { return d.y_axis; })
            .attr("r", function (d) { return d.radius; })
            .attr("value", function(d) {return d.sampleIndex})
-           .style("fill", function(d) { return d.color; });
+           .style("fill", function(d) { return d.color; })
+           .on('click', function(d) { onSampleClick(d.sampleIndex)});
 
     var mouseover = sampleAttributes
            .on('mouseover', tip.show)
@@ -272,7 +282,9 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   }
 
   function onSampleClick(sample) {
-    console.log("I'm sample " + sample);
+    $scope.currentSample = sample;
+    $scope.$digest();
+    console.log("sample", sample);
   }
 
 });

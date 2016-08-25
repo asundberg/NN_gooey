@@ -1,2 +1,5 @@
 node_modules
 secrets
+modelStuff/config/*
+modelStuff/lib/*
+modelStuff/weights/*
