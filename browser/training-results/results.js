@@ -146,24 +146,27 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     .call(yAxis);
   }
 
+
+  // circle stuff:
   function classifier () {
-    // var classes = $scope.view.predicted;
-    var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
+    var classes = $scope.view.predicted;
+    // var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
     var classified = {};
     classes.forEach(function(yClass, index) {
       if(!classified[yClass]) classified[yClass] = [];
       classified[yClass].push(index)
-    })
+    });
     $scope.allClasses = classified;
   }
 
   $scope.drawClassCircles = function() {
     classifier();
-    var numClasses = Object.keys($scope.allClasses).length;
+    $scope.allClassesArr = Object.keys($scope.allClasses);
+    var numClasses = $scope.allClassesArr.length;
     var bigRadius = 150;
     var lilRadius = 5;
     var width = bigRadius * 2 * numClasses;
-    var height = 500;
+    var height = 400;
 
     var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
 
@@ -177,7 +180,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         if (i >= colors.length) {
           colorIndex = 0;
         }
-        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2, "radius": bigRadius, "color" : colors[colorIndex] };
+        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2 + 50, "radius": bigRadius, "color" : colors[colorIndex] };
         bigCircles.push(circle);
         colorIndex++;
       }
@@ -189,9 +192,14 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         allClasses[key].forEach(function (sampleIndex) {
           point = randomPoint(bigRadius);
           point.x += bigRadius + (bigRadius * 2 * i);
+<<<<<<< HEAD
           point.y += height / 2;
           console.log(point);
           circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484", sampleIndex: sampleIndex};
+=======
+          point.y += height / 2 + 50;
+          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
+>>>>>>> ec90b416603925317e7b63e8a83bcfcd6352845a
           smallCircles.push(circle);
         })
         i++;
@@ -218,6 +226,19 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
       .html(function(d) { return "sample #" + d.sampleIndex; })
     canvas.call(tip);
 
+    var headers = canvas.append("g")
+          .attr("class", "result-headers")
+          .selectAll("text")
+          .data($scope.allClassesArr)
+          .enter()
+          .append("text")
+          .text(function (d) { return d; })
+          .data(bigCircles)
+          .attr("class", "result-header")
+          .attr("x", function (d) { return d.x_axis; })
+          .attr("y", "50")
+          .attr("text-anchor", "middle");
+
     var yClass = canvas.append("g")
           .attr("class", "yClass");
 
@@ -231,7 +252,6 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
          .attr("cy", function (d) { return d.y_axis; })
          .attr("r", function (d) { return d.radius; })
          .style("fill", function(d) { return d.color; });
-
 
     var sample = canvas.append("g")
                   .attr("class", "sample");

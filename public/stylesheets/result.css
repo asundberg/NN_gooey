@@ -21,6 +21,12 @@
   overflow: auto;
   width: 90vw; }
 
+<<<<<<< HEAD
 .accuracy-tab {
   width: 80vw;
   display: flex; }
+=======
+.result-header {
+  font-size: 25px;
+  fill: white; }
+>>>>>>> ec90b416603925317e7b63e8a83bcfcd6352845a

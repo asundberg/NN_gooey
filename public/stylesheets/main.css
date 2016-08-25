@@ -39,6 +39,10 @@ h3 {
 h4 {
   color: #f2fffd; }
 
+.center-heading {
+  margin-left: 70px;
+  margin-top: 70px; }
+
 .main-container {
   display: flex;
   width: 100%;
