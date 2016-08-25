@@ -28,10 +28,10 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         accuracyGraph: trainResult[0].accuracy,
         maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
         linkToTest: '#/test/' + trainResult[0].modelId,
-        predicted: trainResult[0].predicted
       };
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
+      $scope.view.predicted = trainResult[0].predicted;
       setPage();
     });
   }
