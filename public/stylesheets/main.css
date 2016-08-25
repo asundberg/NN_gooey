@@ -366,3 +366,7 @@ th {
 .accuracy-tab {
   width: 80vw;
   display: flex; }
+
+.result-header {
+  font-size: 25px;
+  fill: white; }

@@ -1,12 +1,8 @@
-<div class="main-container" id="loading" ng-show="!view" layout="column">
+<!-- <div class="main-container" id="loading" ng-show="!view" layout="column">
     <font class="big">Your network is being trained...</font>
     <img src="http://i.imgur.com/LAs4PVe.gif"></div>
-</div>
-<<<<<<< HEAD
-<!-- ng-show="view" -->
-=======
->>>>>>> ec90b416603925317e7b63e8a83bcfcd6352845a
-<div ng-show="view" id="results" layout="row">
+</div> -->
+<div ng-show="true" id="results" layout="row">
   <md-tabs class="tab-container" md-dynamic-height md-border-bottom>
   <md-tab label="accuracy">
   <div class="accuracy-tab">
@@ -44,8 +40,7 @@
     </div>
     </md-tab>
     <md-tab label="your data">
-    Data predictions here!
-    <md-button ng-click="drawClassCircles()"></md-button>
+    <p>See how your model is classifying the original input data:</p>
 <!--       <div layout="row" flex>
         <div ng-repeat="class in allClassesArr" class="center-heading" flex>
           <h3>{{class}}</h3>

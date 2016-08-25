@@ -19,6 +19,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     TrainerFactory.getModel($scope.view.modelId)
     .then(function (response) {
       $scope.model = response;
+      setResults();
+      drawClassCircles()
     });
     setResults();
   } else {
@@ -34,6 +36,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
       setResults();
+      drawClassCircles()
     });
   }
 
@@ -159,7 +162,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     $scope.allClasses = classified;
   }
 
-  $scope.drawClassCircles = function() {
+  function drawClassCircles() {
     classifier();
     $scope.allClassesArr = Object.keys($scope.allClasses);
     var numClasses = $scope.allClassesArr.length;
@@ -192,14 +195,9 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         allClasses[key].forEach(function (sampleIndex) {
           point = randomPoint(bigRadius);
           point.x += bigRadius + (bigRadius * 2 * i);
-<<<<<<< HEAD
-          point.y += height / 2;
-          console.log(point);
-          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484", sampleIndex: sampleIndex};
-=======
+
           point.y += height / 2 + 50;
-          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484" };
->>>>>>> ec90b416603925317e7b63e8a83bcfcd6352845a
+          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484", sampleIndex: sampleIndex };
           smallCircles.push(circle);
         })
         i++;
