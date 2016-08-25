@@ -20,3 +20,22 @@
   line-height: 30px;
   margin: 30px 0px 20px 0px;
 }
+
+#circles {
+  overflow: auto;
+  width: 90vw;
+}
+
+.accuracy-tab {
+  width: 80vw;
+  display: flex;
+}
+
+.result-header {
+  font-size: 25px;
+  fill: white;
+}
+
+.sample-container {
+  margin: 30px;
+}

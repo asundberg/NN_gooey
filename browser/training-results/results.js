@@ -11,7 +11,6 @@ app.config(function ($stateProvider) {
 app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, AuthService, $cookieStore, $state) {
   $rootScope.state = 'results';
   $rootScope.homeButtonStatus();
-
   var cookieStoreItems = $cookieStore.get('view');
   var data = [];
   if (cookieStoreItems) {
@@ -19,8 +18,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     TrainerFactory.getModel($scope.view.modelId)
     .then(function (response) {
       $scope.model = response;
-    });
-    setResults();
+      setPage();
+    })
   } else {
     TrainerFactory.train()
     .then(trainResult => {
@@ -28,12 +27,26 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         modelId: trainResult[0].modelId,
         accuracyGraph: trainResult[0].accuracy,
         maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
-        linkToTest: '#/test/' + trainResult[0].modelId
+        linkToTest: '#/test/' + trainResult[0].modelId,
+        predicted: trainResult[0].predicted
       };
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
-      setResults();
+      setPage();
     });
+  }
+
+  function setPage() {
+      setResults();
+      drawClassCircles();
+      console.log(TrainerFactory);
+      console.log(TrainerFactory.headerReference)
+      $scope.currentSample = null;
+      $scope.headerReference = TrainerFactory.headerReference;
+      $scope.headerKeys = Object.keys($scope.headerReference);
+      $scope.outputIndex = $scope.headerKeys.length - 1;
+      $scope.inputArr = TrainerFactory.inputArr;
+      $scope.outputArr = TrainerFactory.outputArr;
   }
 
   function setResults () {
@@ -102,7 +115,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     var height = 350 - margin.top - margin.bottom;
 
     var x = d3.scaleLinear().range([0, width]);
-    var y = d3.scaleLinear().range([height, 0]);
+    var y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
 
     var svg = d3.select('graph')
         .append('svg')
@@ -115,7 +128,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         .ticks(5);
 
     var yAxis = d3.axisLeft().scale(y) // How frequent marks on y-axis
-        .ticks(5);
+        .ticks(10);
 
     var valueline = d3.line()
         .x(function (d) {
@@ -143,6 +156,135 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
     svg.append('g') // Add the Y Axis
     .attr('class', 'y axis')
     .call(yAxis);
+  }
+
+
+  // circle stuff:
+  function classifier () {
+    var classes = $scope.view.predicted;
+    // var classes = [1, 1, 2, 1, 5, 4, 4, 3, 2, 3, 4, 5]
+    var classified = {};
+    classes.forEach(function(yClass, index) {
+      if(!classified[yClass]) classified[yClass] = [];
+      classified[yClass].push(index)
+    });
+    $scope.allClasses = classified;
+  }
+
+  function drawClassCircles() {
+    classifier();
+    $scope.allClassesArr = Object.keys($scope.allClasses);
+    var numClasses = $scope.allClassesArr.length;
+    var bigRadius = 150;
+    var lilRadius = 5;
+    var width = bigRadius * 2 * numClasses;
+    var height = 400;
+
+    var colors = ['66CD00', 'FF7F50', 'FFB90F', 'FF69B4', 'E066FF'];
+
+    var bigCircles = [];
+    var smallCircles = [];
+
+    function drawBigCircles (numClasses) {
+      var colorIndex = 0;
+      var circle;
+      for(var i = 0; i < numClasses; i++) {
+        if (i >= colors.length) {
+          colorIndex = 0;
+        }
+        circle = { "x_axis": bigRadius + (bigRadius * 2 * i), "y_axis": height / 2 + 50, "radius": bigRadius, "color" : colors[colorIndex] };
+        bigCircles.push(circle);
+        colorIndex++;
+      }
+    }
+
+    function drawSmallCircles (allClasses) {
+      var circle, point, i = 0;
+      for(var key in allClasses) {
+        allClasses[key].forEach(function (sampleIndex) {
+          point = randomPoint(bigRadius);
+          point.x += bigRadius + (bigRadius * 2 * i);
+
+          point.y += height / 2 + 50;
+          circle = { "x_axis": point.x, "y_axis": point.y, "radius": lilRadius, "color" : "848484", sampleIndex: sampleIndex };
+          smallCircles.push(circle);
+        })
+        i++;
+      }
+    }
+
+    function randomPoint(radius) {
+      var point = {};
+      var angle = Math.random()*Math.PI*2;
+      point.x = Math.random(0, 1)*Math.cos(angle)*radius*0.9;
+      point.y = Math.random(0, 1)*Math.sin(angle)*radius*0.9;
+      return point;
+    }
+
+    drawBigCircles(numClasses);
+    drawSmallCircles($scope.allClasses);
+
+    var canvas = d3.select("#circles")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height);
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .html(function(d) { return "sample #" + d.sampleIndex; })
+    canvas.call(tip);
+
+    var headers = canvas.append("g")
+          .attr("class", "result-headers")
+          .selectAll("text")
+          .data($scope.allClassesArr)
+          .enter()
+          .append("text")
+          .text(function (d) { return d; })
+          .data(bigCircles)
+          .attr("class", "result-header")
+          .attr("x", function (d) { return d.x_axis; })
+          .attr("y", "50")
+          .attr("text-anchor", "middle");
+
+    var yClass = canvas.append("g")
+          .attr("class", "yClass");
+
+    var yCircles = yClass.selectAll("circle")
+          .data(bigCircles)
+          .enter()
+          .append("circle");
+
+    var yCircleAttributes = yCircles
+         .attr("cx", function (d) { return d.x_axis; })
+         .attr("cy", function (d) { return d.y_axis; })
+         .attr("r", function (d) { return d.radius; })
+         .style("fill", function(d) { return d.color; });
+
+    var sample = canvas.append("g")
+                  .attr("class", "sample");
+    var samples = sample.selectAll("circle")
+                  .data(smallCircles)
+                  .enter()
+                  .append("circle");
+
+    var sampleAttributes = samples
+           .attr("cx", function (d) { return d.x_axis; })
+           .attr("cy", function (d) { return d.y_axis; })
+           .attr("r", function (d) { return d.radius; })
+           .attr("value", function(d) {return d.sampleIndex})
+           .style("fill", function(d) { return d.color; })
+           .on('click', function(d) { onSampleClick(d.sampleIndex)});
+
+    var mouseover = sampleAttributes
+           .on('mouseover', tip.show)
+           .on('mouseout', tip.hide);
+
+  }
+
+  function onSampleClick(sample) {
+    $scope.currentSample = sample;
+    $scope.$digest();
+    console.log("sample", sample);
   }
 
 });
