@@ -1,6 +1,5 @@
 import sys, json, numpy as np
 import train as Train
-import regression as RTrain
 #Read data from stdin
 def read_in():
     lines = sys.stdin.readlines()
@@ -10,11 +9,9 @@ def read_in():
 def main():
     #get our data as an array from read_in()
     lines = read_in()
-    result = RTrain.trainModel(lines)
-    # if lines['classType'] == 'regression':
-    # 	result = RTrain.trainModel(lines)
-    # else:
-    # 	result = Train.trainModel(lines)
+
+    result = Train.trainModel(lines)
+
     print json.dumps(result)
 
 #start process
