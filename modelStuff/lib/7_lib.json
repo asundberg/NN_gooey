@@ -1,1 +1,1 @@
-{"lossType": "binary_crossentropy", "decoder": {"0": "0", "1": "1"}}
+{"lossType": "categorical_crossentropy", "decoder": {"0": "Iris-virginica", "1": "Iris-setosa", "2": "Iris-versicolor"}}

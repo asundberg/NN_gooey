@@ -1,8 +1,11 @@
-<div class="main-container" id="loading" ng-show="!view" layout="column">
+<!-- <div class="main-container" id="loading" ng-show="!view" layout="column">
     <font class="big">Your network is being trained...</font>
     <img src="http://i.imgur.com/LAs4PVe.gif"></div>
-</div>
-<div ng-show="view" id="results" layout="row">
+</div> -->
+<div ng-show="true" id="results" layout="row">
+  <md-tabs class="tab-container" md-dynamic-height md-border-bottom>
+  <md-tab label="accuracy">
+  <div class="accuracy-tab">
     <div>
         <font class="big">Accuracy rate per epoch</font>
         <p></p>
@@ -34,4 +37,33 @@
             </form>
         </md-input-container>
     </div>
+    </div>
+    </md-tab>
+    <md-tab label="your data">
+    <p>See how your model is classifying the original input data:</p>
+      <div id="circles">
+      </div>
+      <md-content class="md-padding sample-container">
+        <div ng-show="!currentSample">
+            Click on a sample dot to view!
+        </div>
+          <table ng-show="currentSample">
+          <tbody>
+              <tr>
+              <th>Sample #{{currentSample}}</th>
+              <th ng-repeat='i in headerKeys.slice(0, -1)'>{{headerReference[i]}}</th>
+              <th>Predicted {{headerReference[outputIndex]}}</th>
+              <th>Actual {{headerReference[outputIndex]}}</th>
+              </tr>
+              <tr>
+              <td></td>
+              <td ng-repeat='i in headerKeys.slice(0, -1)'>{{inputArr[currentSample][i]}}</td>
+              <td>{{outputArr[currentSample]}}</td>
+              <td>{{view.predicted[currentSample]}}</td>
+              </tr>
+          </tbody>
+      </md-content>
+  </md-tab>
+  </md-tabs>
 </div>
+
