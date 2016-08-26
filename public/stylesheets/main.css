@@ -231,6 +231,9 @@ a {
   display: flex;
   justify-content: center; }
 
+.disable {
+  opacity: 0.4; }
+
 .train-content {
   display: flex;
   height: 100%;
