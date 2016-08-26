@@ -45,3 +45,8 @@ app.run(function ($rootScope, AuthService, $state) {
     // });
 
 });
+
+
+app.config(function ($urlRouterProvider) {
+    $urlRouterProvider.otherwise('/home');
+});
