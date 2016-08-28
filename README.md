@@ -94,7 +94,7 @@ This is an open source project. Feel free to add features and create a pull requ
 
 ## Authors
 
-See the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See the list of [contributors](https://github.com/asundberg/NN_gooey/graphs/contributors) who participated in this project.
 
 ## Acknowledgments
 
