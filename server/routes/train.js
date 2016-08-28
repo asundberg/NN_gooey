@@ -4,8 +4,9 @@ const express = require('express');
 const router = new express.Router();
 var child_process = require('child_process');
 var path = require('path');
-const Training = require('../db/models').Training;
-const Selection = require('../db/models').Selection;
+const db = require('../db');
+const Training = db.model('training');
+const Selection = db.model('selection');
 
 
 //for /train

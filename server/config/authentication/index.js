@@ -2,7 +2,8 @@
 var path = require('path');
 var passport = require('passport');
 var cookieSession = require('cookie-session');
-var User = require('../../db/models').User;
+var db = require('../../db')
+var User = db.model('user');
 
 var ENABLED_AUTH_STRATEGIES = [
     'local'

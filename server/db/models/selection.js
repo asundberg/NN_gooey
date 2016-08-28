@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('../db');
+const db = require('../_db');
 const Sequelize = db.Sequelize;
 
 module.exports = db.define('selection', {

@@ -2,15 +2,17 @@ var sinon = require('sinon');
 var expect = require('chai').expect;
 var supertest = require('supertest');
 var Sequelize = require('sequelize');
-var db = require('../../../server/db/db');
-var Training = require('../../../server/db/models/training');
-var Selection = require('../../../server/db/models/selection');
-var Training = require('../../../server/db/models/training');
-var Selection = require('../../../server/db/models/selection');
+var Promise = require('bluebird');
+var db = require('../../../server/db');
+// var Training = require('../../../server/db/models/training');
+// var Selection = require('../../../server/db/models/selection');
+
+var Training = db.model('training');
+var Selection = db.model('selection');
 
 describe('Training Model', function () {
 
-    var app, SelectionDetail, agent;
+    var app, agent;
 
 
     beforeEach('Sync DB', function () {
@@ -18,10 +20,10 @@ describe('Training Model', function () {
     });
 
     beforeEach('Create app', function () {
-        // app = require('../../../server/config')(require('../../../server/app'), require('../../../server/db'));
-        var Selection = require('../../../server/db/models/selection');
-        var Training = require('../../../server/db/models/training');
-        // agent = supertest.agent(app);
+        app = require('../../../server/config')(require('../../../server/app'), require('../../../server/db'));
+        var Selection = db.model('selection');
+        var Training = db.model('training');
+        agent = supertest.agent(app);
     });
 
     describe('CRUD Training', function () {
@@ -33,27 +35,16 @@ describe('Training Model', function () {
 				lib: '/Users/Ayako/BrainLab/modelStuff/irisLib.json'
 			}
 
-		var selection = 
-			{
-				headers: ['Iris Servosa', 'Iris Verginica'],
-				rows: [[1,2],[3,4]],
-				numColumns: 2
-			}
-
         it('Creating, getting, and updating Training object', function (done) {
-
         	Training.create(training)
 			.then(function(created){
 				expect(created.id).to.equal(1);
 				expect(created.config).to.be.a('string');
 				expect(created.name).to.equal('Iris Dataset');
-				return Training.findById(1)
-			})
-			.then(function(foundTraining){
-				return foundTraining.update({name: 'Iris Classification'})
+				return created.update({name: 'Updated Iris'})
 			})
 			.then(function(updated){
-				 expect(updated.name).to.equal('Iris Classification');
+				expect(updated.name).to.equal('Updated Iris')
 			})
 			done();
         });      
@@ -75,36 +66,15 @@ describe('Training Model', function () {
 				numColumns: 2
 			}
 
-    	xit('Add Selection to Training', function (done) {
-    		var createdTraining, createdSelection;
-    		Training.create(training)
-    		.then(function(created){
-    			createdTraining = created;
-    			return Selection.create(selection)
-    		})
-    		.then(function(createdSelection){
-    			createdSelection = createdSelection;
-    			createdSelection.trainingId = createdTraining.training_id;
-    			return Training.findOne({where: {id: 1}, include: [Selection]})
-    		})
-    		.then(function(foundTraining){
-				console.log(foundTraining.selection);
-				expect(foundTraining.selection.headers).to.equal('');
+		it('Selection create', function (done) {
+			Promise.all([Training.create(training), Selection.create(selection)])
+			.spread(function(createdTraining, createdSelection){
+				createdSelection.trainingId = createdTraining.id;
+				expect(createdSelection.trainingId).to.be.equal(1);
 			})
-			done();
-			// Promise.all(Training.create(training), Selection.create(selection))
-			// .then(function(arr){
-			// 	console.log(arr);
-			// 	console.log(createdTraining);
-			// 	createdTraining.selectionId = createdSelection.id
-			// 	return Training.findOne({where: {id: 1}, include: [Selection]})
-			// })
-			// .then(function(foundTraining){
-			// 	console.log(foundTraining.selection);
-			// 	expect(foundTraining.selection.headers).to.equal('');
-			// })
-			// done();
-        }); 
+			done()
+        });     
+
     }); 
 
 })

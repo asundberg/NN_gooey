@@ -3,10 +3,10 @@ var expect = require('chai').expect;
 var supertest = require('supertest');
 var Sequelize = require('sequelize');
 
-var db = require('../../../server/db/db');
+var db = require('../../../server/db');
 
 // var User = db.model('user');
-var User = require('../../../server/db/models/user');
+var User = db.model('user');
 
 describe('User model', function () {
 

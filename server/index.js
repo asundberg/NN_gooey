@@ -1,5 +1,5 @@
 var http = require('http');
-var startDb = require('./db');
+var db = require('./db');
 var server = http.createServer();
 
 var createApplication = function () {
@@ -15,7 +15,7 @@ var startServer = function () {
   });
 };
 
-startDb
+db.sync({force:true})
 .then(createApplication)
 .then(startServer)
 .catch(function (err) {

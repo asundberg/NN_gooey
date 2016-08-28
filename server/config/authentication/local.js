@@ -1,7 +1,8 @@
 'use strict';
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../../db/models').User;
+var db = require('../../db');
+var User = db.model('user');
 
 module.exports = function (app, db) {
 
