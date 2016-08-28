@@ -15,10 +15,12 @@ app.use(cookieParser());
 var npmPath = path.join(__dirname, '../node_modules');
 var browserPath = path.join(__dirname, '../browser');
 var publicPath = path.join(__dirname, '../public');
+var datasetsPath = path.join(__dirname, '../datasets');
 
 app.use(Express.static(npmPath));
 app.use(Express.static(browserPath));
 app.use(Express.static(publicPath));
+app.use('/datasets', Express.static(datasetsPath));
 
 require('./config')(app, db);
 

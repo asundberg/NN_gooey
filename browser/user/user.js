@@ -15,7 +15,7 @@ app.config(function ($stateProvider) {
             })
             .then(function (models) {
               if (models) {
-                console.log('this is MODELS: ', models);
+                // console.log('this is MODELS: ', models);
                 userObj.models = models;
               }
               return userObj;
@@ -33,7 +33,7 @@ app.controller('UserCtrl', function ($rootScope, $scope, $state, userAccount) {
   $scope.selectedModel = null;
   $scope.selectModelToTest = function (model) {
     $scope.selectedModel = model;
-    console.log('this is selectedModel: ', $scope.selectedModel);
+    // console.log('this is selectedModel: ', $scope.selectedModel);
   };
   $scope.goToTest = function () {
     $state.go('test', {id: $scope.selectedModel.id});

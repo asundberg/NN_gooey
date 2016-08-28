@@ -40,8 +40,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function setPage() {
       setResults();
       drawClassCircles();
-      console.log(TrainerFactory);
-      console.log(TrainerFactory.headerReference)
+      // console.log(TrainerFactory);
+      // console.log(TrainerFactory.headerReference)
       $scope.currentSample = null;
       $scope.headerReference = TrainerFactory.headerReference;
       $scope.headerKeys = Object.keys($scope.headerReference);
@@ -285,7 +285,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function onSampleClick(sample) {
     $scope.currentSample = sample;
     $scope.$digest();
-    console.log("sample", sample);
+    // console.log("sample", sample);
   }
 
 });
