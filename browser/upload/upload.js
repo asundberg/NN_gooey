@@ -23,7 +23,7 @@ app.controller('UploadCtrl', function($rootScope, $scope, TestingFactory, Traine
     {name: 'Iris dataset'},
     {name: 'Humor types'},
     {name: 'Soybean types'},
-    {name: 'How machiaveliant are you?'}
+    {name: 'How machiavellian are you?'}
   ];
 
   $scope.chooseAvailableDataset = function (dataset) {
