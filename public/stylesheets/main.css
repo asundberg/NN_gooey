@@ -144,6 +144,10 @@ md-backdrop.md-opaque {
 #next-button {
   align-self: center; }
 
+.dataset-container {
+  margin-top: 40px;
+  padding-bottom: 60px; }
+
 .upload-header {
   width: 100%;
   text-align: center;
@@ -230,6 +234,9 @@ a {
 #bar {
   display: flex;
   justify-content: center; }
+
+.disable {
+  opacity: 0.4; }
 
 .train-content {
   display: flex;
@@ -387,4 +394,42 @@ th {
   fill: white; }
 
 .sample-container {
-  margin: 30px; }
+  margin: 30px;
+  width: 85vw; }
+
+#results {
+  /*background-image: url('http://www.examinationtoday.com/wp-content/uploads/Chemical-Bond.jpg');*/
+  /*background-size: cover;*/
+  padding: 50px;
+  font: 12px Arial;
+  color: white; }
+
+#graph {
+  background-color: white;
+  width: 700px;
+  border: solid black 2px; }
+
+.sample-table {
+  overflow: auto; }
+
+path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none; }
+
+.axis path, .axis line {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  shape-rendering: crispEdges; }
+
+.background {
+  width: 360px;
+  height: 200px; }
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; }

@@ -3,3 +3,4 @@ secrets
 modelStuff/config/*
 modelStuff/lib/*
 modelStuff/weights/*
+.DS_Store

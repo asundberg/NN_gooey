@@ -29,6 +29,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
         maxAcc: Math.round(Math.max.apply(null,trainResult[0].accuracy) * 100),
         linkToTest: '#/test/' + trainResult[0].modelId,
       };
+      $cookieStore.put('modelId', trainResult[0].modelId);
       $scope.model = trainResult[0];
       $cookieStore.put('view', $scope.view);
       $scope.view.predicted = trainResult[0].predicted;
@@ -39,8 +40,8 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function setPage() {
       setResults();
       drawClassCircles();
-      console.log(TrainerFactory);
-      console.log(TrainerFactory.headerReference)
+      // console.log(TrainerFactory);
+      // console.log(TrainerFactory.headerReference)
       $scope.currentSample = null;
       $scope.headerReference = TrainerFactory.headerReference;
       $scope.headerKeys = Object.keys($scope.headerReference);
@@ -284,7 +285,7 @@ app.controller('ResultsCtrl', function ($rootScope, $scope, TrainerFactory, Auth
   function onSampleClick(sample) {
     $scope.currentSample = sample;
     $scope.$digest();
-    console.log("sample", sample);
+    // console.log("sample", sample);
   }
 
 });
