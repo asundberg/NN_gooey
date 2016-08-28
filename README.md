@@ -20,7 +20,7 @@ Please install anaconda (Python 2.7 version) [here](https://docs.continuum.io/an
 pip install numpy --upgrade
 pip install scipy --upgrade
 ```
-Next, you will need to have Keras. Keras is a python library that we use to build, train, and test the neural network model. We used Theano as our backend for keras. The next steps will be to install Theano and Keras.
+The next steps will be to install Theano and Keras. Keras is a python library that we use to build, train, and test the neural network model. We used Theano as our backend for keras. 
 
 ```
 pip install theano
@@ -39,7 +39,7 @@ pip install git+git://github.com/Theano/Theano.git --upgrade --no-deps
 
 ### Installing
 
-After cloning this repo, open up terminal and make sure you're on in the directory NN_gooey. Then do an npm install:
+After cloning this repo, open up terminal and make sure you're in the directory NN_gooey. Then do an npm install:
 
 ```
 npm install
