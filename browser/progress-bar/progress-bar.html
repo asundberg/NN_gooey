@@ -1,7 +1,6 @@
 <div id="bar" layout="row">
 
-
-<md-button class="little-btn circle" ng-class="{current:isState(item.state)}" ng-repeat="item in items">{{item.label}}
+<md-button class="little-btn circle" ng-class="{current:isState(item.state), disable:!isClickable(item)}" ng-repeat="item in items" ng-click="isClickable(item) && goTo(item)">{{item.label}}
 </md-button>
 
 </div>

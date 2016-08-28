@@ -26,7 +26,6 @@
     <script src="/d3-tip/index.js" defer></script>
     <script src="/training-results/results.js" defer></script>
     <script src="/trainer-factory.js" defer></script>
-    <script src="/training-results/loader.js" defer></script>
     <script src="/test/test.js" defer></script>
     <script src="/navbar/navbar-directive.js" defer></script>
     <script src="/user/signup.js" defer></script>
@@ -47,6 +46,7 @@
 
 </head>
 <body ng-app='nn_gooey' layout="column">
+<img ng-show='state =="home"' id="main-img" src="/img/boxes.svg">
   <navbar></navbar>
   <ui-view layout="row"></ui-view>
 </body>
