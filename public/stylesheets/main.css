@@ -144,6 +144,10 @@ md-backdrop.md-opaque {
 #next-button {
   align-self: center; }
 
+.dataset-container {
+  margin-top: 40px;
+  padding-bottom: 60px; }
+
 .upload-header {
   width: 100%;
   text-align: center;
