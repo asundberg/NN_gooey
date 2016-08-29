@@ -20,17 +20,17 @@ describe('User Routes', function () {
         agent = supertest.agent(app);
     });
 
-
-    //NOT FINISHED
     describe('CRUD Training', function () {
 
         beforeEach(function(done) {
             var training = {name:'Iris Dataset', config: "/modelStuff/Irisconfig.json", weights: "/modelStuff/irisWeights.json", lib: "/modelStuff/irisLib.json"};
+
+            var training2 = {name:'Soybean Dataset', config: "/modelStuff/Soybeanconfig.json", weights: "/modelStuff/soybeanWeights.json", lib: "/modelStuff/soybeanLib.json"};
+
             var user = {name: "Irisy", email: "iris@gmail.com", password: "forest"};
 
-            Promise.all([Training.create(training), User.create(user)])
-            .spread(function(createdTraining, createdUser){
-                // createdTraining.userId = createdUser.id;
+            Promise.all([Training.create(training), Training.create(training2), User.create(user)])
+            .spread(function(createdTraining, createdTraining2, createdUser){
                 agent
                 .post('/login')
                 .send({
@@ -43,21 +43,19 @@ describe('User Routes', function () {
                    // console.log("this is the user", res.body);
                    done();
                 });
-                return createdUser.addTraining(createdTraining)
+                return createdUser.addTrainings([createdTraining, createdTraining2])
             })
-           
         })
 
         it('PUT Training', function (done) {
             agent
             .put('/train/1')
-            .send({name: 'Updated Iris Dataset'})
+            .send({name: 'Updated Iris Dataset', config: '/modelStuff/config/updatedIrisConfig.json'})
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-                console.log(res.body);
-                expect(res.body.name).to.equal('Updated Iris Dataset')
-                console.log(res.body[0])
+                expect(res.body.model.name).to.equal('Updated Iris Dataset');
+                expect(res.body.model.config).to.equal('/modelStuff/config/updatedIrisConfig.json');
                 done();
             });
         });
@@ -68,8 +66,8 @@ describe('User Routes', function () {
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-                expect(res.body[0].name).to.equal('Iris Dataset')
-                console.log(res.body[0])
+                expect(res.body[0].name).to.equal('Iris Dataset');
+                expect(res.body[1].name).to.equal('Soybean Dataset');
                 done();
             });
         });
