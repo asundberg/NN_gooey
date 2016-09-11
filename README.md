@@ -73,12 +73,12 @@ Type "npm test" in your terminal to run tests.
 We used mocha and chai to test our routes.
 
 ```
-Give an example
+npm run test
 ```
 
 ## Deployment
 
-We used heroku to deploy this app.
+We used Digital Ocean to deploy this app.
 
 ## Built With
 
