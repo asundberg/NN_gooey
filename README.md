@@ -8,6 +8,8 @@ Once the network is finished training, the user will see a graph that shows how 
 
 Technologies: Python, Keras (a Python library), SQL, Node.js, Angular.js, Angular Material, and d3.
 
+Our app is now deployed. Please visit us at [brainlab.tech](http://brainlab.tech/).
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
